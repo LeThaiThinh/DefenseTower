@@ -14,8 +14,8 @@ protected:
 
 public:
     Animation2D();
-    Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, float frameTime, float x, float y);
-    Animation2D(int numFrames, float frameTime, int numFramesInLine, float x, float y);
+    Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, int numFramesInLine, float frameTime, float x, float y);
+    Animation2D(int numFrames, int numFramesInLine, float frameTime, float x, float y);
     ~Animation2D();
     void Init() override;
     void Draw() override;

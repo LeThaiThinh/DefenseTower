@@ -30,20 +30,7 @@ public:
             return resource;
         }
     }
-    std::shared_ptr<T> getResource2(Vector3 position)
-    {
-        if (resources.empty())
-        {
-            return new T(position);
-        }
-        else
-        {
-            T* resource = resources.front();
-            resource->Set2DPosition(Vector2(position.x, position.y));
-            resources.pop_front();
-            return resource;
-        }
-    }
+
     void returnResource(T* object)
     {
         object->Reset();

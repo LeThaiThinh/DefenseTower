@@ -1,8 +1,7 @@
 #include "MainCharacter.h"
 #include "Bullet.h"
-ObjectPool<Bullet>* ObjectPool<Bullet>::instance = 0;
 
-MainCharacter::MainCharacter() :Animation2D(16, 0.033f, 4, 300, 300)
+MainCharacter::MainCharacter() :Animation2D(16, 4, 0.033f,  300, 300)
 {
 	Init();
 }
@@ -19,9 +18,6 @@ void MainCharacter::Init()
 
 	m_speed = 50;
 	m_hitpoint = 500;
-	m_poolTarget = ObjectPool<Bullet>::getInstance();
-	std::shared_ptr<Bullet> bullet = m_poolTarget->getResource();
-	m_bulletList.push_back(bullet);
 	SetSize(100, 100);
 	Set2DPosition(Globals::screenWidth / 2.f, Globals::screenWidth / 3.f);
 
@@ -39,5 +35,13 @@ void MainCharacter::Move(GLfloat deltatime, Vector2 direction)
 void MainCharacter::Update(GLfloat deltatime)
 {
 	Animation2D::Update(deltatime);
+}
+
+void MainCharacter::ShootLinear(Vector2 targetPosition)
+{
+	std::shared_ptr<Bullet> bullet = BulletPool<Bullet>::getInstance()->getResource(BulletType::MainCharacter);
+	m_bulletList.push_back(bullet);
+	bullet->SetTargetPosition(targetPosition);
+	bullet->Set2DPosition(m_position.x,m_position.y);
 }
 

@@ -9,14 +9,14 @@ Animation2D::Animation2D()
 {
 }
 
-Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, float frameTime, float x, float y)
-	: Sprite2D(model, shader, texture), m_numFrames(numFrames), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0)
+Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y)
+	: Sprite2D(model, shader, texture), m_numFrames(numFrames),m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0)
 {
 	Set2DPosition(Vector2(x, y));
 	Init();
 }
-Animation2D::Animation2D(int numFrames, float frameTime, int numFramesInLine, float x, float y)
-	: m_numFrames(numFrames), m_frameTime(frameTime), m_numFramesInLine(numFramesInLine), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
+Animation2D::Animation2D(int numFrames, int numFramesInLine, float frameTime, float x, float y)
+	: m_numFrames(numFrames), m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
 {
 	Set2DPosition(Vector2(x, y));
 	Init();

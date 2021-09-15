@@ -1,5 +1,4 @@
 #include "GSPlay.h"
-
 #include "Shader.h"
 #include "Texture.h"
 #include "Model.h"
@@ -9,6 +8,8 @@
 #include "Sprite3D.h"
 #include "Text.h"
 #include "GameButton.h"
+
+BulletPool<Bullet>* BulletPool<Bullet>::instance = 0;
 
 GSPlay::GSPlay()
 {
@@ -128,11 +129,14 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
 {
+	if (keyPressed & KEY_SPACE) {
+		m_mainCharacter->ShootLinear(Vector2(x,y));
+	}
 }
 
 void GSPlay::Update(float deltaTime)
 {
-	HandleInput(deltaTime);
+	HandleKeyPress(deltaTime);
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
@@ -151,7 +155,7 @@ void GSPlay::Draw()
 	m_mainCharacter->Draw();
 }
 
-void GSPlay::HandleInput(float deltaTime) {
+void GSPlay::HandleKeyPress(float deltaTime) {
 	if (keyPressed & KEY_MOVE_LEFT) {
 		m_mainCharacter->Move(deltaTime, Vector2(-1, 0));
 	}
@@ -163,8 +167,5 @@ void GSPlay::HandleInput(float deltaTime) {
 	}
 	if (keyPressed & KEY_MOVE_BACKWARD) {
 		m_mainCharacter->Move(deltaTime, Vector2(0, 1));
-	}
-	if (keyPressed & KEY_SPACE) {
-
 	}
 }
