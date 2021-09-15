@@ -162,7 +162,7 @@
     <ClInclude Include="src\GameObject\Sound.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\AttackAble.h">
+    <ClInclude Include="src\GameObject\BeAttackAble.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\MoveAble.h">
@@ -174,17 +174,20 @@
     <ClInclude Include="src\GameObject\ShootAble.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Animation2D.h">
-      <Filter>TrainingFramework\src\GameManager</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\Bullet.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\MainCharacter.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\BulletManager.h">
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Animation2D.h">
+      <Filter>TrainingFramework\src\GameObject\Base</Filter>
+    </ClInclude>
     <ClInclude Include="src\GameObject\BulletPool.h">
-      <Filter>TrainingFramework\src\GameObject</Filter>
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

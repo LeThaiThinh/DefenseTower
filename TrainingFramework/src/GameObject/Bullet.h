@@ -19,8 +19,11 @@ public:
 	void SetTargetPosition(Vector2 targetPosition) { m_targetPosition = targetPosition; }
 	void SetType(BulletType bulletType);
 	void Init(BulletType bulletType);
+	void Reset();
+	void Update(float deltaTime);
 
 protected:
 	Vector2 m_targetPosition;
 	BulletType m_bulletType;
+	ObjectType m_targetType;
 };

@@ -6,6 +6,11 @@ class Shader;
 class Model;
 class Texture;
 class Camera;
+enum class ObjectType
+{
+	Ally,
+	Enemy,
+};
 class BaseObject
 {
 public:

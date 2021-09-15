@@ -8,8 +8,9 @@
 #include "Sprite3D.h"
 #include "Text.h"
 #include "GameButton.h"
+#include "Bullet.h"
 
-BulletPool<Bullet>* BulletPool<Bullet>::instance = 0;
+
 
 GSPlay::GSPlay()
 {
@@ -43,11 +44,15 @@ void GSPlay::Init()
 	m_listButton.push_back(button);
 	//
 	m_mainCharacter = std::make_shared<MainCharacter>();
+	//
+	m_bullet = std::make_shared<Bullet>();
+	m_bullet->SetTargetPosition(Vector2(500, 500));
 	// score
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
 	m_score = std::make_shared< Text>(shader, font, "score: 10", TextColor::RED, 1.0f);
 	m_score->Set2DPosition(Vector2(5, 25));
+	
 }
 
 void GSPlay::Exit()
@@ -124,14 +129,12 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 			break;
 		}
 	}
-
+	m_mainCharacter->HandleTouchEvents(x, y, bIsPressed);
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
 {
-	if (keyPressed & KEY_SPACE) {
-		m_mainCharacter->ShootLinear(Vector2(x,y));
-	}
+
 }
 
 void GSPlay::Update(float deltaTime)
@@ -142,6 +145,7 @@ void GSPlay::Update(float deltaTime)
 		it->Update(deltaTime);
 	}
 	m_mainCharacter->Update(deltaTime);
+	BulletPoolManager::GetInstance()->Update(deltaTime);
 }
 
 void GSPlay::Draw()
@@ -153,6 +157,7 @@ void GSPlay::Draw()
 		it->Draw();
 	}
 	m_mainCharacter->Draw();
+	BulletPoolManager::GetInstance()->Draw();
 }
 
 void GSPlay::HandleKeyPress(float deltaTime) {

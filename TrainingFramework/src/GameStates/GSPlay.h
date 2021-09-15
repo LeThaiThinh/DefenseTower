@@ -1,11 +1,13 @@
 #pragma once
 #include "GameStateBase.h"
 #include "MainCharacter.h"
+#include "BulletManager.h"
+
 class Sprite2D;
 class Sprite3D;
 class Text;
 class GameButton;
-
+class Bullet;
 class GSPlay :
 	public GameStateBase
 {
@@ -34,9 +36,7 @@ private:
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::shared_ptr <MainCharacter> m_mainCharacter;
 	std::shared_ptr <BaseObject> m_controller;
-
-	BulletPool<Bullet>* m_poolTarget;
-
+	std::shared_ptr<Bullet>	m_bullet;
 
 };
 

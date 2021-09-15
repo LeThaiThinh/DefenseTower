@@ -2,16 +2,16 @@
 #include "Sprite2D.h"
 #include "Animation2D.h"
 #include "MoveAble.h"
-#include "AttackAble.h"
+#include "BeAttackAble.h"
 #include "ShootAble.h"
 #include "../GameManager/ResourceManagers.h"
-#include <BulletPool.h>
+#include <BulletManager.h>
 
 class MainCharacter
 	:public MoveAble,
 	public Animation2D,
-	public AttackAble,
-	public ShootAble
+	public BeAttackAble,
+	public AttackAble
 {
 public:
 
@@ -21,8 +21,9 @@ public:
 	void Move(GLfloat deltatime);
 	void Move(GLfloat deltatime, Vector2 vector2);
 	void Update(GLfloat deltatime);
-	void ShootLinear(Vector2 targetPosition) override;
-	void ShootCircular() {};
+	void AttackLinear(Vector2 targetPosition) override;
+	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
+	void AttackCircular() {};
 
 private:
 };

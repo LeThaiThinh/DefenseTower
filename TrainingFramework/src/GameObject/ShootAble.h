@@ -3,15 +3,20 @@
 #include <list>
 #include <Bullet.h>
 #include <memory>
-class ShootAble
+class AttackAble
 {
 protected:
-	float range;
-	float attackSpeed;
+	float m_range;
+	float m_attackSpeed;
+	float m_timeAttack;
 	std::list<std::shared_ptr<Bullet>> m_bulletList;
 public:
-	ShootAble() :m_bulletList(NULL), range(0),attackSpeed(1){}
-	~ShootAble() {}
-	virtual void ShootLinear(Vector2 targetPosition)=0;
-	virtual void ShootCircular()=0;
+	AttackAble() :m_bulletList(NULL), m_range(0),m_attackSpeed(1),m_timeAttack(0){}
+	~AttackAble() {}
+	bool CanAttack() {
+		return m_timeAttack > 1 / m_attackSpeed;
+	};
+	virtual void AttackLinear(Vector2 targetPosition)=0;
+	virtual void AttackCircular()=0;
+	void Update(float deltaTime) { m_timeAttack += deltaTime; }
 };

@@ -19,6 +19,16 @@ void GSIntro::Init()
 	m_logo = std::make_shared<Sprite2D>(model, shader, texture);
 	m_logo->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
 	m_logo->SetSize(150, 150);
+	ResourceManagers::GetInstance()->AddShader("AnimationShader");
+	ResourceManagers::GetInstance()->AddTexture("explosion.tga");
+	ResourceManagers::GetInstance()->AddTexture("Bomb2.tga");
+	ResourceManagers::GetInstance()->AddTexture("bg_play1.tga");
+	/*ResourceManagers::GetInstance()->AddTexture();
+	ResourceManagers::GetInstance()->AddTexture();
+	ResourceManagers::GetInstance()->AddTexture();
+	ResourceManagers::GetInstance()->AddTexture();
+	ResourceManagers::GetInstance()->AddTexture();*/
+
 }
 
 void GSIntro::Exit()
