@@ -8,6 +8,8 @@ protected:
 	Vector2	m_destination;
 public:
 	MoveAble() :m_speed(0), m_destination(Vector2(0, 0)),m_direction(Vector2(0,0)) {}
+	MoveAble(float speed):m_speed(speed){}
+	~MoveAble() {};
 	void	SetSpeed(float speed) { m_speed = speed; }
 	float	GetSpeed() { return m_speed; }
 	void	SetDirection(Vector2 direction) { m_direction = direction; }

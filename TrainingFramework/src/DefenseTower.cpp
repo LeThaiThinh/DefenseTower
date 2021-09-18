@@ -5,6 +5,10 @@
 
 int Globals::screenWidth = 960;
 int Globals::screenHeight = 960;
+int Globals::mapWidth = 1920;
+int Globals::mapHeight = 1920;
+int Globals::borderMoveCam = 50;
+
 
 GLint Init(ESContext* esContext)
 {

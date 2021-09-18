@@ -8,8 +8,8 @@ class Camera
 {
 public:
 	Camera(void);
-	Camera::Camera(GLint id, Vector3 position, Vector3 target, Vector3 up, GLfloat fovY, GLfloat fNear, GLfloat fFar, GLfloat fSpeed);
-	Camera::Camera(GLint id, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat fNear, GLfloat fFar, GLfloat fSpeed);
+	Camera::Camera(GLint id, Vector3 position, Vector3 target, Vector3 up, GLfloat fovY, GLfloat fNear, GLfloat fFar, GLfloat fSpeed, Vector3 moveCamera);
+	Camera::Camera(GLint id, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat fNear, GLfloat fFar, GLfloat fSpeed,	Vector3 moveCamera);
 	~Camera(void);
 	Matrix		GetLookAtCameraMatrix();
 	Vector3		GetPosition();
@@ -23,6 +23,8 @@ public:
 	Matrix		GetWorldMatrix();
 	Matrix		GetViewMatrix();
 	Matrix		GetProjecttionMatrix();
+	Vector3		GetMoveCamera();
+	void		SetMoveCamera(Vector3);
 	void		Update(GLfloat deltaTime);
 	void		MoveUp(GLfloat deltaTime);
 	void		MoveLeft(GLfloat deltaTime);
@@ -42,6 +44,7 @@ private:
 	GLfloat		m_fNear;
 	GLfloat		m_fFar;
 	bool	m_isChanged;
+	Vector3 m_moveCamera;
 
 	void		CalculateWorldMatrix();
 	void		CalculateViewMatrix();

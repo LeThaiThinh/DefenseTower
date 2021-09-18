@@ -96,6 +96,15 @@
     <ClCompile Include="src\GameObject\MainCharacter.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\MainTower.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\GroundEnemy.cpp">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\FlyEnemy.cpp">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -158,11 +167,10 @@
     <ClInclude Include="src\GameObject\Sprite3D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h" />
     <ClInclude Include="src\GameObject\Sound.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BeAttackAble.h">
+    <ClInclude Include="src\GameObject\AttackAble.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\MoveAble.h">
@@ -171,7 +179,7 @@
     <ClInclude Include="src\GameObject\SelfDestructable.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\ShootAble.h">
+    <ClInclude Include="src\GameObject\AbleToAttack.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\Bullet.h">
@@ -188,6 +196,36 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\BulletPool.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEnemy.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MainTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TowerManager.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\UnMoveThroughAbleTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MoveThroughAbleTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Enemy.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TowerPool.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\FlyEnemny.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\GroundEnemy.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

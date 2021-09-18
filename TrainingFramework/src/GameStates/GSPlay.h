@@ -2,6 +2,7 @@
 #include "GameStateBase.h"
 #include "MainCharacter.h"
 #include "BulletManager.h"
+#include <MainTower.h>
 
 class Sprite2D;
 class Sprite3D;
@@ -35,8 +36,8 @@ private:
 	std::shared_ptr<Text>		m_score;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::shared_ptr <MainCharacter> m_mainCharacter;
+	std::shared_ptr <MainTower> m_mainTower;
 	std::shared_ptr <BaseObject> m_controller;
-	std::shared_ptr<Bullet>	m_bullet;
 
 };
 

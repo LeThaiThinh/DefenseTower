@@ -20,6 +20,9 @@ public:
 	BaseObject(GLint id, std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
 		: m_id(id), m_name("TextureObj"), m_pModel(model), m_pShader(shader), m_pTexture(texture),
 		m_position(Vector3(0.0f, 0.0f, 0.0f)), m_rotation(Vector3(0.0f, 0.0f, 0.0f)), m_scale(Vector3(1.0f, 1.0f, 1.0f)) {}
+	BaseObject(GLint id, std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float x, float y)
+		: m_id(id), m_name("TextureObj"), m_pModel(model), m_pShader(shader), m_pTexture(texture),
+		m_position(Vector3(x, y, 0.0f)), m_rotation(Vector3(0.0f, 0.0f, 0.0f)), m_scale(Vector3(1.0f, 1.0f, 1.0f)) {}
 	BaseObject(GLint id, std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, Vector4 color)
 		: m_id(id), m_name("ColorObj"), m_pModel(model), m_pShader(shader), m_color(color),
 		m_position(Vector3(0.0f, 0.0f, 0.0f)), m_rotation(Vector3(0.0f, 0.0f, 0.0f)), m_scale(Vector3(1.0f, 1.0f, 1.0f)) {}

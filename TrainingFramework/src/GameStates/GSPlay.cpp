@@ -9,6 +9,7 @@
 #include "Text.h"
 #include "GameButton.h"
 #include "Bullet.h"
+#include <Application.h>
 
 
 
@@ -25,28 +26,28 @@ GSPlay::~GSPlay()
 void GSPlay::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("HellBackground.tga");
 
 	// background
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	m_background = std::make_shared<Sprite2D>(model, shader, texture);
 	m_background->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
-	m_background->SetSize(Globals::screenWidth, Globals::screenHeight);
-
+	m_background->SetSize(Globals::mapWidth, Globals::mapHeight);
 	// button clode
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_close.tga");
 	std::shared_ptr<GameButton>  button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(Globals::screenWidth - 50.f, 50.f);
 	button->SetSize(50, 50);
 	button->SetOnClick([]() {
+		Application::GetInstance()->GetCamera()->SetMoveCamera(-Application::GetInstance()->GetCamera()->GetPosition());
+		Application::GetInstance()->GetCamera()->Update(1/300.f);
+		Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 0, 0));
 		GameStateMachine::GetInstance()->PopState();
 		});
 	m_listButton.push_back(button);
 	//
 	m_mainCharacter = std::make_shared<MainCharacter>();
-	//
-	m_bullet = std::make_shared<Bullet>();
-	m_bullet->SetTargetPosition(Vector2(500, 500));
+	m_mainTower= std::make_shared<MainTower>();
 	// score
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
@@ -124,27 +125,55 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 {
 	for (auto button : m_listButton)
 	{
-		if (button->HandleTouchEvents(x, y, bIsPressed))
+		if (button->HandleTouchEvents((float)Application::GetInstance()->GetCamera()->GetPosition().x+x, (float)Application::GetInstance()->GetCamera()->GetPosition().y+ y, bIsPressed))
 		{
 			break;
 		}
 	}
-	m_mainCharacter->HandleTouchEvents(x, y, bIsPressed);
+	m_mainCharacter->HandleTouchEvents((float)Application::GetInstance()->GetCamera()->GetPosition().x+x, (float)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
 {
-
+	if (Application::GetInstance()->GetCamera()->GetMoveCamera().x == 0) {
+		if (x >= Globals::screenWidth  - Globals::borderMoveCam) {
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(1, 0, 0));
+		}
+		if (x <= Globals::borderMoveCam) {
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(-1, 0, 0));
+		}
+	} else
+		if (Application::GetInstance()->GetCamera()->GetMoveCamera().x != 0 && x <= Globals::screenWidth - Globals::borderMoveCam && x >= Globals::borderMoveCam) {
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 0, 0));
+		}
+	
+	if (Application::GetInstance()->GetCamera()->GetMoveCamera().y == 0) {
+		if (y <= Globals::borderMoveCam)
+		{
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, -1, 0));
+		}
+		if (y >= Globals::screenHeight  - Globals::borderMoveCam)
+		{
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 1, 0));
+		}
+	} else
+		if ( Application::GetInstance()->GetCamera()->GetMoveCamera().y != 0 && y >= Globals::borderMoveCam && y <= Globals::screenHeight - Globals::borderMoveCam) {
+			Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 0, 0));
+		}
 }
 
 void GSPlay::Update(float deltaTime)
 {
+
 	HandleKeyPress(deltaTime);
+	Application::GetInstance()->GetCamera()->Update(deltaTime);
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
+		it->Set2DPosition(Application::GetInstance()->GetCamera()->GetPosition().x+ Globals::screenWidth - 50.f, Application::GetInstance()->GetCamera()->GetPosition().y + 50.f);
 	}
 	m_mainCharacter->Update(deltaTime);
+	m_mainTower->Update(deltaTime);
 	BulletPoolManager::GetInstance()->Update(deltaTime);
 }
 
@@ -157,6 +186,7 @@ void GSPlay::Draw()
 		it->Draw();
 	}
 	m_mainCharacter->Draw();
+	m_mainTower->Draw();
 	BulletPoolManager::GetInstance()->Draw();
 }
 

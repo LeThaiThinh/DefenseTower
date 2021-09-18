@@ -11,9 +11,14 @@ Bullet::Bullet(BulletType bulletType)
 	Init(bulletType);
 }
 
-Bullet::Bullet(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, int numFramesInLine, float frameTime, float x, float y, Vector2 targetPosition)
-	:Animation2D(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y), m_targetPosition(targetPosition)
+Bullet::Bullet(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, int numFramesInLine, float frameTime, float x, float y, float width, float height, Vector2 targetPosition, BulletType bulletType)
+	:Animation2D(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y,width,height), m_targetPosition(targetPosition), m_bulletType(bulletType)
 	, SelfDestructable(), MoveAble()
+{
+}
+
+Bullet::Bullet(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, int numFramesInLine, float frameTime, float x, float y, float width, float height, std::weak_ptr<BaseObject> target, BulletType bulletType)
+	: Animation2D(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y, width, height), m_target(target),m_bulletType(bulletType)
 {
 }
 
@@ -34,7 +39,7 @@ void Bullet::SetType(BulletType bulletType)
 
 void Bullet::Init(BulletType bulletType)
 {
-	m_time = 0.f;
+	m_currentTimeExist = 0.f;
 	m_currentFrame = 0;
 	m_currentFrameTime = 0;
 	switch (bulletType)
@@ -47,9 +52,9 @@ void Bullet::Init(BulletType bulletType)
 		m_numFramesInLine = 15;
 		m_frameTime = 0.1f;
 
-		m_speed = 500.f;
+		m_speed = 700.f;
 		m_timeExist = 4.f;
-		SetSize(50, 50);
+		SetSize(20, 20);
 		Set2DPosition(200.f, 200.f);
 		break;
 	default:

@@ -8,11 +8,8 @@ public:
 	void AddBullet(std::shared_ptr<Bullet> bullet) {
 		//m_bulletList.push_back(bullet);
 	};
-	std::shared_ptr<Bullet> AddBullet(Vector2 position,Vector2 targetPosition,BulletType bulletType) {
+	std::shared_ptr<Bullet> AddBullet(BulletType bulletType) {
 		std::shared_ptr<Bullet> bullet = getResource(bulletType);
-		//std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>();
-		bullet->SetTargetPosition(targetPosition);
-		bullet->Set2DPosition(position.x, position.y);
 		m_bulletList.push_back(bullet);
 		return bullet;
 	};

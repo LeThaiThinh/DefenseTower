@@ -1,22 +1,22 @@
 #include "Camera.h"
 
 
-Camera::Camera() : m_id(0), m_is2D(false), m_position(Vector3(0.0f, 0.0f, 1.0f)), m_target(Vector3(0.0f, 0.0f, 0.0f)), m_up(Vector3(0.0f, 1.0f, 0.0f)), m_fNear(0.1f), m_fFar(100.0f), m_fSpeed(10.0f), m_isChanged(true)
+Camera::Camera() : m_id(0), m_is2D(false), m_position(Vector3(0.0f, 0.0f, 1.0f)), m_target(Vector3(0.0f, 0.0f, 0.0f)), m_up(Vector3(0.0f, 1.0f, 0.0f)), m_fNear(0.1f), m_fFar(100.0f), m_fSpeed(10.0f), m_isChanged(true), m_moveCamera(Vector3(0,0,0))
 {
 	m_viewMatrix.SetIdentity();
 	m_projectionMatrix.SetIdentity();
 }
 
-Camera::Camera(GLint id, Vector3 position, Vector3 target, Vector3 up, GLfloat fovY, GLfloat fNear, GLfloat fFar, GLfloat fSpeed)
-	: m_id(id), m_is2D(false), m_position(position), m_target(target), m_up(up), m_fNear(fNear), m_fFar(fFar), m_fSpeed(fSpeed), m_isChanged(true)
+Camera::Camera(GLint id, Vector3 position, Vector3 target, Vector3 up, GLfloat fovY, GLfloat fNear, GLfloat fFar, GLfloat fSpeed, Vector3 moveCamera)
+	: m_id(id), m_is2D(false), m_position(position), m_target(target), m_up(up), m_fNear(fNear), m_fFar(fFar), m_fSpeed(fSpeed), m_isChanged(true), m_moveCamera(moveCamera)
 {
 	CalculateWorldMatrix();
 	CalculateViewMatrix();
 	m_projectionMatrix.SetPerspective(1.0f, (GLfloat)Globals::Globals::screenWidth / Globals::Globals::screenHeight, fNear, fFar);
 }
 
-Camera::Camera(GLint id, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat fNear, GLfloat fFar, GLfloat fSpeed)
-	: m_id(id), m_is2D(true), m_position(0.0f, 0.0f, 0.0f), m_target(0.0f, 0.0f, -1.0f), m_up(0.0f, 1.0f, 0.0f), m_fSpeed(fSpeed), m_isChanged(true)
+Camera::Camera(GLint id, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat fNear, GLfloat fFar, GLfloat fSpeed, Vector3 moveCamera)
+	: m_id(id), m_is2D(true), m_position(0.0f, 0.0f, 0.0f), m_target(0.0f, 0.0f, -1.0f), m_up(0.0f, 1.0f, 0.0f), m_fSpeed(fSpeed), m_isChanged(true), m_moveCamera(moveCamera)
 {
 	CalculateWorldMatrix();
 	CalculateViewMatrix();
@@ -115,9 +115,38 @@ Matrix Camera::GetProjecttionMatrix()
 	return m_projectionMatrix;
 }
 
+Vector3 Camera::GetMoveCamera()
+{
+	return m_moveCamera;
+}
+
+void Camera::SetMoveCamera(Vector3 moveCamera)
+{
+	m_moveCamera = moveCamera;
+}
+
 void Camera::Update(GLfloat deltaTime)
 {
-	// Handle camera movement here
+
+		// Handle camera movement here
+	Vector3 zaxis = (m_position - m_target).Normalize();
+	Vector3 xaxis = m_up.Cross(zaxis).Normalize();
+	Vector3 yaxis = (zaxis.Cross(xaxis).Normalize());
+	Vector3 deltaMove = m_moveCamera.Modulate(xaxis + yaxis) * m_fSpeed * deltaTime;
+	m_position += deltaMove;
+	m_target += deltaMove;
+	m_isChanged = true;
+	if (m_position.x  <  -Globals::mapWidth / 2 + Globals::screenWidth / 2 ||
+		m_position.y  <  -Globals::mapHeight / 2 + Globals::screenHeight / 2 ||
+		m_position.x + Globals::screenWidth / 2 >  Globals::mapWidth / 2 ||
+		m_position.y + Globals::screenHeight / 2 >   Globals::mapHeight / 2) {
+		m_position -= deltaMove;
+		m_target -= deltaMove;
+		m_isChanged = false;
+	}
+	CalculateWorldMatrix();
+	CalculateViewMatrix();
+
 }
 
 void Camera::MoveUp(GLfloat deltaTime)
@@ -144,3 +173,4 @@ void Camera::MoveLeft(GLfloat deltaTime)
 	CalculateWorldMatrix();
 	CalculateViewMatrix();
 }
+

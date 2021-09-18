@@ -1,6 +1,5 @@
 #pragma once
 #include "Bullet.h"
-template <class T>
 class BulletPool
 {
 private:

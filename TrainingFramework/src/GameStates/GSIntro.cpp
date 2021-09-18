@@ -23,9 +23,12 @@ void GSIntro::Init()
 	ResourceManagers::GetInstance()->AddTexture("explosion.tga");
 	ResourceManagers::GetInstance()->AddTexture("Bomb2.tga");
 	ResourceManagers::GetInstance()->AddTexture("bg_play1.tga");
+	ResourceManagers::GetInstance()->AddTexture("HellBackground.tga");
+	ResourceManagers::GetInstance()->AddTexture("SnowBackground.tga");
+	ResourceManagers::GetInstance()->AddTexture("AbandonedForestBackground.tga");
+	ResourceManagers::GetInstance()->AddTexture("UndeadBackground.tga");
+
 	/*ResourceManagers::GetInstance()->AddTexture();
-	ResourceManagers::GetInstance()->AddTexture();
-	ResourceManagers::GetInstance()->AddTexture();
 	ResourceManagers::GetInstance()->AddTexture();
 	ResourceManagers::GetInstance()->AddTexture();*/
 

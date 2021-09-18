@@ -4,22 +4,18 @@
 #include "Camera.h"
 #include "Texture.h"
 #include "Application.h"
-Animation2D::Animation2D()
-	:m_currentFrame(0), m_frameTime(0), m_numFrames(0), m_currentFrameTime(0), m_numFramesInLine(0), m_currentColumn(0), m_currentLine(0)
-{
-	Init();
-}
 
-Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y)
-	: Sprite2D(model, shader, texture), m_numFrames(numFrames),m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0)
+
+Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y, float width, float height)
+	: Sprite2D(model, shader, texture,x,y,width,height), m_numFrames(numFrames),m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
 {
-	Set2DPosition(Vector2(x, y));
+	printf("asdasd");
 	Init();
 }
 Animation2D::Animation2D(int numFrames, int numFramesInLine, float frameTime, float x, float y)
 	: m_numFrames(numFrames), m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
 {
-	Set2DPosition(Vector2(x, y));
+	Set2DPosition(x, y);
 	Init();
 }
 Animation2D::~Animation2D()
@@ -28,8 +24,7 @@ Animation2D::~Animation2D()
 
 void Animation2D::Init()
 {
-	SetCamera(Application::GetInstance()->GetCamera());
-	CalculateWorldMatrix();
+	Sprite2D::Init();
 }
 
 void Animation2D::Draw()
