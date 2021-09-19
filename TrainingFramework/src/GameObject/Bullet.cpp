@@ -63,9 +63,6 @@ void Bullet::Init(BulletType bulletType)
 	
 }
 
-void Bullet::Reset()
-{
-}
 
 void Bullet::Update(float deltaTime)
 {

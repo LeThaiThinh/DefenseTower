@@ -16,7 +16,7 @@ void GameButton::SetOnClick(void(*pBtClickFun)())
 
 bool GameButton::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 {
-	bool isHandled = false;
+	m_isHandled = false;
 	if (bIsPressed)
 	{
 		if ((x > m_position.x - m_iWidth / 2) && (x < m_position.x + m_iWidth / 2)
@@ -34,14 +34,19 @@ bool GameButton::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 		{
 			// Only perform click action when the same button was pressed down and released
 			m_pBtClick();
-			isHandled = true;
+			m_isHandled = true;
 		}
 		m_isHolding = false;
 	}
-	return isHandled;
+	return m_isHandled;
 }
 
 bool GameButton::IsHolding()
 {
 	return m_isHolding;
+}
+
+bool GameButton::IsHandled()
+{
+	return m_isHandled;
 }

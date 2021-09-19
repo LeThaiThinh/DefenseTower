@@ -10,7 +10,7 @@
 #include "GameButton.h"
 #include "Bullet.h"
 #include <Application.h>
-
+#include "CheckCollision.h"
 
 
 GSPlay::GSPlay()
@@ -26,12 +26,12 @@ GSPlay::~GSPlay()
 void GSPlay::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("HellBackground.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("Fortress.tga");
 
 	// background
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	m_background = std::make_shared<Sprite2D>(model, shader, texture);
-	m_background->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
+	m_background->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
 	m_background->SetSize(Globals::mapWidth, Globals::mapHeight);
 	// button clode
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_close.tga");
@@ -47,7 +47,9 @@ void GSPlay::Init()
 	m_listButton.push_back(button);
 	//
 	m_mainCharacter = std::make_shared<MainCharacter>();
-	m_mainTower= std::make_shared<MainTower>();
+	TowerPoolManager::GetInstance()->GetInstance()->Add(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f, TowerType::Main);
+	TowerPoolManager::GetInstance()->GetInstance()->Add(20,20,TowerType::Spot);
+	TowerPoolManager::GetInstance()->GetInstance()->Add(500, 20, TowerType::Spot);
 	// score
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
@@ -125,12 +127,12 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 {
 	for (auto button : m_listButton)
 	{
-		if (button->HandleTouchEvents((float)Application::GetInstance()->GetCamera()->GetPosition().x+x, (float)Application::GetInstance()->GetCamera()->GetPosition().y+ y, bIsPressed))
+		if (button->HandleTouchEvents(Application::GetInstance()->GetCamera()->GetPosition().x+x, Application::GetInstance()->GetCamera()->GetPosition().y+ y, bIsPressed))
 		{
 			break;
 		}
 	}
-	m_mainCharacter->HandleTouchEvents((float)Application::GetInstance()->GetCamera()->GetPosition().x+x, (float)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
+	m_mainCharacter->HandleTouchEvents(Application::GetInstance()->GetCamera()->GetPosition().x+x,Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
@@ -173,8 +175,10 @@ void GSPlay::Update(float deltaTime)
 		it->Set2DPosition(Application::GetInstance()->GetCamera()->GetPosition().x+ Globals::screenWidth - 50.f, Application::GetInstance()->GetCamera()->GetPosition().y + 50.f);
 	}
 	m_mainCharacter->Update(deltaTime);
-	m_mainTower->Update(deltaTime);
+	TowerPoolManager::GetInstance()->Update(deltaTime);
+	TowerPoolManager::GetInstance()->Remove();
 	BulletPoolManager::GetInstance()->Update(deltaTime);
+	BulletPoolManager::GetInstance()->RemoveBullet();
 }
 
 void GSPlay::Draw()
@@ -186,12 +190,12 @@ void GSPlay::Draw()
 		it->Draw();
 	}
 	m_mainCharacter->Draw();
-	m_mainTower->Draw();
+	TowerPoolManager::GetInstance()->Draw();
 	BulletPoolManager::GetInstance()->Draw();
 }
 
 void GSPlay::HandleKeyPress(float deltaTime) {
-	if (keyPressed & KEY_MOVE_LEFT) {
+	if (keyPressed & KEY_MOVE_LEFT) {	
 		m_mainCharacter->Move(deltaTime, Vector2(-1, 0));
 	}
 	if (keyPressed & KEY_MOVE_RIGHT) {

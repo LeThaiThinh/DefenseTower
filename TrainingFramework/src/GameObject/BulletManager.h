@@ -4,26 +4,19 @@
 class BulletPoolManager : public CSingleton<BulletPoolManager>
 {
 public:
-
-	void AddBullet(std::shared_ptr<Bullet> bullet) {
-		//m_bulletList.push_back(bullet);
-	};
+	std::list<std::shared_ptr<Bullet>> GetBullet() { return m_bulletList; };
 	std::shared_ptr<Bullet> AddBullet(BulletType bulletType) {
 		std::shared_ptr<Bullet> bullet = getResource(bulletType);
 		m_bulletList.push_back(bullet);
 		return bullet;
 	};
 	void Update(float deltaTime) {
-		MoveAndUpdateBullet(deltaTime);
-		RemoveBullet();
-	};
-	void MoveAndUpdateBullet(float deltaTime) {
 		for (auto bullet : m_bulletList) {
 			bullet->Move(deltaTime);
 			bullet->Update(deltaTime);
 			if (!bullet->IsExist()) {
 				m_removeBulletList.push_back(bullet);
-				GetInstance()->returnResource(bullet);
+				returnResource(bullet);
 			}
 		}
 	};
@@ -54,7 +47,6 @@ public:
 	}
 	void returnResource(std::shared_ptr<Bullet> object)
 	{
-		object->Reset();
 		resources.push_back(object);
 	}
 

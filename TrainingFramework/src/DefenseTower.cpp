@@ -5,8 +5,8 @@
 
 int Globals::screenWidth = 960;
 int Globals::screenHeight = 960;
-int Globals::mapWidth = 1920;
-int Globals::mapHeight = 1920;
+int Globals::mapWidth = 1500;
+int Globals::mapHeight = 1200;
 int Globals::borderMoveCam = 50;
 
 

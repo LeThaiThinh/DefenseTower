@@ -10,8 +10,10 @@ public:
 	void	SetOnClick(void	(*pBtClick)());
 	bool	HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
 	bool	IsHolding();
+	bool	IsHandled();
 
 private:
 	void	(*m_pBtClick)();
 	bool	m_isHolding;
+	bool	m_isHandled;
 };

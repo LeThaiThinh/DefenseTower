@@ -31,6 +31,18 @@
     <Filter Include="TrainingFramework\src\GameObject\Base">
       <UniqueIdentifier>{4eab6c16-55af-46c5-b99d-9675c4d6b871}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower">
+      <UniqueIdentifier>{bc91a8c1-64cc-469e-8c83-d633ba17a55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Enemy\FlyEnemy">
+      <UniqueIdentifier>{f08ede3f-4aa6-4558-bc43-0ea03d276425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Enemy\GroundEnemy">
+      <UniqueIdentifier>{7cf4f0a9-fc33-4340-b947-18fa3acd0258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Tower\MoveThroughAbleTower">
+      <UniqueIdentifier>{7a203c4a-f945-4e8b-baea-4c85e912cb9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -96,14 +108,32 @@
     <ClCompile Include="src\GameObject\MainCharacter.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\MainTower.cpp">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    <ClCompile Include="src\GameObject\TowerOne.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\GroundEnemy.cpp">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    <ClCompile Include="src\GameObject\MainTower.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\UnMoveThroughAbleTower.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\TowerTwo.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\FlyEnemy.cpp">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+      <Filter>TrainingFramework\src\GameObject\Enemy\FlyEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\GroundEnemy.cpp">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\CheckCollision.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\SpotTower.cpp">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\TowerOption.cpp">
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +164,7 @@
     <ClInclude Include="src\GameManager\ResourceManagers.h">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameManager\ObjectPool.h">
+    <ClInclude Include="src\GameManager\ObjectPoolManager.h">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\BaseObject.h">
@@ -194,38 +224,50 @@
     <ClInclude Include="src\GameObject\Animation2D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BulletPool.h">
-      <Filter>TrainingFramework\src\GameObject\Other</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEnemy.h">
       <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="BaseTower.h">
       <Filter>TrainingFramework\src\GameObject\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\MainTower.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\TowerManager.h">
       <Filter>TrainingFramework\src\GameObject\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\UnMoveThroughAbleTower.h">
+    <ClInclude Include="src\GameObject\EnemyManager.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\PoolManager.h">
       <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TowerOne.h">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MainTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TowerTwo.h">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\MoveThroughAbleTower.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+      <Filter>TrainingFramework\src\GameObject\Tower\MoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Enemy.h">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    <ClInclude Include="src\GameObject\UnMoveThroughAbleTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\TowerPool.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\FlyEnemny.h">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    <ClInclude Include="src\GameObject\FlyEnemy.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy\FlyEnemy</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\GroundEnemy.h">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\CheckCollision.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\SpotTower.h">
+      <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\TowerOption.h">
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

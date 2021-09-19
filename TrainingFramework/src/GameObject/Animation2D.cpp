@@ -9,7 +9,6 @@
 Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y, float width, float height)
 	: Sprite2D(model, shader, texture,x,y,width,height), m_numFrames(numFrames),m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
 {
-	printf("asdasd");
 	Init();
 }
 Animation2D::Animation2D(int numFrames, int numFramesInLine, float frameTime, float x, float y)

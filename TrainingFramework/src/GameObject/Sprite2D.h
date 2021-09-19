@@ -23,5 +23,7 @@ public:
 	void		Set2DPosition(GLfloat x, GLfloat y);
 	void		Set2DPosition(Vector2 position);
 	void		SetSize(GLint width, GLint height);
+	int			GetWidtd() { return m_iWidth; }
+	int			GetHeight(){ return m_iHeight; }
 };
 

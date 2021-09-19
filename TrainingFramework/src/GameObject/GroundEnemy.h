@@ -1,5 +1,6 @@
 #pragma once
 #include "../BaseEnemy.h"
+#include "../../BaseTower.h"
 class GroundEnemy:public BaseEnemy
 {
 public:
@@ -8,10 +9,10 @@ public:
 		float x, float y, float width, float height, float speed, float range, float attackSpeed, float hitPoint)
 		:BaseEnemy(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y, width, height, speed, range, attackSpeed, hitPoint){}
 	~GroundEnemy(){}
-	std::shared_ptr<BaseObject> FindTarget() override ;
-	void Move() ;
-	void Attack() ;
-	void Update() ;
+	std::shared_ptr<AttackAble> FindTarget() override ;
+	void Move() override;
+	void Attack() override;
+	void Update(float deltaTim) override;
 private:
 
 };

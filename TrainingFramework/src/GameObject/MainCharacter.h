@@ -6,6 +6,7 @@
 #include "../GameObject/AbleToAttack.h"
 #include "../GameManager/ResourceManagers.h"
 #include <BulletManager.h>
+#include <UnMoveThroughAbleTower.h>
 
 class MainCharacter
 	:public MoveAble,
@@ -25,7 +26,7 @@ public:
 	void AttackLinear();
 	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
 	void AttackCircular() {};
-
+	bool CheckCollide(GLfloat deltaTime);
 private:
 	Vector2 m_targetPosition;
 };

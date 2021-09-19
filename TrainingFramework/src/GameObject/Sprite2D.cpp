@@ -26,7 +26,6 @@ Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader,
 Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float x, float y, float width, float height)
 	: BaseObject(-1, model, shader, texture,x,y), m_iWidth(width), m_iHeight(height), m_vboId(0)
 {
-	printf("qwe");
 	SetSize(width, height);
 	Init();
 }
