@@ -18,19 +18,32 @@ void GSIntro::Init()
 
 	m_logo = std::make_shared<Sprite2D>(model, shader, texture);
 	m_logo->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
-	m_logo->SetSize(150, 150);
+	m_logo->SetISize(150, 150);
+	ResourceManagers::GetInstance()->AddFont("arialbd.ttf");
 	ResourceManagers::GetInstance()->AddShader("AnimationShader");
-	ResourceManagers::GetInstance()->AddTexture("explosion.tga");
-	ResourceManagers::GetInstance()->AddTexture("Bomb2.tga");
-	ResourceManagers::GetInstance()->AddTexture("bg_play1.tga");
 	ResourceManagers::GetInstance()->AddTexture("HellBackground.tga");
 	ResourceManagers::GetInstance()->AddTexture("SnowBackground.tga");
 	ResourceManagers::GetInstance()->AddTexture("AbandonedForestBackground.tga");
 	ResourceManagers::GetInstance()->AddTexture("UndeadBackground.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl4.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl5.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl6.tga");
+	ResourceManagers::GetInstance()->AddTexture("Hitpoint.tga");
+	ResourceManagers::GetInstance()->AddTexture("Mana.tga");
+	ResourceManagers::GetInstance()->AddTexture("Grey.tga");
 
-	/*ResourceManagers::GetInstance()->AddTexture();
-	ResourceManagers::GetInstance()->AddTexture();
-	ResourceManagers::GetInstance()->AddTexture();*/
 
 }
 

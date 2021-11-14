@@ -1,17 +1,19 @@
 #pragma once
 #include <UnMoveThroughAbleTower.h>
-#include "ObjectPoolManager.h"
 class TowerOne
 	:public UnMoveThroughAbleTower
 {
 public:
 	TowerOne();
-	TowerOne(float x,float y);
+	TowerOne(float x, float y);
 	~TowerOne() {};
 
 	void	Attack();
-	void	Reset();
+	void	Reset() override;
+	void	Upgrade() override;
+	void	LocateOption();
 	void	Update(GLfloat deltatime);
+
 private:
 
 };

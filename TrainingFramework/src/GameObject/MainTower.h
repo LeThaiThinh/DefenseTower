@@ -1,14 +1,20 @@
 #pragma once
 #include "UnMoveThroughAbleTower.h"
+#include <TowerOption.h>
+
 class UnMoveThroughAbleTower;
-class MainTower:public UnMoveThroughAbleTower
+class MainTower :public UnMoveThroughAbleTower
 {
 public:
 	MainTower();
+	MainTower(float x, float y);
 	~MainTower() {};
-	void	Attack() ;
-	void	Reset() ;
+	void	Attack();
+	void	LocateOption();
+	void	Reset();
 	void	Update(GLfloat deltatime);
+	void	Upgrade() override;
+
 private:
 
 };

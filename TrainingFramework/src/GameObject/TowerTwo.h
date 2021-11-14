@@ -1,6 +1,5 @@
 #pragma once
 #include <UnMoveThroughAbleTower.h>
-#include "ObjectPoolManager.h"
 class TowerTwo
 	:public UnMoveThroughAbleTower
 {
@@ -10,8 +9,11 @@ public:
 	~TowerTwo() {};
 
 	void	Attack();
-	void	Reset();
+	void	Reset() override;
+	void	LocateOption();
 	void	Update(GLfloat deltatime);
+	void	Upgrade() override;
+
 private:
 
 };

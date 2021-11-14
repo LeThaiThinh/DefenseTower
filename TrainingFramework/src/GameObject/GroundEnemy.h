@@ -1,18 +1,20 @@
 #pragma once
 #include "../BaseEnemy.h"
-#include "../../BaseTower.h"
-class GroundEnemy:public BaseEnemy
+class GroundEnemy :public BaseEnemy
 {
 public:
-	GroundEnemy():BaseEnemy(){}
+	GroundEnemy() :BaseEnemy() {}
 	GroundEnemy(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrame, int numFramesInLine, float frameTime,
-		float x, float y, float width, float height, float speed, float range, float attackSpeed, float hitPoint)
-		:BaseEnemy(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y, width, height, speed, range, attackSpeed, hitPoint){}
-	~GroundEnemy(){}
-	std::shared_ptr<AttackAble> FindTarget() override ;
-	void Move() override;
-	void Attack() override;
-	void Update(float deltaTim) override;
-private:
+		float x, float y, int iwidth, int iheight, int width, int height, float speed, float range, float attackSpeed, float damage, float hitPoint, EnemyType type)
+		:BaseEnemy(model, shader, texture, numFrame, numFramesInLine, frameTime, x, y, iwidth, iheight, width, height, speed, range, attackSpeed, damage, hitPoint, type) {}
+	~GroundEnemy() {}
 
+	virtual void Attack() override;
+
+	void FindPath();
+	std::shared_ptr<UnMoveThroughAbleTower> FindTarget() override;
+	void Update(float deltaTim) override;
+	bool CheckCollideTarget(GLfloat deltaTime);
+protected:
+	Vector3 m_start;
 };

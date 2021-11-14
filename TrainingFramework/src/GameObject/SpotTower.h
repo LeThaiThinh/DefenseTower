@@ -1,14 +1,17 @@
 #pragma once
-#include <UnMoveThroughAbleTower.h>
-#include "ObjectPoolManager.h"
+#include "../BaseDefensive.h"
 class SpotTower
-	:public BaseTower
+	:public BaseDefensive
 {
 public:
 	SpotTower();
-	~SpotTower() {};
-	void	Attack(){}
+	SpotTower(float x, float y);
+	~SpotTower();
+	void	Reset();
+	void	Attack() {}
+	void	LocateOption();
 	void	Update(GLfloat deltatime);
+
 private:
 
 };

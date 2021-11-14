@@ -20,13 +20,14 @@ public:
 	~MainCharacter();
 	void Init();
 	void Move(GLfloat deltatime);
-	void Move(GLfloat deltatime, Vector2 vector2);
+	void Move(GLfloat deltatime, Vector3 vector);
 	void Update(GLfloat deltatime);
 	void Attack() override;
 	void AttackLinear();
 	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
 	void AttackCircular() {};
 	bool CheckCollide(GLfloat deltaTime);
+	void Draw() { Animation2D::Draw(); AttackAble::Draw(); };
 private:
-	Vector2 m_targetPosition;
+	Vector3 m_targetPosition;
 };

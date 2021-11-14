@@ -6,8 +6,8 @@
 #include "Application.h"
 
 
-Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y, float width, float height)
-	: Sprite2D(model, shader, texture,x,y,width,height), m_numFrames(numFrames),m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
+Animation2D::Animation2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int numFrames, int numFramesInLine, float frameTime, float x, float y, int iwidth, int iheight, int width, int height)
+	: Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), m_numFrames(numFrames), m_numFramesInLine(numFramesInLine), m_frameTime(frameTime), m_currentFrame(0), m_currentFrameTime(0), m_currentColumn(0), m_currentLine(0)
 {
 	Init();
 }
@@ -124,12 +124,12 @@ void Animation2D::Update(GLfloat deltatime)
 	m_currentFrameTime += deltatime;
 	if (m_currentFrameTime >= m_frameTime) {
 		m_currentFrame++;
-		m_currentColumn = (m_currentFrame % m_numFramesInLine);
-		m_currentLine = (m_currentFrame / m_numFramesInLine);
 		if (m_currentFrame >= m_numFrames) {
 			m_currentFrame = 0;
 		}
 		m_currentFrameTime -= m_frameTime;
 	}
+	m_currentColumn = (m_currentFrame % m_numFramesInLine);
+	m_currentLine = (m_currentFrame / m_numFramesInLine);
 }
 

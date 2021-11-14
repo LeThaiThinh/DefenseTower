@@ -1,13 +1,18 @@
 #include "FlyEnemy.h"
 #include "BaseObject.h"
 
-std::shared_ptr<AttackAble> FlyEnemy::FindTarget()
+std::shared_ptr<UnMoveThroughAbleTower> FlyEnemy::FindTarget()
 {
-	return std::make_shared<AttackAble>();
-}
-
-void FlyEnemy::Move()
-{
+	std::shared_ptr<UnMoveThroughAbleTower> towerMin;
+	for (auto tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
+		if (!towerMin)
+			towerMin = std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
+		else
+			if ((tower->GetPosition() - m_position).Length() < (towerMin->GetPosition() - m_position).Length())
+				towerMin = std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
+	}
+	SetDirection(towerMin->GetPosition() - m_position);
+	return towerMin;
 }
 
 void FlyEnemy::Attack()
@@ -16,10 +21,9 @@ void FlyEnemy::Attack()
 
 void FlyEnemy::Update(float deltaTime)
 {
-	Animation2D::Update(deltaTime);
-	AbleToAttack::Update(deltaTime);
-	m_currentTimeFindTarget += deltaTime;
-	if (m_currentTimeFindTarget >= timeFindTarget) {
-		FindTarget();
+	BaseEnemy::Update(deltaTime);
+	if (std::dynamic_pointer_cast<UnMoveThroughAbleTower>(m_target)->GetHitPoint() <= 0) {
+		m_target = nullptr;
 	}
+	Move(deltaTime);
 }

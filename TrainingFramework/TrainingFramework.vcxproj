@@ -304,6 +304,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="F:\DefenseTower\TrainingFramework\Buffalo.cpp" />
+    <ClCompile Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\GameManager\ResourceManagers.cpp" />
     <ClCompile Include="src\GameObject\Animation2D.cpp" />
@@ -338,6 +340,11 @@
   <ItemGroup>
     <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="BaseTower.h" />
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\Buffalo.h" />
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\Coin.h" />
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\DefensiveManager.h" />
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\EnemyManager.h" />
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\GameManager\ObjectPoolManager.h" />

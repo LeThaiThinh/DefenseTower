@@ -1,8 +1,8 @@
 #include "GSMenu.h"
 #include "Camera.h"
 
-GSMenu::GSMenu() : GameStateBase(StateType::STATE_MENU), 
-	m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{}), m_textGameName(nullptr)
+GSMenu::GSMenu() : GameStateBase(StateType::STATE_MENU),
+m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{}), m_textGameName(nullptr)
 {
 }
 
@@ -22,13 +22,13 @@ void GSMenu::Init()
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	m_background = std::make_shared<Sprite2D>(model, shader, texture);
 	m_background->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
-	m_background->SetSize(Globals::screenWidth, Globals::screenHeight);
+	m_background->SetISize(Globals::screenWidth, Globals::screenHeight);
 
 	// play button
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_play.tga");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
-	button->SetSize(200, 200);
+	button->SetISize(200, 200);
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
 		});
@@ -38,7 +38,7 @@ void GSMenu::Init()
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_close.tga");
 	button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(Globals::screenWidth - 50.f, 50.f);
-	button->SetSize(50, 50);
+	button->SetISize(50, 50);
 	button->SetOnClick([]() {
 		exit(0);
 		});

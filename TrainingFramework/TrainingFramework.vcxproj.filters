@@ -43,6 +43,9 @@
     <Filter Include="TrainingFramework\src\GameObject\Tower\MoveThroughAbleTower">
       <UniqueIdentifier>{7a203c4a-f945-4e8b-baea-4c85e912cb9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Resourse">
+      <UniqueIdentifier>{0c774144-e26b-4dba-ae7a-ed9827b92c5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -134,6 +137,12 @@
     </ClCompile>
     <ClCompile Include="src\GameObject\TowerOption.cpp">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.cpp">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="F:\DefenseTower\TrainingFramework\Buffalo.cpp">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +277,21 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\TowerOption.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\DefensiveManager.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\EnemyManager.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\Coin.h">
+      <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
+    </ClInclude>
+    <ClInclude Include="F:\DefenseTower\TrainingFramework\Buffalo.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,17 +1,22 @@
 #pragma once
-#include "../BaseTower.h"
+#include "../BaseDefensive.h"
+
 class UnMoveThroughAbleTower :
-	public BaseTower,
-	public AttackAble
+	public BaseDefensive
 {
 public:
-	UnMoveThroughAbleTower() :BaseTower(),AttackAble() {};
-	UnMoveThroughAbleTower(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,  float x, float y, float width, float height, float range, float attackSpeed, float hitpoint,int level )
-		:BaseTower(model, shader, texture, x, y, width, height, range, attackSpeed, level),AttackAble(hitpoint) {}
+	UnMoveThroughAbleTower() :BaseDefensive() {};
+	UnMoveThroughAbleTower(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
+		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float hitpoint, int level, TowerType type, int maxlevel)
+		:BaseDefensive(model, shader, texture, x, y, iwidth, iheight, width, height, range, attackSpeed, damage, level, type, maxlevel, hitpoint, hitpoint) {}
 	~UnMoveThroughAbleTower() {};
 
-	void	Attack();
-	void	Update(GLfloat deltatime);
-private:
+	std::shared_ptr<BaseEnemy> FindEnemyTarget();
 
+	virtual	void	Attack();
+	virtual void	Update(GLfloat deltatime);
+	virtual	void	Reset() override;
+	virtual	void	Upgrade() { BaseDefensive::Upgrade(); }
+
+protected:
 };

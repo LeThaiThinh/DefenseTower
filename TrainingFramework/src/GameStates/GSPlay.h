@@ -3,8 +3,8 @@
 #include "MainCharacter.h"
 #include "BulletManager.h"
 #include "MainTower.h"
-#include "TowerManager.h"
-
+#include "DefensiveManager.h"
+#include "EnemyManager.h"
 class Sprite2D;
 class Sprite3D;
 class Text;
@@ -29,16 +29,15 @@ public:
 	void	HandleMouseMoveEvents(int x, int y) override;
 	void	Update(float deltaTime) override;
 	void	Draw() override;
+	void	HandleKeyPress(float deltaTime);
 
-	void HandleKeyPress(float deltaTime);
 
 private:
 	std::shared_ptr<Sprite2D>	m_background;
-	std::shared_ptr<Text>		m_score;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::shared_ptr <MainCharacter> m_mainCharacter;
-	std::shared_ptr <MainTower> m_mainTower;
-	std::shared_ptr <BaseObject> m_controller;
-
+	std::shared_ptr <MainTower>		m_mainTower;
+	std::shared_ptr <BaseObject>	m_controller;
+	float						m_time;
 };
 

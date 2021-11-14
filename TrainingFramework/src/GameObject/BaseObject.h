@@ -11,7 +11,8 @@ enum class ObjectType
 	Ally,
 	Enemy,
 };
-class BaseObject
+class BaseObject :
+	public std::enable_shared_from_this<BaseObject>
 {
 public:
 	BaseObject()

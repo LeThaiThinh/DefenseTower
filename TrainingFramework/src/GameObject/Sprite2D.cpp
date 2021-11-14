@@ -23,9 +23,18 @@ Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader,
 	Init();
 }
 
-Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float x, float y, float width, float height)
-	: BaseObject(-1, model, shader, texture,x,y), m_iWidth(width), m_iHeight(height), m_vboId(0)
+Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, int iwidth, int iheight)
+	: BaseObject(-1, model, shader, texture), m_iWidth(iwidth), m_iHeight(iheight), m_vboId(0)
 {
+	SetISize(iwidth, iheight);
+	Init();
+}
+
+Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float x, float y, int iwidth, int iheight, int width, int height)
+	: BaseObject(-1, model, shader, texture), m_iWidth(width), m_iHeight(height), m_vboId(0), m_width(width), m_height(height)
+{
+	Set2DPosition(x, y);
+	SetISize(iwidth, iheight);
 	SetSize(width, height);
 	Init();
 }
@@ -111,19 +120,28 @@ void Sprite2D::Update(GLfloat deltatime)
 void Sprite2D::Set2DPosition(GLfloat x, GLfloat y)
 {
 	m_position = Vector3(x, y, 0.0f);
+	m_centerPosition = Vector3(x - m_iWidth / 2 + m_width / 2, y + m_iHeight / 2 - m_height / 2, 0.0f);
 	CalculateWorldMatrix();
 }
 
 void Sprite2D::Set2DPosition(Vector2 position)
 {
 	m_position = Vector3(position.x, position.y, 0.0f);
+	m_centerPosition = Vector3(m_position.x - m_iWidth / 2 + m_width / 2, m_position.y + m_iHeight / 2 - m_height / 2, 0.0f);
 	CalculateWorldMatrix();
 }
 
-void Sprite2D::SetSize(GLint width, GLint height)
+void Sprite2D::SetISize(GLint width, GLint height)
 {
 	m_iWidth = width;
 	m_iHeight = height;
 	m_scale = Vector3((GLfloat)m_iWidth, (GLfloat)m_iHeight, 1.0f);
 	CalculateWorldMatrix();
+}
+
+void Sprite2D::SetSize(GLint width, GLint height)
+{
+	m_width = width;
+	m_height = height;
+	m_centerPosition = m_position; //Vector3(m_position.x - m_iWidth / 2 + m_width/2, m_position.y + m_iHeight / 2 - m_height/2, 0);
 }

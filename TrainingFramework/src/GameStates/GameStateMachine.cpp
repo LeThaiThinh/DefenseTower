@@ -39,7 +39,6 @@ void GameStateMachine::PushState(StateType state)
 	if (!m_StateStack.empty()) {
 		m_StateStack.back()->Pause();
 	}
-
 	m_pNextState = nextState;
 }
 
@@ -63,7 +62,8 @@ void  GameStateMachine::PerformStateChange()
 	if (m_pNextState != 0)
 	{
 		if (m_StateStack.empty() == false) {
-			if(m_pActiveState->GetGameStateType() == StateType::STATE_INTRO)
+
+			if (m_pActiveState->GetGameStateType() == StateType::STATE_INTRO)
 			{
 				// Cleanup Intro state
 				m_pActiveState->Exit();
