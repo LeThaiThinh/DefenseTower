@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "../../BaseEnemy.h"
+#include "BaseEnemy.h"
 #include "BulletManager.h"
 #include "EnemyManager.h"
 #include "DefensiveManager.h"
@@ -55,7 +55,7 @@ void Bullet::Move(GLfloat deltatime)
 		}
 	}
 	break;
-	case BulletType::Target_TowerOne:
+	case BulletType::Target_Tower_One:
 	{
 		std::shared_ptr<BaseEnemy> groundEnemy = CheckCollideGroundEnemy(deltatime);
 		std::shared_ptr<BaseEnemy> flyEnemy = CheckCollideFlyEnemy(deltatime);
@@ -86,15 +86,15 @@ void Bullet::Move(GLfloat deltatime)
 		break;
 	case BulletType::Chain:
 		break;
-	case BulletType::Target_Enemy:
+	case BulletType::Target_Enemy_Two:
 	{
-		std::shared_ptr<UnMoveThroughAbleTower> tower = CheckCollideTower(deltatime);
+		std::shared_ptr<UnMoveThroughAbleTower> tower = CheckCollideTarget(deltatime);
 		if (!tower) {
 			if (m_target.lock())
 				SetDirection((m_target.lock()->GetPosition() - m_source.lock()->GetPosition()).Normalize());
 			Set2DPosition(m_position.x + deltatime * m_speed * m_direction.x, m_position.y + deltatime * m_speed * m_direction.y);
 		}
-		else if (tower) {
+		else {
 			tower->TakeDamage(m_damage);
 			if (tower->GetHitPoint() <= 0) {
 				DefensivePoolManager::GetInstance()->Add(m_target.lock()->GetPosition().x, m_target.lock()->GetPosition().y, TowerType::Spot);
@@ -118,12 +118,14 @@ void Bullet::Init(BulletType bulletType, std::shared_ptr<BaseObject> target, Vec
 	m_currentFrameTime = 0.f;
 	m_bulletType = bulletType;
 	m_damage = std::dynamic_pointer_cast<AbleToAttack>(source)->GetDamage();
+
 	switch (bulletType)
 	{
 	case BulletType::Linear_MainCharacter:
 	{
 		SetModels(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"));
-		SetTexture(ResourceManagers::GetInstance()->GetTexture("ElectricBullet.tga"));
+		//SetTexture(ResourceManagers::GetInstance()->GetTexture("ElectricBullet.tga"));
+		SetTexture(ResourceManagers::GetInstance()->GetTexture("Bullet/bullet_main_character.tga"));
 		SetShaders(ResourceManagers::GetInstance()->GetShader("AnimationShader"));
 		m_numFrames = 6;
 		m_numFramesInLine = 6;
@@ -131,15 +133,20 @@ void Bullet::Init(BulletType bulletType, std::shared_ptr<BaseObject> target, Vec
 
 		m_source = source;
 		m_targetPosition = targetPosition;
-		SetDirection((targetPosition - m_source.lock()->GetPosition()).Normalize());
+		if ((targetPosition - source->GetPosition()).x >= 0) {
+			SetPosition(source->GetPosition() + std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		else {
+			SetPosition(source->GetPosition() - std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		SetDirection((targetPosition - m_position).Normalize());
 		m_speed = 300.f;
-		m_timeExist = 3.f;
-		SetISize(20, 20);
+		m_timeExist = 1.f;
+		SetISize(30, 20);
 		SetSize(20, 20);
-		SetPosition(source->GetPosition());
 	}
 	break;
-	case BulletType::Target_TowerOne:
+	case BulletType::Target_Tower_One:
 	{
 		SetModels(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"));
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("ElectricBullet.tga"));
@@ -150,35 +157,54 @@ void Bullet::Init(BulletType bulletType, std::shared_ptr<BaseObject> target, Vec
 
 		m_source = source;
 		m_target = target;
+		if ((target->GetPosition() - source->GetPosition()).x >= 0) {
+			SetPosition(source->GetPosition() + std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		else {
+			SetPosition(source->GetPosition() - std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		SetDirection((target->GetPosition() - m_position).Normalize());
 		m_speed = 300.f;
 		m_timeExist = 2.f;
 		SetISize(20, 20);
 		SetSize(20, 20);
-		SetPosition(source->GetPosition());
 	}
 	break;
-	case BulletType::Target_Enemy:
+	case BulletType::Target_Enemy_Two:
 	{
 		SetModels(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"));
-		SetTexture(ResourceManagers::GetInstance()->GetTexture("ElectricBullet.tga"));
+		SetTexture(ResourceManagers::GetInstance()->GetTexture("Bullet/enemy_two_bullet.tga"));
 		SetShaders(ResourceManagers::GetInstance()->GetShader("AnimationShader"));
-		m_numFrames = 6;
-		m_numFramesInLine = 6;
-		m_frameTime = 0.1f;
+		m_numFrames = 1;
+		m_numFramesInLine = 1;
+		m_frameTime = INFINITY;
 
 		m_source = source;
 		m_target = target;
+		if ((target->GetPosition() - source->GetPosition()).x >= 0) {
+			SetPosition(source->GetPosition() + std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		else {
+			SetPosition(source->GetPosition() - std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		SetDirection((target->GetPosition() - m_position).Normalize());
 		m_speed = 300.f;
 		m_timeExist = 2.f;
-		SetISize(20, 20);
+		SetISize(10, 10);
 		SetSize(20, 20);
-		SetPosition(source->GetPosition());
 	}
 	break;
 	default:
 		break;
 	}
+	//m_rotation = Vector3(0, m_direction.y,0).Cross(Vector3(m_direction.x, 0, 0));
 
+	if (m_direction.y > 0) {
+		m_rotation = Vector3(0, 0, acos(m_direction.x));
+	}
+	else {
+		m_rotation = Vector3(0, 0, -acos(m_direction.x));
+	}
 }
 
 
@@ -190,9 +216,9 @@ void Bullet::Update(float deltaTime)
 
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideGroundEnemy(GLfloat deltaTime)
 {
-	for (auto groundEnemy : EnemyPoolManager::GetInstance()->groundEnemyList) {
-		if ((groundEnemy->GetCenterPosition().x + groundEnemy->GetWidth() / 3 > m_position.x - m_width / 3 + deltaTime * m_speed * m_direction.x) && (groundEnemy->GetCenterPosition().x - groundEnemy->GetWidth() / 3 < m_position.x + m_width / 3 + deltaTime * m_speed * m_direction.x)
-			&& (groundEnemy->GetCenterPosition().y + groundEnemy->GetIHeight() / 3 > m_position.y - m_height / 3 + deltaTime * m_speed * m_direction.y) && (groundEnemy->GetCenterPosition().y - groundEnemy->GetHeight() / 3 < m_position.y + m_height / 3 + deltaTime * m_speed * m_direction.y))
+	for (auto &groundEnemy : EnemyPoolManager::GetInstance()->groundEnemyList) {
+		if ((groundEnemy->GetCenterPosition().x + groundEnemy->GetWidth() / 3.f > m_position.x - m_width / 3.f - deltaTime * m_speed * m_direction.x) && (groundEnemy->GetCenterPosition().x - groundEnemy->GetWidth() / 3.f < m_position.x + m_width / 3.f + deltaTime * m_speed * m_direction.x)
+			&& (groundEnemy->GetCenterPosition().y + groundEnemy->GetIHeight() / 3.f > m_position.y - m_height / 3.f - deltaTime * m_speed * m_direction.y) && (groundEnemy->GetCenterPosition().y - groundEnemy->GetHeight() / 3.f < m_position.y + m_height / 3.f + deltaTime * m_speed * m_direction.y))
 		{
 			return groundEnemy;
 		}
@@ -201,9 +227,9 @@ std::shared_ptr<BaseEnemy> Bullet::CheckCollideGroundEnemy(GLfloat deltaTime)
 }
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideFlyEnemy(GLfloat deltaTime)
 {
-	for (auto flyEnemy : EnemyPoolManager::GetInstance()->flyEnemyList) {
-		if ((flyEnemy->GetCenterPosition().x + flyEnemy->GetWidth() / 3 > m_position.x - m_width / 3 + deltaTime * m_speed * m_direction.x) && (flyEnemy->GetCenterPosition().x - flyEnemy->GetWidth() / 3 < m_position.x + m_width / 3 + deltaTime * m_speed * m_direction.x)
-			&& (flyEnemy->GetCenterPosition().y + flyEnemy->GetIHeight() / 3 > m_position.y - m_height / 3 + deltaTime * m_speed * m_direction.y) && (flyEnemy->GetCenterPosition().y - flyEnemy->GetHeight() / 3 < m_position.y + m_height / 3 + deltaTime * m_speed * m_direction.y))
+	for (auto &flyEnemy : EnemyPoolManager::GetInstance()->flyEnemyList) {
+		if ((flyEnemy->GetCenterPosition().x + flyEnemy->GetWidth() / 3.f > m_position.x - m_width / 3.f - deltaTime * m_speed * m_direction.x) && (flyEnemy->GetCenterPosition().x - flyEnemy->GetWidth() / 3.f < m_position.x + m_width / 3.f + deltaTime * m_speed * m_direction.x)
+			&& (flyEnemy->GetCenterPosition().y + flyEnemy->GetIHeight() / 3.f > m_position.y - m_height / 3.f - deltaTime * m_speed * m_direction.y) && (flyEnemy->GetCenterPosition().y - flyEnemy->GetHeight() / 3.f < m_position.y + m_height / 3.f + deltaTime * m_speed * m_direction.y))
 		{
 			return flyEnemy;
 		}
@@ -213,12 +239,23 @@ std::shared_ptr<BaseEnemy> Bullet::CheckCollideFlyEnemy(GLfloat deltaTime)
 
 std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTower(GLfloat deltaTime)
 {
-	for (auto tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
-		if ((tower->GetCenterPosition().x + tower->GetWidth() / 3 > m_position.x - m_width / 3 + deltaTime * m_speed * m_direction.x) && (tower->GetCenterPosition().x - tower->GetWidth() / 3 < m_position.x + m_width / 3 + deltaTime * m_speed * m_direction.x)
-			&& (tower->GetCenterPosition().y + tower->GetIHeight() / 3 > m_position.y - m_height / 3 + deltaTime * m_speed * m_direction.y) && (tower->GetCenterPosition().y - tower->GetHeight() / 3 < m_position.y + m_height / 3 + deltaTime * m_speed * m_direction.y))
+	for (auto &tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
+		if ((tower->GetCenterPosition().x + tower->GetWidth() / 3.f > m_position.x - m_width / 3.f - deltaTime * m_speed * m_direction.x) && (tower->GetCenterPosition().x - tower->GetWidth() / 3.f < m_position.x + m_width / 3.f + deltaTime * m_speed * m_direction.x)
+			&& (tower->GetCenterPosition().y + tower->GetIHeight() / 3.f > m_position.y - m_height / 3.f - deltaTime * m_speed * m_direction.y) && (tower->GetCenterPosition().y - tower->GetHeight() / 3.f < m_position.y + m_height / 3.f + deltaTime * m_speed * m_direction.y))
 		{
 			return std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
 		}
+	}
+	return nullptr;
+}
+
+std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTarget(GLfloat deltaTime)
+{
+	std::shared_ptr<UnMoveThroughAbleTower> tower = std::static_pointer_cast<UnMoveThroughAbleTower>(m_target.lock());
+	if ((tower->GetCenterPosition().x + tower->GetWidth() / 3.f > m_position.x - m_width / 3.f - deltaTime * m_speed * m_direction.x) && (tower->GetCenterPosition().x - tower->GetWidth() / 3.f < m_position.x + m_width / 3.f + deltaTime * m_speed * m_direction.x)
+		&& (tower->GetCenterPosition().y + tower->GetIHeight() / 3.f > m_position.y - m_height / 3.f - deltaTime * m_speed * m_direction.y) && (tower->GetCenterPosition().y - tower->GetHeight() / 3.f < m_position.y + m_height / 3.f + deltaTime * m_speed * m_direction.y))
+	{
+		return std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
 	}
 	return nullptr;
 }

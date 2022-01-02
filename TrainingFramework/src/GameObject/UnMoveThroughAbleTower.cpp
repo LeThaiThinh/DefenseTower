@@ -1,12 +1,11 @@
 #include "UnMoveThroughAbleTower.h"
 #include "../Application.h"
-#include "../BaseEnemy.h"
 #include "DefensiveManager.h"
 #include "EnemyManager.h"
 std::shared_ptr<BaseEnemy> UnMoveThroughAbleTower::FindEnemyTarget() {
 	std::shared_ptr<BaseEnemy> enemyMin;
 	float distanceMin = 10000;
-	for (auto enemy : DefensivePoolManager::GetInstance()->mainTower->GetEnemyIsAttacking())
+	for (auto &enemy : DefensivePoolManager::GetInstance()->mainTower->GetEnemyIsAttacking())
 	{
 		std::shared_ptr<BaseEnemy> e = std::dynamic_pointer_cast<BaseEnemy>(enemy.lock());
 		if ((e->GetCenterPosition() - GetPosition()).Length() <= m_range) {
@@ -14,14 +13,14 @@ std::shared_ptr<BaseEnemy> UnMoveThroughAbleTower::FindEnemyTarget() {
 			return e;
 		}
 	}
-	for (auto enemy : m_attackedList) {
+	for (auto &enemy : m_attackedList) {
 		std::shared_ptr<BaseEnemy> e = std::dynamic_pointer_cast<BaseEnemy>(enemy.lock());
 		if ((e->GetCenterPosition() - GetPosition()).Length() <= m_range) {
 			m_target = enemy.lock();
 			return e;
 		}
 	}
-	for (auto enemy : EnemyPoolManager::GetInstance()->groundEnemyList) {
+	for (auto &enemy : EnemyPoolManager::GetInstance()->groundEnemyList) {
 		float distance = (enemy->GetCenterPosition() - GetPosition()).Length();
 		if (distance <= m_range && distance < distanceMin) {
 			distanceMin = distance;

@@ -1,7 +1,7 @@
 #include "GameButton.h"
 
 GameButton::GameButton(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-	: Sprite2D(-1, model, shader, texture), m_pBtClick(nullptr), m_isHolding(false)
+	: Sprite2D(-1, model, shader, texture), m_pBtClick(nullptr),m_pBtClickTower(nullptr),m_pBtClickTexture(nullptr), m_isHandled(false), m_isHolding(false)
 {
 }
 
@@ -11,23 +11,27 @@ GameButton::~GameButton()
 
 void GameButton::SetOnClick(void(*pBtClickFun)())
 {
+
 	m_pBtClick = pBtClickFun;
 }
+void GameButton::SetOnClickTexture(void(*pBtClickFunTexture)(std::shared_ptr<GameButton> gamebutton))
+{
 
+	m_pBtClickTexture = pBtClickFunTexture;
+
+}
 void GameButton::SetOnClickTower(void(*pBtClickFunTower)(std::shared_ptr<BaseDefensive> tower))
 {
 	m_pBtClickTower = pBtClickFunTower;
 }
-
-
 
 bool GameButton::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 {
 	m_isHandled = false;
 	if (bIsPressed)
 	{
-		if ((x > m_position.x - m_iWidth / 2) && (x < m_position.x + m_iWidth / 2)
-			&& (y > m_position.y - m_iHeight / 2) && (y < m_position.y + m_iHeight / 2))
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f))
 		{
 			// The button is being pressed down
 			m_isHolding = true;
@@ -35,12 +39,15 @@ bool GameButton::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 	}
 	else
 	{
-		if ((x > m_position.x - m_iWidth / 2) && (x < m_position.x + m_iWidth / 2)
-			&& (y > m_position.y - m_iHeight / 2) && (y < m_position.y + m_iHeight / 2)
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f)
 			&& m_isHolding == true)
 		{
 			// Only perform click action when the same button was pressed down and released
-			m_pBtClick();
+			if(m_pBtClick)
+				m_pBtClick();
+			else
+				m_pBtClickTexture(std::dynamic_pointer_cast<GameButton>(shared_from_this()));
 			m_isHandled = true;
 		}
 		m_isHolding = false;
@@ -52,18 +59,17 @@ bool GameButton::HandleTouchEventsTower(GLint x, GLint y, bool bIsPressed, std::
 	m_isHandled = false;
 	if (bIsPressed)
 	{
-		if ((x > m_position.x - m_iWidth / 2) && (x < m_position.x + m_iWidth / 2)
-			&& (y > m_position.y - m_iHeight / 2) && (y < m_position.y + m_iHeight / 2))
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f))
 		{
-
 			// The button is being pressed down
 			m_isHolding = true;
 		}
 	}
 	else
 	{
-		if ((x > m_position.x - m_iWidth / 2) && (x < m_position.x + m_iWidth / 2)
-			&& (y > m_position.y - m_iHeight / 2) && (y < m_position.y + m_iHeight / 2)
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f)
 			&& m_isHolding == true)
 		{
 			// Only perform click action when the same button was pressed down and released

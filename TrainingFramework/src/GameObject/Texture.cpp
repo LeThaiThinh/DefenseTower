@@ -5,13 +5,13 @@ int Texture::Init(const char* fileName, GLuint wrapMode, GLuint minFilterMode, G
 	glGenTextures(1, &m_textureId);
 	glBindTexture(GL_TEXTURE_2D, m_textureId);
 
-	LOGI("Load 2D Texture:%s\t\t", fileName);
+	LOGI("Load 2D Texture:%s\t", fileName);
 
 	GLint h, w, bpp;
 	char* imageData = LoadTGA(fileName, &w, &h, &bpp);
 	if (imageData == 0)
 	{
-		LOGE("ERROR");
+		LOGE("ERROR\n");
 		return 0;
 	}
 	switch (bpp)

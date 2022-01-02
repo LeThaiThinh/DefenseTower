@@ -1,4 +1,7 @@
 #include "GSIntro.h"
+#include "GameStateMachine.h"
+#include <GameStates/Record.h>
+#include "irrKlang.h"
 
 GSIntro::GSIntro() : GameStateBase(StateType::STATE_INTRO), m_time(0.0f)
 {
@@ -12,39 +15,56 @@ GSIntro::~GSIntro()
 
 void GSIntro::Init()
 {
+	Record::GetInstance()->ReadAll();
+
+	ResourceManagers::GetInstance()->GetSound("intro.mp3")->PlaySoundFromStart2D(false);
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("logo.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/logo.tga");
 
 	m_logo = std::make_shared<Sprite2D>(model, shader, texture);
 	m_logo->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
-	m_logo->SetISize(150, 150);
+	m_logo->SetISize(300, 225);
+
+	ResourceManagers::GetInstance()->AddFont("Brightly Crush Shine.otf");
 	ResourceManagers::GetInstance()->AddFont("arialbd.ttf");
+	ResourceManagers::GetInstance()->AddShader("TextShader");
 	ResourceManagers::GetInstance()->AddShader("AnimationShader");
-	ResourceManagers::GetInstance()->AddTexture("HellBackground.tga");
-	ResourceManagers::GetInstance()->AddTexture("SnowBackground.tga");
-	ResourceManagers::GetInstance()->AddTexture("AbandonedForestBackground.tga");
-	ResourceManagers::GetInstance()->AddTexture("UndeadBackground.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl1.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl2.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl3.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl1.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl2.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl3.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl1.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl2.tga");
-	ResourceManagers::GetInstance()->AddTexture("TowerThreelvl3.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl1.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl2.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl3.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl4.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl5.tga");
-	ResourceManagers::GetInstance()->AddTexture("MainTowerlvl6.tga");
-	ResourceManagers::GetInstance()->AddTexture("Hitpoint.tga");
-	ResourceManagers::GetInstance()->AddTexture("Mana.tga");
-	ResourceManagers::GetInstance()->AddTexture("Grey.tga");
+	//UI
+	ResourceManagers::GetInstance()->AddTexture("UI/bg.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bg_2.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/table.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_empty.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/btton_empty.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_close_2.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_settings.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_music.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_music_off.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_sound.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_sound_off.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/rope_big.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_0.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_1.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_2.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_3.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_4.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_5.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_6.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_7.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_8.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/num_9.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bar_1.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bar_2.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bar_3.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bar_4.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bar_bg.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bg_bar.tga");
 
-
+	//sound
+	ResourceManagers::GetInstance()->AddSound("epic.mp3");
+	ResourceManagers::GetInstance()->AddSound("maincharacter_attack.mp3");
 }
 
 void GSIntro::Exit()
@@ -80,7 +100,7 @@ void GSIntro::HandleMouseMoveEvents(int x, int y)
 void GSIntro::Update(float deltaTime)
 {
 	m_time += deltaTime;
-	if (m_time > 1.5)
+	if (m_time > 5.5f)
 	{
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
 		m_time = 0;

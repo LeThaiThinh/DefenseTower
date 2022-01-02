@@ -33,10 +33,10 @@ Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader,
 Sprite2D::Sprite2D(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float x, float y, int iwidth, int iheight, int width, int height)
 	: BaseObject(-1, model, shader, texture), m_iWidth(width), m_iHeight(height), m_vboId(0), m_width(width), m_height(height)
 {
+	Init();
 	Set2DPosition(x, y);
 	SetISize(iwidth, iheight);
 	SetSize(width, height);
-	Init();
 }
 
 Sprite2D::~Sprite2D()
@@ -124,6 +124,20 @@ void Sprite2D::Set2DPosition(GLfloat x, GLfloat y)
 	CalculateWorldMatrix();
 }
 
+void Sprite2D::Set2DStaticPosition(GLfloat x, GLfloat y)
+{
+	m_static_x = x;
+	m_static_y = y;
+	m_position = Vector3(m_static_x + Application::GetInstance()->GetCamera()->GetPosition().x, m_static_y + Application::GetInstance()->GetCamera()->GetPosition().y, 0.0f);
+	m_centerPosition = Vector3(m_static_x - m_iWidth / 2 + m_width / 2 + Application::GetInstance()->GetCamera()->GetPosition().x, m_static_y + m_iHeight / 2 - m_height / 2 + Application::GetInstance()->GetCamera()->GetPosition().y, 0.0f);
+	CalculateWorldMatrix();
+}
+void Sprite2D::Set2DStaticPosition()
+{
+	m_position = Vector3(m_static_x + Application::GetInstance()->GetCamera()->GetPosition().x, m_static_y + Application::GetInstance()->GetCamera()->GetPosition().y, 0.0f);
+	m_centerPosition = Vector3(m_static_x - m_iWidth / 2 + m_width / 2 + Application::GetInstance()->GetCamera()->GetPosition().x, m_static_y + m_iHeight / 2 - m_height / 2 + Application::GetInstance()->GetCamera()->GetPosition().y, 0.0f);
+	CalculateWorldMatrix();
+}
 void Sprite2D::Set2DPosition(Vector2 position)
 {
 	m_position = Vector3(position.x, position.y, 0.0f);
@@ -143,5 +157,5 @@ void Sprite2D::SetSize(GLint width, GLint height)
 {
 	m_width = width;
 	m_height = height;
-	m_centerPosition = m_position; //Vector3(m_position.x - m_iWidth / 2 + m_width/2, m_position.y + m_iHeight / 2 - m_height/2, 0);
+	m_centerPosition = m_position; //Vector3(m_position.x - m_iWidth / 2 + m_width/2, m_position.y + m_iHeight / 2 - m_height/2, 0);//
 }

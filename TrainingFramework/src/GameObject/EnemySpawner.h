@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseEnemy.h"
+#include "BaseEnemy.h"
 class EnemySpawner
 {
 public:

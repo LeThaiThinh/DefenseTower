@@ -1,12 +1,13 @@
 #pragma once
-#include "../BaseTower.h"
+#include "BaseDefensive.h"
 
-class MoveThroughAbleTower :public BaseTower
+class MoveThroughAbleTower :public BaseDefensive
 {
 public:
-	MoveThroughAbleTower() :BaseTower() {};
-	MoveThroughAbleTower(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, float range, float attackSpeed, float x, float y, float width, float height, int level)
-		:BaseTower(model, shader, texture, x, y, width, height, range, attackSpeed, level) {}
+	MoveThroughAbleTower() :BaseDefensive() {};
+	MoveThroughAbleTower(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
+		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float delayAttackTime,Vector3 bulletSpawner, std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int level, TowerType type, int maxlevel)
+		:BaseDefensive(model, shader, texture, x, y, iwidth, iheight, width, height, range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation, level,type,maxlevel) {}
 	~MoveThroughAbleTower() {};
 	void	Attack() {};
 	void	Update(GLfloat deltatime) {

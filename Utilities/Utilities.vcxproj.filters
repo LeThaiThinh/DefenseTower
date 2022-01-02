@@ -15,4 +15,7 @@
     <ClInclude Include="src\utilities.h" />
     <ClInclude Include="src\CMath.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Data\Record.txt" />
+  </ItemGroup>
 </Project>

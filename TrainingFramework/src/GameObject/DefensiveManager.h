@@ -3,6 +3,7 @@
 #include "TowerOne.h"
 #include "TowerTwo.h"
 #include "SpotTower.h"
+#include "GameStates/GSPlay.h"
 
 class DefensivePoolManager : public CSingleton<DefensivePoolManager>
 {
@@ -25,11 +26,11 @@ public:
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f, Globals::screenHeight * 3 / 8.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
-		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 50, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
-		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 100, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
-		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 150, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
-		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 200, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
-		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f, Globals::screenHeight * 5 / 8.f - 50, TowerType::Spot);
+		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 50, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
+		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 100, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
+		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 150, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
+		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f + 200, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
+		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3 / 8.f, Globals::screenHeight * 5 / 8.f - 50, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 5 / 8.f, Globals::screenHeight * 3 / 8.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 5 / 8.f, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
 	}
@@ -81,26 +82,26 @@ public:
 		}
 	}
 	void Update(float deltaTime) {
-		for (auto tower : spotList) {
+		for (auto &tower : spotList) {
 			tower->Update(deltaTime);
 		}
-		for (auto tower : unMoveThroughAbleTowerList) {
+		for (auto &tower : unMoveThroughAbleTowerList) {
 			tower->Update(deltaTime);
 		}
 	}
 	void HandleTouchEvents(GLint x, GLint y, bool bIsPressed) {
-		for (auto tower : spotList) {
-			tower->HandleTouchEvents(x, y, bIsPressed, tower);
+		for (auto & spot : spotList) {
+			spot->HandleTouchEvents(x, y, bIsPressed, spot);
 		}
-		for (auto tower : unMoveThroughAbleTowerList) {
+		for (auto &tower : unMoveThroughAbleTowerList) {
 			tower->HandleTouchEvents(x, y, bIsPressed, tower);
 		}
 	}
 	void Draw() {
-		for (auto spot : spotList) {
+		for (auto &spot : spotList) {
 			spot->Draw();
 		}
-		for (auto tower : unMoveThroughAbleTowerList) {
+		for (auto &tower : unMoveThroughAbleTowerList) {
 			tower->Draw();
 		}
 	}
@@ -127,6 +128,8 @@ public:
 		if (tower->GetType() == TowerType::Main) {
 			unMoveThroughAbleTowerList.remove(tower);
 			std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower)->Reset();
+			tower.reset();
+			GSPlay::win = 0;
 		}
 		else if (tower->GetType() == TowerType::One) {
 			oneResources.push_back(std::dynamic_pointer_cast<TowerOne>(tower));
@@ -140,22 +143,22 @@ public:
 		}
 	}
 	void Remove() {
-		for (auto tower : spotListRemove) {
+		for (auto &tower : spotListRemove) {
 			std::dynamic_pointer_cast<SpotTower>(tower)->Reset();
 			spotList.remove(tower);
 		}
 		spotListRemove.clear();
-		for (auto tower : unMoveThroughAbleTowerListRemove) {
+		for (auto &tower : unMoveThroughAbleTowerListRemove) {
 			std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower)->Reset();
 			unMoveThroughAbleTowerList.remove(tower);
 		}
 		unMoveThroughAbleTowerListRemove.clear();
 	}
 	void Clear() {
-		for (auto spot : spotList) {
+		for (auto &spot : spotList) {
 			RemoveSpot(spot);
 		}
-		for (auto tower : unMoveThroughAbleTowerList) {
+		for (auto &tower : unMoveThroughAbleTowerList) {
 			RemoveUnmove(tower);
 		}
 	}

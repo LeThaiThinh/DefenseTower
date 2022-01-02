@@ -10,6 +10,8 @@ protected:
 	int			m_height;
 	Vector3		m_centerPosition;
 	GLuint		m_vboId;
+	int			m_static_x;
+	int			m_static_y;
 
 public:
 	Sprite2D() : BaseObject(), m_iWidth(0), m_iHeight(0), m_vboId(0), m_height(0), m_width(0), m_centerPosition(Vector3(0, 0, 0)) {}
@@ -25,6 +27,8 @@ public:
 	void		Update(GLfloat deltatime) override;
 
 	void		Set2DPosition(GLfloat x, GLfloat y);
+	void		Set2DStaticPosition(GLfloat x, GLfloat y);
+	void		Set2DStaticPosition();
 	void		Set2DPosition(Vector2 position);
 	void		SetISize(GLint width, GLint height);
 	int			GetIWidth() { return m_iWidth; }

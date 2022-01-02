@@ -10,7 +10,13 @@ enum class StateType
 	STATE_INVALID = 0,
 	STATE_INTRO,
 	STATE_MENU,
-	STATE_PLAY
+	STATE_PLAY,
+	STATE_CREDIT,
+	STATE_TUTORIAL,
+	STATE_SETTING,
+	STATE_SELECT_STAGE,
+	STATE_MENU_IN_GAME,
+	STATE_MENU_AFTER_GAME
 };
 
 class GameStateMachine : public CSingleton<GameStateMachine>
@@ -49,6 +55,7 @@ private:
 	std::list < std::shared_ptr<GameStateBase>>	m_StateStack;
 	std::shared_ptr<GameStateBase>				m_pActiveState;
 	std::shared_ptr<GameStateBase>				m_pNextState;
+	std::shared_ptr<GameStateBase>				m_pChangeState;
 	bool	m_running;
 	bool	m_fullscreen;
 };

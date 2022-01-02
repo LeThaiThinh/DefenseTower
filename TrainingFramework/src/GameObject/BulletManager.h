@@ -14,7 +14,7 @@ public:
 		return bullet;
 	};
 	void Update(float deltaTime) {
-		for (auto bullet : bulletList) {
+		for (auto &bullet : bulletList) {
 			bullet->Move(deltaTime);
 			bullet->Update(deltaTime);
 			if (!bullet->IsExist()) {
@@ -24,7 +24,7 @@ public:
 		}
 	};
 	void Remove() {
-		for (auto bullet : removeBulletList) {
+		for (auto &bullet : removeBulletList) {
 			bulletList.remove(bullet);
 		}
 		removeBulletList.clear();
@@ -35,7 +35,7 @@ public:
 		bullet->Reset();
 	}
 	void Draw() {
-		for (auto bullet : bulletList) {
+		for (auto &bullet : bulletList) {
 			bullet->Draw();
 			//std::cout << bullet->GetPosition().x << "-" << bullet->GetPosition().y << std::endl;
 		}
@@ -58,6 +58,14 @@ public:
 	{
 		resources.push_back(object);
 	}
+
+	void Clear() {
+		for (auto &bullet : bulletList) {
+			RemoveBullet(bullet);
+		}
+	}
+
+
 
 	std::list<std::shared_ptr<Bullet>> bulletList;
 	std::list<std::shared_ptr<Bullet>> removeBulletList;

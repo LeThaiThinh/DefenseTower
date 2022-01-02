@@ -1,10 +1,8 @@
 #pragma once
 #include "GameStateBase.h"
 #include "MainCharacter.h"
-#include "BulletManager.h"
 #include "MainTower.h"
-#include "DefensiveManager.h"
-#include "EnemyManager.h"
+
 class Sprite2D;
 class Sprite3D;
 class Text;
@@ -31,13 +29,13 @@ public:
 	void	Draw() override;
 	void	HandleKeyPress(float deltaTime);
 
-
+	static int win;
 private:
-	std::shared_ptr<Sprite2D>	m_background;
+	std::shared_ptr<Sprite2D>		m_background;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::shared_ptr <MainCharacter> m_mainCharacter;
 	std::shared_ptr <MainTower>		m_mainTower;
 	std::shared_ptr <BaseObject>	m_controller;
-	float						m_time;
+	float							m_time;
 };
 

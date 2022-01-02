@@ -7,7 +7,7 @@ int Globals::screenWidth = 1200;
 int Globals::screenHeight = 960;
 int Globals::mapWidth = 1920;
 int Globals::mapHeight = 1920;
-int Globals::borderMoveCam = 50;
+int Globals::borderMoveCam = 30;
 
 
 GLint Init(ESContext* esContext)
@@ -52,10 +52,9 @@ GLint _tmain(GLint argc, _TCHAR* argv[])
 {
 	ESContext esContext;
 	esInitContext(&esContext);
-	esCreateWindow(&esContext, "Epic Game", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Territory Conquest", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 	if (Init(&esContext) != 0)
 		return 0;
-
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, OnKey);

@@ -46,6 +46,9 @@
     <Filter Include="TrainingFramework\src\GameObject\Resourse">
       <UniqueIdentifier>{0c774144-e26b-4dba-ae7a-ed9827b92c5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Bullet">
+      <UniqueIdentifier>{3c4aa1a6-cf17-4553-9ddf-cbcef5d38a9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -78,9 +81,6 @@
     <ClCompile Include="src\GameObject\Font.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\GameButton.cpp">
-      <Filter>TrainingFramework\src\GameObject\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\Model.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
@@ -104,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="src\GameObject\Animation2D.cpp">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject\Bullet.cpp">
-      <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\MainCharacter.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
@@ -138,11 +135,38 @@
     <ClCompile Include="src\GameObject\TowerOption.cpp">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClCompile>
-    <ClCompile Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.cpp">
+    <ClCompile Include="src\GameObject\EnemyOne.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="F:\DefenseTower\TrainingFramework\Buffalo.cpp">
+    <ClCompile Include="src\GameStates\GSCredit.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GSTutorial.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GSSelectStage.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GSMenuInGame.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GSMenuAfterGame.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GSSetting.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\EnemyTwo.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\GameButton.cpp">
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Bullet.cpp">
+      <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\Record.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +209,6 @@
     <ClInclude Include="src\GameObject\Font.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\GameButton.h">
-      <Filter>TrainingFramework\src\GameObject\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\Model.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
@@ -221,32 +242,11 @@
     <ClInclude Include="src\GameObject\AbleToAttack.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Bullet.h">
-      <Filter>TrainingFramework\src\GameObject\Other</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\MainCharacter.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BulletManager.h">
-      <Filter>TrainingFramework\src\GameObject\Other</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\Animation2D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEnemy.h">
-      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseTower.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\TowerManager.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\EnemyManager.h">
-      <Filter>TrainingFramework\src\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\PoolManager.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\TowerOne.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
@@ -278,23 +278,74 @@
     <ClInclude Include="src\GameObject\TowerOption.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\DefensiveManager.h">
-      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\EnemyManager.h">
+    <ClInclude Include="src\GameObject\EnemyManager.h">
       <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.h">
+    <ClInclude Include="src\GameObject\BaseDefensive.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\BaseEnemy.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\EnemyOne.h">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\Coin.h">
+    <ClInclude Include="src\GameStates\GSCredit.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSTutorial.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSSelectStage.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSMenuInGame.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSMenuAfterGame.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSSetting.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\EnemyTwo.h">
+      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Bullet.h">
+      <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\GameButton.h">
+      <Filter>TrainingFramework\src\GameObject\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\BulletManager.h">
+      <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Coin.h">
       <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
     </ClInclude>
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\Buffalo.h">
-      <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
+    <ClInclude Include="src\GameObject\DefensiveManager.h">
+      <Filter>TrainingFramework\src\GameObject\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\BountyObject.h">
+      <Filter>TrainingFramework\src\GameObject\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\Record.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Diamond.h">
+      <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\ResourceTable.h">
+      <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\BackgroundMusic.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Data\Record.txt" />
   </ItemGroup>
 </Project>

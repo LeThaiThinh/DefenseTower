@@ -13,7 +13,7 @@ ResourceManagers::ResourceManagers()
 {
 	std::string dataPath = "..\\Data\\";
 	m_ShaderPath = dataPath + "Shaders\\";
-	m_TexturePath = dataPath + "Textures\\";
+	m_TexturePath = dataPath + "Texture\\";
 	m_ModelsPath = dataPath + "Model\\";
 	m_FontPath = dataPath + "fonts\\";
 	m_SoundPath = dataPath + "Sound\\";
@@ -86,9 +86,10 @@ void ResourceManagers::AddSound(const std::string& name)
 	{
 		return;
 	}
-	std::string path = m_FontPath + name;
-	std::shared_ptr<Sound> font = std::make_shared<Sound>(path);
-	m_MapSound.insert(std::pair<std::string, std::shared_ptr<Sound>>(name, font));
+
+	std::string path = m_SoundPath + name;
+	std::shared_ptr<Sound> sound = std::make_shared<Sound>(path);
+	m_MapSound.insert(std::pair<std::string, std::shared_ptr<Sound>>(name, sound));
 }
 
 void ResourceManagers::RemoveShader(const std::string& name)

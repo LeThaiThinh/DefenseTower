@@ -40,40 +40,40 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Angle|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-AMD|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-ATI|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-ATI|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Nvidia|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Angle|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Nvidia|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -108,6 +108,8 @@
     <OutDir>$(SolutionDir)\BIN-Nvidia\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\Include\irrKlang;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Lib\irrKlang;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Nvidia|Win32'">
     <OutDir>$(SolutionDir)\BIN-Nvidia\</OutDir>
@@ -142,7 +144,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Nvidia|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Include\Nvidia;$(SolutionDir)\freetype\include;$(SolutionDir)\Utilities\src;$(projectdir)\src\GameManager;$(projectdir)\src\GameObject;$(projectdir)\src\GameState;$(projectdir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Include\Nvidia;$(SolutionDir)\freetype\include;$(SolutionDir)\Utilities\src;$(projectdir)\src\GameManager;$(projectdir)\src\GameObject;$(projectdir)\src\GameState;$(projectdir)\src;E:\Visual studio\Repo\ProjectGame\Include\irrKlang;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -153,8 +155,8 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;WinMM.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;WinMM.Lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Lib\irrKlang;$(SolutionDir)\Lib\Nvidia;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -304,13 +306,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="F:\DefenseTower\TrainingFramework\Buffalo.cpp" />
-    <ClCompile Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\GameManager\ResourceManagers.cpp" />
     <ClCompile Include="src\GameObject\Animation2D.cpp" />
+    <ClCompile Include="src\GameObject\EnemyOne.cpp" />
     <ClCompile Include="src\GameObject\Bullet.cpp" />
     <ClCompile Include="src\GameObject\CheckCollision.cpp" />
+    <ClCompile Include="src\GameObject\EnemyTwo.cpp" />
     <ClCompile Include="src\GameObject\FlyEnemy.cpp" />
     <ClCompile Include="src\GameObject\Font.cpp" />
     <ClCompile Include="src\GameObject\GameButton.cpp" />
@@ -330,21 +332,21 @@
     <ClCompile Include="src\GameObject\TowerOption.cpp" />
     <ClCompile Include="src\GameObject\TowerTwo.cpp" />
     <ClCompile Include="src\GameObject\UnMoveThroughAbleTower.cpp" />
+    <ClCompile Include="src\GameStates\GSCredit.cpp" />
     <ClCompile Include="src\GameStates\GameStateBase.cpp" />
     <ClCompile Include="src\GameStates\GameStateMachine.cpp" />
     <ClCompile Include="src\GameStates\GSIntro.cpp" />
     <ClCompile Include="src\GameStates\GSMenu.cpp" />
     <ClCompile Include="src\GameStates\GSPlay.cpp" />
     <ClCompile Include="src\DefenseTower.cpp" />
+    <ClCompile Include="src\GameStates\GSMenuAfterGame.cpp" />
+    <ClCompile Include="src\GameStates\GSMenuInGame.cpp" />
+    <ClCompile Include="src\GameStates\GSSelectStage.cpp" />
+    <ClCompile Include="src\GameStates\GSSetting.cpp" />
+    <ClCompile Include="src\GameStates\GSTutorial.cpp" />
+    <ClCompile Include="src\GameStates\Record.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseEnemy.h" />
-    <ClInclude Include="BaseTower.h" />
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\Buffalo.h" />
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\Coin.h" />
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\DefensiveManager.h" />
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\EnemyManager.h" />
-    <ClInclude Include="F:\DefenseTower\TrainingFramework\src\GameObject\Zombie.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\GameManager\ObjectPoolManager.h" />
@@ -352,11 +354,20 @@
     <ClInclude Include="src\GameManager\Singleton.h" />
     <ClInclude Include="src\GameObject\Animation2D.h" />
     <ClInclude Include="src\GameObject\AttackAble.h" />
+    <ClInclude Include="src\GameObject\BackgroundMusic.h" />
+    <ClInclude Include="src\GameObject\BaseDefensive.h" />
+    <ClInclude Include="src\GameObject\BaseEnemy.h" />
     <ClInclude Include="src\GameObject\BaseObject.h" />
+    <ClInclude Include="src\GameObject\BountyObject.h" />
+    <ClInclude Include="src\GameObject\EnemyOne.h" />
     <ClInclude Include="src\GameObject\Bullet.h" />
     <ClInclude Include="src\GameObject\BulletManager.h" />
     <ClInclude Include="src\GameObject\CheckCollision.h" />
+    <ClInclude Include="src\GameObject\Coin.h" />
+    <ClInclude Include="src\GameObject\DefensiveManager.h" />
+    <ClInclude Include="src\GameObject\Diamond.h" />
     <ClInclude Include="src\GameObject\EnemyManager.h" />
+    <ClInclude Include="src\GameObject\EnemyTwo.h" />
     <ClInclude Include="src\GameObject\FlyEnemy.h" />
     <ClInclude Include="src\GameObject\Font.h" />
     <ClInclude Include="src\GameObject\GameButton.h" />
@@ -365,7 +376,7 @@
     <ClInclude Include="src\GameObject\MainTower.h" />
     <ClInclude Include="src\GameObject\MoveAble.h" />
     <ClInclude Include="src\GameObject\MoveThroughAbleTower.h" />
-    <ClInclude Include="src\GameObject\PoolManager.h" />
+    <ClInclude Include="src\GameObject\ResourceTable.h" />
     <ClInclude Include="src\GameObject\SelfDestructable.h" />
     <ClInclude Include="src\GameObject\AbleToAttack.h" />
     <ClInclude Include="src\GameObject\Sound.h" />
@@ -377,19 +388,28 @@
     <ClInclude Include="src\GameObject\Shader.h" />
     <ClInclude Include="src\GameObject\Text.h" />
     <ClInclude Include="src\GameObject\Texture.h" />
-    <ClInclude Include="src\GameObject\TowerManager.h" />
     <ClInclude Include="src\GameObject\TowerOne.h" />
     <ClInclude Include="src\GameObject\TowerOption.h" />
     <ClInclude Include="src\GameObject\TowerTwo.h" />
     <ClInclude Include="src\GameObject\UnMoveThroughAbleTower.h" />
+    <ClInclude Include="src\GameStates\GSCredit.h" />
     <ClInclude Include="src\GameStates\GameStateBase.h" />
     <ClInclude Include="src\GameStates\GameStateMachine.h" />
     <ClInclude Include="src\GameStates\GSIntro.h" />
     <ClInclude Include="src\GameStates\GSMenu.h" />
     <ClInclude Include="src\GameStates\GSPlay.h" />
+    <ClInclude Include="src\GameStates\GSMenuAfterGame.h" />
+    <ClInclude Include="src\GameStates\GSMenuInGame.h" />
+    <ClInclude Include="src\GameStates\GSSelectStage.h" />
+    <ClInclude Include="src\GameStates\GSSetting.h" />
+    <ClInclude Include="src\GameStates\GSTutorial.h" />
+    <ClInclude Include="src\GameStates\Record.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Data\Record.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

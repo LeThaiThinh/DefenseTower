@@ -19,8 +19,8 @@ public:
 	AttackAble() :m_hitpoint(0), m_maxHitPoint(0), m_hitpointBarMaxSize(Vector2(0, 0)) {}
 	AttackAble(float hitpoint, float maxHitPoint) :m_hitpoint(hitpoint), m_maxHitPoint(maxHitPoint),
 		//m_hitpointBarMaxSize(Vector2(std::sqrt(m_maxHitPoint/StandardHitpoint)*StandardHitPointBarWidth,std::sqrt(m_maxHitPoint/StandardHitpoint)*StandardHitPointBarHeight)),
-		m_hitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("Hitpoint.tga"))),
-		m_lostHitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("Grey.tga")))
+		m_hitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("UI/bar_4.tga"))),
+		m_lostHitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("UI/bar_bg.tga")))
 	{
 		m_hitpointBarMaxSize = Vector2(std::sqrt(m_maxHitPoint / StandardHitpoint) * StandardHitPointBarWidth, std::sqrt(m_maxHitPoint / StandardHitpoint) * StandardHitPointBarHeight);
 		m_hitpointBar->SetISize(hitpoint / maxHitPoint * m_hitpointBarMaxSize.x, hitpoint / maxHitPoint * m_hitpointBarMaxSize.y);
@@ -45,14 +45,14 @@ public:
 	bool	IsDestroyed() { return m_hitpoint <= 0; }
 	void	AddEnemyIsAttacking(std::shared_ptr<BaseObject> attacker) {
 		bool exist = false;
-		for (auto i : m_attackedList) {
+		for (auto &i : m_attackedList) {
 			if (i.lock() == attacker)
 				exist = true;
 		}
 		if (!exist)m_attackedList.push_back(attacker);
 	}
 	void	RemoveEnemyIsAttacking(std::shared_ptr<BaseObject> attacker) {
-		for (auto i = m_attackedList.begin(); i != m_attackedList.end(); ++i)
+		for (auto &i = m_attackedList.begin(); i != m_attackedList.end(); ++i)
 			if (i->lock() == attacker) {
 				m_attackedList.erase(i);
 				break;

@@ -10,11 +10,11 @@ enum class BulletType
 {
 	Linear_MainCharacter,
 	AOE,
-	Target_TowerOne,
+	Target_Tower_One,
 	TowerTwo,
 	TowerThree,
 	Chain,
-	Target_Enemy,
+	Target_Enemy_Two,
 };
 class Bullet :public MoveAble, public SelfDestructable, public Animation2D
 {
@@ -35,6 +35,8 @@ public:
 	std::shared_ptr<BaseEnemy> CheckCollideGroundEnemy(GLfloat deltaTime);
 	std::shared_ptr<BaseEnemy> CheckCollideFlyEnemy(GLfloat deltaTime);
 	std::shared_ptr<UnMoveThroughAbleTower> CheckCollideTower(GLfloat deltaTime);
+	std::shared_ptr<UnMoveThroughAbleTower> CheckCollideTower(GLfloat deltaTime, std::shared_ptr<UnMoveThroughAbleTower> tower);
+	std::shared_ptr<UnMoveThroughAbleTower> CheckCollideTarget(GLfloat deltaTime);
 	void Reset() {
 		m_source.reset();
 		m_target.reset();

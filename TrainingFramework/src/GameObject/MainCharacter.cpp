@@ -2,13 +2,15 @@
 #include "Bullet.h"
 #include "Application.h"
 #include "DefensiveManager.h"
-#include "../../BaseEnemy.h"
-#include "../Buffalo.h"
+#include "BaseEnemy.h"
+#include "EnemyOne.h"
 MainCharacter::MainCharacter() :Animation2D(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("AnimationShader"),
-	ResourceManagers::GetInstance()->GetTexture("WormMonster.tga"),
-	15, 15, 0.2f, 300.f, 300.f, 30, 30, 30, 30),
-	AbleToAttack(100.f, 5.f, 10), AttackAble(500.f, 500.f), MoveAble(50.f)
+	ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),
+	6, 6, 0.5f, 300.f, 300.f, 30, 30, 30, 30),
+	AbleToAttack(100.f, 2.f, 10.f, 0.3f, Vector3(10, 0, 0), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_right.tga")),
+	AttackAble(500.f, 500.f), 
+	MoveAble(50.f, ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_right.tga"),3,3,0.1)
 {
 	Init();
 }
@@ -27,6 +29,10 @@ void MainCharacter::Move(GLfloat deltatime)
 void MainCharacter::Move(GLfloat deltatime, Vector3 direction)
 {
 	SetDirection(direction);
+	if (direction.x >= 0 && !m_isCastingAttack)
+		m_pTexture = m_walkRightAnimation;
+	else if (direction.x < 0&& !m_isCastingAttack)
+		m_pTexture = m_walkLeftAnimation;
 	if (!CheckCollide(deltatime)) {
 		Set2DPosition(m_position.x + deltatime * m_speed * m_direction.x, m_position.y + deltatime * m_speed * m_direction.y);
 	}
@@ -38,6 +44,19 @@ void MainCharacter::Update(GLfloat deltatime)
 	AbleToAttack::Update(deltatime);
 	AttackAble::UpdateHitPointBarAndLostHitpointBarSize();
 	AttackAble::UpdateHitPointBarAndLostHitpointBarPosition(m_position.x, m_position.y - m_iHeight);
+	if (m_currentTimeAttack >= m_delayAttackTime/2 && m_isCastingAttack) {
+		m_isCastingAttack = false;
+		SpawnBullet();
+	}
+	if (m_currentTimeAttack >= m_delayAttackTime ) {
+		m_frameTime = 0.5f;
+		if (m_pTexture == m_attackLeftAnimation) {
+			m_pTexture = m_walkLeftAnimation;
+		}
+		else if(m_pTexture == m_attackRightAnimation) {
+			m_pTexture = m_walkRightAnimation;
+		}
+	}
 }
 
 void MainCharacter::Attack()
@@ -46,12 +65,28 @@ void MainCharacter::Attack()
 		AttackLinear();
 	}
 }
+void MainCharacter::SpawnBullet()
+{
+	if(GSMenu::vfxSound)
+		ResourceManagers::GetInstance()->GetSound("maincharacter_attack.mp3")
+		->PlaySoundFromStart(false,irrklang::vec3df((m_position.x-Application::GetInstance()->GetCamera()->GetPosition().x-Globals::mapWidth/2)/ SOUND_DISTANCE_UNIT,
+			(m_position.x - Application::GetInstance()->GetCamera()->GetPosition().x - Globals::screenHeight/2) / 200, 0));
+
+	BulletPoolManager::GetInstance()->AddBullet(
+		BulletType::Linear_MainCharacter, std::dynamic_pointer_cast<BaseEnemy>(std::make_shared<EnemyOne>()),
+		m_targetPosition, shared_from_this());
+}
 void MainCharacter::AttackLinear()
 {
-	m_currentTimeAttack = 0;
-	BulletPoolManager::GetInstance()->AddBullet(
-		BulletType::Linear_MainCharacter, std::dynamic_pointer_cast<BaseObject>(std::make_shared<Buffalo>()),
-		m_targetPosition, shared_from_this());
+	m_currentTimeAttack =0;
+	m_isCastingAttack = true;
+	if ((m_targetPosition-m_position).x<0) {
+		m_pTexture = m_attackLeftAnimation;
+	}
+	else {
+		m_pTexture = m_attackRightAnimation;
+	}
+	m_frameTime = m_delayAttackTime / m_numFrames;
 }
 
 bool MainCharacter::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
@@ -71,17 +106,17 @@ bool MainCharacter::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 
 bool MainCharacter::CheckCollide(GLfloat deltaTime)
 {
-	for (auto tower : DefensivePoolManager::GetInstance()->spotList) {
-		if ((tower->GetPosition().x + tower->GetWidth() / 2 > m_position.x - m_width / 2 + deltaTime * m_speed * m_direction.x) && (tower->GetPosition().x - tower->GetWidth() / 2 < m_position.x + m_width / 2 + deltaTime * m_speed * m_direction.x)
-			&& (tower->GetPosition().y + tower->GetIHeight() / 2 > m_position.y - m_height / 2 + deltaTime * m_speed * m_direction.y) && (tower->GetPosition().y + tower->GetIHeight() / 2 - tower->GetHeight() < m_position.y + m_height / 2 + deltaTime * m_speed * m_direction.y))
+	for (auto &tower : DefensivePoolManager::GetInstance()->spotList) {
+		if ((tower->GetPosition().x + tower->GetWidth() / 2.f > m_position.x - m_width / 2.f + deltaTime * m_speed * m_direction.x) && (tower->GetPosition().x - tower->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
+			&& (tower->GetPosition().y + tower->GetIHeight() / 2.f > m_position.y - m_height / 2.f + deltaTime * m_speed * m_direction.y) && (tower->GetPosition().y + tower->GetIHeight() / 2.f - tower->GetHeight() < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
 		{
 			return true;
 		}
 
 	}
-	for (auto tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
-		if ((tower->GetPosition().x + tower->GetWidth() / 2 > m_position.x - m_width / 2 + deltaTime * m_speed * m_direction.x) && (tower->GetPosition().x - tower->GetWidth() / 2 < m_position.x + m_width / 2 + deltaTime * m_speed * m_direction.x)
-			&& (tower->GetPosition().y + tower->GetIHeight() / 2 > m_position.y - m_height / 2 + deltaTime * m_speed * m_direction.y) && (tower->GetPosition().y + tower->GetIHeight() / 2 - tower->GetHeight() < m_position.y + m_height / 2 + deltaTime * m_speed * m_direction.y))
+	for (auto &tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
+		if ((tower->GetPosition().x + tower->GetWidth() / 2.f > m_position.x - m_width / 2.f + deltaTime * m_speed * m_direction.x) && (tower->GetPosition().x - tower->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
+			&& (tower->GetPosition().y + tower->GetIHeight() / 2.f > m_position.y - m_height / 2.f + deltaTime * m_speed * m_direction.y) && (tower->GetPosition().y + tower->GetIHeight() / 2.f - tower->GetHeight() < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
 		{
 			return true;
 		}

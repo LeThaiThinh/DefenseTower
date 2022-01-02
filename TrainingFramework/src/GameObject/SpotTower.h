@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseDefensive.h"
+#include "BaseDefensive.h"
 class SpotTower
 	:public BaseDefensive
 {

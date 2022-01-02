@@ -1,6 +1,5 @@
 #pragma once
 #include "UnMoveThroughAbleTower.h"
-#include <TowerOption.h>
 
 class UnMoveThroughAbleTower;
 class MainTower :public UnMoveThroughAbleTower
