@@ -15,8 +15,8 @@ GSIntro::~GSIntro()
 
 void GSIntro::Init()
 {
+	srand(time(0));
 	Record::GetInstance()->ReadAll();
-
 	ResourceManagers::GetInstance()->GetSound("intro.mp3")->PlaySoundFromStart2D(false);
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");

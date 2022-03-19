@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "GameConfig.h"
-#include "Camera.h"
+#include "Base/Camera.h"
 
 
 class Application : public CSingleton<Application>

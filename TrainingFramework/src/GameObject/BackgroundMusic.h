@@ -1,5 +1,5 @@
 #pragma once
-#include "Sound.h"
+#include "Base/Sound.h"
 #include "ResourceManagers.h"
 class BackgroundMusic:public CSingleton<BackgroundMusic>
 {
@@ -14,12 +14,12 @@ public:
 	};
 	void PlayBGMIngame() {
 		m_ingame->PlaySoundFromStart2D(true);
-		m_ingame->Volumn(0.5);
+		m_ingame->Volumn(0.5f);
 		m_menu->Pause(true);
 	}
 	void PlayBGMMenu() {
 		m_menu->PlaySoundFromStart2D(true);
-		m_menu->Volumn(0.7);
+		m_menu->Volumn(0.7f);
 		m_ingame->Pause(true);
 	}
 	void StopBGMIngame() {

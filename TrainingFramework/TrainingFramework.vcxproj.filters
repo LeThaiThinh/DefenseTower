@@ -75,67 +75,64 @@
     <ClCompile Include="src\GameManager\ResourceManagers.cpp">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Camera.cpp">
+    <ClCompile Include="src\GameObject\Base\Camera.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Font.cpp">
+    <ClCompile Include="src\GameObject\Base\Font.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Model.cpp">
+    <ClCompile Include="src\GameObject\Base\Model.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Shader.cpp">
+    <ClCompile Include="src\GameObject\Base\Shader.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Text.cpp">
+    <ClCompile Include="src\GameObject\Base\Text.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Texture.cpp">
+    <ClCompile Include="src\GameObject\Base\Texture.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Sprite2D.cpp">
+    <ClCompile Include="src\GameObject\Base\Sprite2D.cpp">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Sprite3D.cpp">
+    <ClCompile Include="src\GameObject\Base\Sprite3D.cpp">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Sound.cpp">
+    <ClCompile Include="src\GameObject\Base\Sound.cpp">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Animation2D.cpp">
+    <ClCompile Include="src\GameObject\Base\Animation2D.cpp">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\MainCharacter.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\TowerOne.cpp">
+    <ClCompile Include="src\GameObject\Defensive\TowerOne.cpp">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\MainTower.cpp">
+    <ClCompile Include="src\GameObject\Defensive\MainTower.cpp">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\UnMoveThroughAbleTower.cpp">
+    <ClCompile Include="src\GameObject\Defensive\UnMoveThroughAbleTower.cpp">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\TowerTwo.cpp">
+    <ClCompile Include="src\GameObject\Defensive\TowerTwo.cpp">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\FlyEnemy.cpp">
+    <ClCompile Include="src\GameObject\Enemy\FlyEnemy.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\FlyEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\GroundEnemy.cpp">
+    <ClCompile Include="src\GameObject\Enemy\GroundEnemy.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\CheckCollision.cpp">
-      <Filter>TrainingFramework\src\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject\SpotTower.cpp">
+    <ClCompile Include="src\GameObject\Defensive\SpotTower.cpp">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\TowerOption.cpp">
+    <ClCompile Include="src\GameObject\Others\TowerOption.cpp">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\EnemyOne.cpp">
+    <ClCompile Include="src\GameObject\Enemy\EnemyOne.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClCompile>
     <ClCompile Include="src\GameStates\GSCredit.cpp">
@@ -156,18 +153,20 @@
     <ClCompile Include="src\GameStates\GSSetting.cpp">
       <Filter>TrainingFramework\src\GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\EnemyTwo.cpp">
+    <ClCompile Include="src\GameObject\Enemy\EnemyTwo.cpp">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\GameButton.cpp">
+    <ClCompile Include="src\GameObject\Others\GameButton.cpp">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\Bullet.cpp">
+    <ClCompile Include="src\GameObject\Bullet\Bullet.cpp">
       <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="src\GameStates\Record.cpp">
       <Filter>TrainingFramework\src\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\HUD\HUD.cpp" />
+    <ClCompile Include="src\GameStates\GSLoadGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -200,94 +199,94 @@
     <ClInclude Include="src\GameManager\ObjectPoolManager.h">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BaseObject.h">
+    <ClInclude Include="src\GameObject\Base\BaseObject.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Camera.h">
+    <ClInclude Include="src\GameObject\Base\Camera.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Font.h">
+    <ClInclude Include="src\GameObject\Base\Font.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Model.h">
+    <ClInclude Include="src\GameObject\Base\Model.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Shader.h">
+    <ClInclude Include="src\GameObject\Base\Shader.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Text.h">
+    <ClInclude Include="src\GameObject\Base\Text.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Texture.h">
+    <ClInclude Include="src\GameObject\Base\Texture.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Sprite2D.h">
+    <ClInclude Include="src\GameObject\Base\Sprite2D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Sprite3D.h">
+    <ClInclude Include="src\GameObject\Base\Sprite3D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Sound.h">
+    <ClInclude Include="src\GameObject\Base\Sound.h">
       <Filter>TrainingFramework\src\GameObject\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\AttackAble.h">
+    <ClInclude Include="src\GameObject\Base\AttackAble.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\MoveAble.h">
+    <ClInclude Include="src\GameObject\Base\MoveAble.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\SelfDestructable.h">
+    <ClInclude Include="src\GameObject\Base\SelfDestructable.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\AbleToAttack.h">
+    <ClInclude Include="src\GameObject\Base\AbleToAttack.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\MainCharacter.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Animation2D.h">
+    <ClInclude Include="src\GameObject\Base\Animation2D.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\TowerOne.h">
+    <ClInclude Include="src\GameObject\Defensive\TowerOne.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\MainTower.h">
+    <ClInclude Include="src\GameObject\Defensive\MainTower.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\TowerTwo.h">
+    <ClInclude Include="src\GameObject\Defensive\TowerTwo.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\MoveThroughAbleTower.h">
+    <ClInclude Include="src\GameObject\Defensive\MoveThroughAbleTower.h">
       <Filter>TrainingFramework\src\GameObject\Tower\MoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\UnMoveThroughAbleTower.h">
+    <ClInclude Include="src\GameObject\Defensive\UnMoveThroughAbleTower.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\FlyEnemy.h">
+    <ClInclude Include="src\GameObject\Enemy\FlyEnemy.h">
       <Filter>TrainingFramework\src\GameObject\Enemy\FlyEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\GroundEnemy.h">
+    <ClInclude Include="src\GameObject\Enemy\GroundEnemy.h">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\CheckCollision.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\SpotTower.h">
+    <ClInclude Include="src\GameObject\Defensive\SpotTower.h">
       <Filter>TrainingFramework\src\GameObject\Tower\UnMoveThroughAbleTower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\TowerOption.h">
+    <ClInclude Include="src\GameObject\Others\TowerOption.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\EnemyManager.h">
+    <ClInclude Include="src\GameObject\Enemy\EnemyManager.h">
       <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BaseDefensive.h">
+    <ClInclude Include="src\GameObject\Defensive\BaseDefensive.h">
       <Filter>TrainingFramework\src\GameObject\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BaseEnemy.h">
+    <ClInclude Include="src\GameObject\Enemy\BaseEnemy.h">
       <Filter>TrainingFramework\src\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\EnemyOne.h">
+    <ClInclude Include="src\GameObject\Enemy\EnemyOne.h">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClInclude>
     <ClInclude Include="src\GameStates\GSCredit.h">
@@ -308,42 +307,50 @@
     <ClInclude Include="src\GameStates\GSSetting.h">
       <Filter>TrainingFramework\src\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\EnemyTwo.h">
+    <ClInclude Include="src\GameObject\Enemy\EnemyTwo.h">
       <Filter>TrainingFramework\src\GameObject\Enemy\GroundEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Bullet.h">
+    <ClInclude Include="src\GameObject\Bullet\Bullet.h">
       <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\GameButton.h">
+    <ClInclude Include="src\GameObject\Others\GameButton.h">
       <Filter>TrainingFramework\src\GameObject\Other</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BulletManager.h">
+    <ClInclude Include="src\GameObject\Bullet\BulletManager.h">
       <Filter>TrainingFramework\src\GameObject\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Coin.h">
+    <ClInclude Include="src\GameObject\Resource\Coin.h">
       <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\DefensiveManager.h">
+    <ClInclude Include="src\GameObject\Defensive\DefensiveManager.h">
       <Filter>TrainingFramework\src\GameObject\Tower</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BountyObject.h">
+    <ClInclude Include="src\GameObject\Base\BountyObject.h">
       <Filter>TrainingFramework\src\GameObject\Base</Filter>
     </ClInclude>
     <ClInclude Include="src\GameStates\Record.h">
       <Filter>TrainingFramework\src\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Diamond.h">
+    <ClInclude Include="src\GameObject\Resource\Diamond.h">
       <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\ResourceTable.h">
+    <ClInclude Include="src\GameObject\Resource\ResourceTable.h">
       <Filter>TrainingFramework\src\GameObject\Resourse</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\BackgroundMusic.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Enemy\EnemySpawner.h" />
+    <ClInclude Include="src\GameObject\Pathing\Obstacle.h" />
+    <ClInclude Include="src\GameObject\Pathing\ObstacleManager.h" />
+    <ClInclude Include="src\GameObject\Pathing\WayPoint.h" />
+    <ClInclude Include="src\GameObject\Pathing\FloydWarshall.h" />
+    <ClInclude Include="src\GameObject\HUD\HUD.h" />
+    <ClInclude Include="src\GameStates\GSLoadGame.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="pcviewer_es2.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Data\Record.txt" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameStateBase.h"
 #include "MainCharacter.h"
-#include "MainTower.h"
+#include "../GameObject/Defensive/MainTower.h"
 
 class Sprite2D;
 class Sprite3D;
@@ -33,7 +33,6 @@ public:
 private:
 	std::shared_ptr<Sprite2D>		m_background;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
-	std::shared_ptr <MainCharacter> m_mainCharacter;
 	std::shared_ptr <MainTower>		m_mainTower;
 	std::shared_ptr <BaseObject>	m_controller;
 	float							m_time;

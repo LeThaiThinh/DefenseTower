@@ -1,8 +1,8 @@
 #include "GSMenu.h"
-#include "Camera.h"
+#include "Base/Camera.h"
 #include "ResourceManagers.h"
 #include "GSSelectStage.h"
-#include <ResourceTable.h>
+#include <Resource/ResourceTable.h>
 #include "BackgroundMusic.h"
 bool GSMenu::backgroundMusic = true;
 bool GSMenu::vfxSound = true;

@@ -68,6 +68,7 @@ public:
 	Vector3 operator / (GLfloat k);
 	Vector3& operator /= (GLfloat k);
 	Vector3& operator = (const Vector3& vector);
+	bool Vector3::operator == (const Vector3& vector);
 	Vector3 Modulate(Vector3& vector);
 	GLfloat Dot(Vector3& vector);
 	Vector3 Cross(Vector3& vector);

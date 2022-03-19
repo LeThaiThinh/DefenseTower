@@ -34,9 +34,9 @@ void Application::Update(GLfloat deltaTime)
 void Application::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	if (GameStateMachine::GetInstance()->HasState())
 		GameStateMachine::GetInstance()->CurrentState()->Draw();
+
 }
 
 void Application::HandleKeyEvent(unsigned char key, bool bIsPresseded)

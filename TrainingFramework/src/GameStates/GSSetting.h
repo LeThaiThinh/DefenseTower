@@ -1,6 +1,6 @@
 #pragma once
 #include "GameStateBase.h"
-#include <GameButton.h>
+#include <Others/GameButton.h>
 
 class GSSetting : public GameStateBase
 {

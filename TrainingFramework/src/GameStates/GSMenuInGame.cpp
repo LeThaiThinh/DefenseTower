@@ -2,9 +2,10 @@
 #include "GSPlay.h"
 #include <Application.h>
 #include "CheckCollision.h"
-#include "Coin.h"
-#include "EnemyManager.h"
+#include "Resource/Coin.h"
+#include "Enemy/EnemyManager.h"
 #include "BackgroundMusic.h"
+#include "Pathing/FloydWarshall.h"
 GSMenuInGame::GSMenuInGame() : GameStateBase(StateType::STATE_MENU_IN_GAME)
 {
 }
@@ -65,13 +66,14 @@ void GSMenuInGame::Init()
 	button->SetOnClick([]() {
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
+		FloydWarshall::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Remove();
 		BulletPoolManager::GetInstance()->Clear();
 		BulletPoolManager::GetInstance()->Remove();
 		Coin::GetInstance()->Reset();
 		GameStateMachine::GetInstance()->PopState();
-		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
+		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_LOAD_GAME);
 		BackgroundMusic::GetInstance()->StopBGMIngame();
 		});
 	m_listButton.push_back(button);
@@ -87,6 +89,7 @@ void GSMenuInGame::Init()
 		GameStateMachine::GetInstance()->PopState();
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
+		FloydWarshall::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Remove();
 		BulletPoolManager::GetInstance()->Clear();

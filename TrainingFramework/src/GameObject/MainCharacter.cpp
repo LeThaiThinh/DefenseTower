@@ -1,9 +1,9 @@
 #include "MainCharacter.h"
-#include "Bullet.h"
+#include "Bullet/Bullet.h"
 #include "Application.h"
-#include "DefensiveManager.h"
-#include "BaseEnemy.h"
-#include "EnemyOne.h"
+#include "Defensive/DefensiveManager.h"
+#include "Enemy/BaseEnemy.h"
+#include "Enemy/EnemyOne.h"
 MainCharacter::MainCharacter() :Animation2D(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("AnimationShader"),
 	ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),
@@ -96,6 +96,20 @@ bool MainCharacter::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 	{
 		m_targetPosition = Vector3((float)x, (float)y, 0);
 		Attack();
+	}
+	else
+	{
+		isHandled = true;
+	}
+	return isHandled;
+}
+
+bool MainCharacter::HandleTouchHUD(GLint x, GLint y, bool bIsPressed)
+{
+	bool isHandled = false;
+	if (bIsPressed)
+	{
+		
 	}
 	else
 	{

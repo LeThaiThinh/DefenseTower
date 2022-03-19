@@ -1,5 +1,5 @@
 #include "GSSelectStage.h"
-#include "ResourceTable.h"
+#include "Resource/ResourceTable.h"
 int GSSelectStage::choosenLevel = 0;
 int GSSelectStage::currentLevel = 0;
 GSSelectStage::GSSelectStage() : GameStateBase(StateType::STATE_SELECT_STAGE)
@@ -43,7 +43,6 @@ void GSSelectStage::Init()
 	sprite->Set2DPosition(Globals::screenWidth / 2.f + 200.f, Globals::screenHeight / 8.f);
 	sprite->SetISize(30, Globals::screenHeight * 3 / 10.f);
 	m_listRope.push_back(sprite);
-	std::cout << currentLevel;
 	//level number
 	{
 		if (currentLevel >= 1)
@@ -119,7 +118,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 1) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 1;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {
@@ -134,7 +133,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 2) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 2;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {
@@ -149,7 +148,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 3) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 3;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {
@@ -164,7 +163,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 4) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 4;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {
@@ -179,7 +178,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 5) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 5;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {
@@ -194,7 +193,7 @@ void GSSelectStage::Init()
 		if (currentLevel >= 6) {
 			button->SetOnClick([]() {
 				GSSelectStage::choosenLevel = 6;
-				GameStateMachine::GetInstance()->PushState(StateType::STATE_PLAY);
+				GameStateMachine::GetInstance()->PushState(StateType::STATE_LOAD_GAME);
 				});
 		}
 		else {

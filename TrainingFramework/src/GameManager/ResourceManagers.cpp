@@ -1,12 +1,12 @@
 #include "ResourceManagers.h"
-#include "GameObject/Shader.h"
-#include "GameObject/Texture.h"
-#include "GameObject/Model.h"
-#include "GameObject/Camera.h"
-#include "GameObject/Font.h"
-#include "GameObject/Sprite2D.h"
-#include "GameObject/Sprite3D.h"
-#include "GameObject/Text.h"
+#include "Base/Shader.h"
+#include "Base/Texture.h"
+#include "Base/Model.h"
+#include "Base/Camera.h"
+#include "Base/Font.h"
+#include "Base/Sprite2D.h"
+#include "Base/Sprite3D.h"
+#include "Base/Text.h"
 
 
 ResourceManagers::ResourceManagers()

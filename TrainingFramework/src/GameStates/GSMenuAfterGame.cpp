@@ -59,11 +59,11 @@ void GSMenuAfterGame::Init()
 	// button restart
 	texture = ResourceManagers::GetInstance()->GetTexture("UI/button_restart.tga");
 	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(Globals::screenWidth * 2.25 / 6.f, Globals::screenHeight *5 / 6.f - 25.f);
+	button->Set2DPosition(Globals::screenWidth * 2.25f / 6.f, Globals::screenHeight * 5.f / 6.f - 25.f);
 	button->SetISize(125, 125);
 	button->SetOnClick([]() {
 		GSPlay::win = -1;
-		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
+		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_LOAD_GAME);
 		});
 	m_listButton.push_back(button);
 

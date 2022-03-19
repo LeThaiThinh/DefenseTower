@@ -1,5 +1,4 @@
 #include "targetver.h"
-#include "Shader.h"
 #include "Application.h"
 #include "utilities.h" 
 

@@ -22,7 +22,7 @@ public:
 	virtual void HandleMouseMoveEvents(int x, int y) = 0;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
-	
+
 	static std::shared_ptr<GameStateBase> CreateState(StateType stt);
 	StateType GetGameStateType();
 	int keyPressed{};

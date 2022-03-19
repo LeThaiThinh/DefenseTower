@@ -1,19 +1,22 @@
 #include "GSPlay.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "Model.h"
-#include "Camera.h"
-#include "Font.h"
-#include "Sprite2D.h"
-#include "Sprite3D.h"
-#include "Text.h"
-#include "GameButton.h"
-#include "Bullet.h"
+#include "Base/Shader.h"
+#include "Base/Texture.h"
+#include "Base/Model.h"
+#include "Base/Camera.h"
+#include "Base/Font.h"
+#include "Base/Sprite2D.h"
+#include "Base/Sprite3D.h"
+#include "Base/Text.h"
+#include "Others/GameButton.h"
+#include "Bullet/Bullet.h"
 #include <Application.h>
 #include "CheckCollision.h"
-#include "EnemyManager.h"
-#include "ResourceTable.h"
+#include "Enemy/EnemyManager.h"
+#include "Resource/ResourceTable.h"
 #include "BackgroundMusic.h"
+#include "Pathing/ObstacleManager.h"
+#include "Pathing/FloydWarshall.h"
+
 float EnemyPoolManager::currentTimeFindPath = 3;
 int GSPlay::win = -1;
 GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),m_mainCharacter(std::make_shared<MainCharacter>()),
@@ -29,7 +32,6 @@ void GSPlay::Init()
 {
 	if(GSMenu::backgroundMusic)
 		BackgroundMusic::GetInstance()->PlayBGMIngame();
-	srand(time(0));
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_land.tga");
 
@@ -50,10 +52,7 @@ void GSPlay::Init()
 		GameStateMachine::GetInstance()->PushState(StateType::STATE_MENU_IN_GAME);
 		});
 	m_listButton.push_back(button);
-	// init
-	DefensivePoolManager::GetInstance()->Init();
-	EnemyPoolManager::GetInstance()->Init();
-	ResourceTable::GetInstance()->Init();
+
 }
 
 void GSPlay::HandleEvents()
@@ -116,7 +115,9 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 			return;
 		}
 	}
-	DefensivePoolManager::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
+	if (DefensivePoolManager::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed)) {
+		return;
+	}
 	m_mainCharacter->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
 }
 
@@ -178,6 +179,7 @@ void GSPlay::Update(float deltaTime)
 		Coin::GetInstance()->Reset();
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
+		FloydWarshall::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Clear();
 		EnemyPoolManager::GetInstance()->Remove();
 		BulletPoolManager::GetInstance()->Clear();
@@ -199,6 +201,7 @@ void GSPlay::Draw()
 	m_background->Draw();
 	EnemyPoolManager::GetInstance()->Draw();
 	DefensivePoolManager::GetInstance()->Draw();
+	ObstacleManager::GetInstance()->Draw();
 	BulletPoolManager::GetInstance()->Draw();
 	m_mainCharacter->Draw();
 	for (auto& it : m_listButton)

@@ -1,18 +1,18 @@
 #pragma once
-#include "Sprite2D.h"
-#include "Animation2D.h"
-#include "MoveAble.h"
-#include "AttackAble.h"
-#include "AbleToAttack.h"
-#include "ResourceManagers.h"
-#include <BulletManager.h>
-#include <UnMoveThroughAbleTower.h>
+#include "Base/Sprite2D.h"
+#include "Base/Animation2D.h"
+#include "Base/MoveAble.h"
+#include "Base/AttackAble.h"
+#include "Base/AbleToAttack.h"
+#include "../GameManager/ResourceManagers.h"
+#include <Bullet/BulletManager.h>
+#include <Defensive/UnMoveThroughAbleTower.h>
 
 class MainCharacter
 	:public MoveAble,
 	public Animation2D,
 	public AttackAble,
-	public AbleToAttack
+	public AbleToAttack,
 {
 public:
 
@@ -26,6 +26,7 @@ public:
 	void SpawnBullet();
 	void AttackLinear();
 	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
+	bool HandleTouchHUD(GLint x, GLint y, bool bIsPressed);
 	void AttackCircular() {};
 	bool CheckCollide(GLfloat deltaTime);
 	void Draw() { Animation2D::Draw(); AttackAble::Draw(); };
