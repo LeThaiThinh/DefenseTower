@@ -9,13 +9,14 @@
 enum class EnemyType {
 	EnemyOne,
 	EnemyTwo,
+	EnemyThree,
 };
 class BaseEnemy :
 	public Animation2D,
 	public MoveAble,
 	public AbleToAttack,
 	public AttackAble,
-	public BountyObject,
+	public BountyObject
 {
 public:
 	BaseEnemy() :m_type(EnemyType::EnemyOne) {}
@@ -24,8 +25,10 @@ public:
 		std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int numFrameAttack, int numFramesInLineAttack, float frameTimeAttack, float hitPoint, EnemyType type,int bounty)
 		:Animation2D(model, shader, textureLeft, numFrame, numFramesInLine, frameTime, x, y, iwidth, iheight, width, height),
 		MoveAble(speed,textureLeft,textureRight,numFrame,numFramesInLine,frameTime), 
-		AttackAble((GSMenu::difficulty * 0.2f + 0.8f)* hitPoint,(GSMenu::difficulty * 0.2f + 0.8f)*hitPoint), BountyObject(bounty),
-		AbleToAttack(range, attackSpeed,(GSMenu::difficulty*0.2f+0.8f)*damage,delayAttackTime,bulletSpawner, attackLeftAnimation,attackRightAnimation,numFrameAttack,numFramesInLineAttack,frameTimeAttack), m_type(type) {}
+		AttackAble((GSMenu::difficulty * 0.2f + 0.8f)* hitPoint,(GSMenu::difficulty * 0.2f + 0.8f)*hitPoint), BountyObject(bounty+ Upgrade::GetInstance()->upgradeList.find("Upgrade Resource")->second->GetLevel()*1),
+		AbleToAttack(range, attackSpeed,(GSMenu::difficulty*0.2f+0.8f)*damage,delayAttackTime,bulletSpawner, attackLeftAnimation,attackRightAnimation,numFrameAttack,numFramesInLineAttack,frameTimeAttack), m_type(type)
+		,m_isHolding(false)
+	{}
 	~BaseEnemy() {}
 
 	EnemyType GetType() { return m_type; }
@@ -74,7 +77,7 @@ public:
 		//	if target is targeted  
 		if (target) {
 			//if in range able to attack then attack
-			if ((target->GetCenterPosition() - m_centerPosition).Length() <= m_range + target->GetHeight() / 2.f  || CheckCollideTarget(deltaTime)) {
+			if ((target->GetCenterPosition() - m_centerPosition).Length() <= m_range + target->GetHeight() / 2.f + m_height /2.f  || CheckCollideTarget(deltaTime)) {
 				m_isAttacking = true;
 				if (CanAttack()) {
 					Attack();
@@ -108,6 +111,8 @@ public:
 
 	void Reset() {
 		m_hitpoint = m_maxHitPoint;
+		m_isAttacking = false;
+		m_isCastingAttack = false;
 		for (auto& tower : m_attackedList) {
 			std::dynamic_pointer_cast<AbleToAttack>(tower.lock())->Untarget();
 		}
@@ -135,13 +140,18 @@ public:
 		if (towerMin) {
 			if (!m_target) {
 				towerMin->AddEnemyIsAttacking(std::dynamic_pointer_cast<BaseEnemy>(shared_from_this()));
+				m_target = towerMin;
+				FindPath();
+			}
+			else if (m_target && m_target == towerMin) {
+				
 			}
 			else if (m_target && m_target != towerMin) {
 				std::dynamic_pointer_cast<UnMoveThroughAbleTower>(m_target)->RemoveEnemyIsAttacking(std::dynamic_pointer_cast<BaseEnemy>(shared_from_this()));
 				towerMin->AddEnemyIsAttacking(std::dynamic_pointer_cast<BaseEnemy>(shared_from_this()));
+				m_target = towerMin;
+				FindPath();
 			}
-			m_target = towerMin;
-			FindPath();
 		}
 		return towerMin;
 	};
@@ -163,10 +173,30 @@ public:
 	}
 
 	bool HandleTouchHUD(GLint x, GLint y, bool bIsPressed) {
-
+		bool m_isHandled = false;
+		if (bIsPressed)
+		{
+			if (CheckCollision::PointInRect(Vector3(x,y,0),std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
+			{
+				// The button is being pressed down
+				m_isHolding = true;
+			}
+		}
+		else
+		{
+			if (CheckCollision::PointInRect(Vector3(x, y, 0), std::dynamic_pointer_cast<Sprite2D>(shared_from_this()))
+				&& m_isHolding == true)
+			{
+				// Only perform click action when the same button was pressed down and released
+				m_isHandled = true;
+			}
+			m_isHolding = false;
+		}
+		return m_isHandled;
 	}
 
 protected:
+	bool m_isHolding;
 	std::list<Vector3> m_wayPointList;
 	EnemyType m_type;
 };

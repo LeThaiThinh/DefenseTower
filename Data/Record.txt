@@ -1,3 +1,8 @@
+BackgroundMusic 0
 CurrentLevel 2
-Diamond 0
-Difficulty 0
+Diamond 8390
+Difficulty 2
+
+
+
+

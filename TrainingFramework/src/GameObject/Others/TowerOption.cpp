@@ -1,6 +1,6 @@
 #include "TowerOption.h"
 #include "ResourceManagers.h"
-
+#include "HUD/HUD.h"
 #define BORDER_OPTION_TOWER 1.5f
 TowerOption::TowerOption() :m_secondOptionVisible(false) {
 	m_mainOption = std::make_shared<GameButton>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),

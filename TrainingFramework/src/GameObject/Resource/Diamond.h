@@ -34,7 +34,7 @@ public:
 		m_diamondText_middle->Set2DPosition(DIAMOND_POSITION_X_MIDDLE + 5, DIAMOND_POSITION_Y + 10);
 	}
 	bool Purchase(int cost) {
-		if (GSMenu::diamond > cost) {
+		if (GSMenu::diamond >= cost) {
 			GSMenu::diamond -= cost;
 			return true;
 		}

@@ -16,6 +16,8 @@ void Record::ReadAll()
 	GSMenu::difficulty = record["Difficulty"];
 	GSSelectStage::currentLevel = record["CurrentLevel"];
 	GSMenu::diamond = record["Diamond"];
+	GSMenu::backgroundMusic = record["BackgroundMusic"];
+
 	file.close();
 }
 
@@ -25,6 +27,7 @@ void Record::WriteAll()
 	record["Difficulty"] = GSMenu::difficulty;
 	record["CurrentLevel"] = GSSelectStage::currentLevel;
 	record["Diamond"] = GSMenu::diamond;
+	record["BackgroundMusic"] = GSMenu::backgroundMusic;
 
 	for (auto i = record.begin(); i != record.end(); i++)
 	{

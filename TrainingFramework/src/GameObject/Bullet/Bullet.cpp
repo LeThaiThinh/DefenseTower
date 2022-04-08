@@ -218,8 +218,7 @@ void Bullet::Update(float deltaTime)
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideGroundEnemy(GLfloat deltaTime)
 {
 	for (auto &groundEnemy : EnemyPoolManager::GetInstance()->groundEnemyList) {
-		if ((groundEnemy->GetCenterPosition().x + groundEnemy->GetWidth() / 2.f > m_position.x - m_width / 2.f - deltaTime * m_speed * m_direction.x) && (groundEnemy->GetCenterPosition().x - groundEnemy->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
-			&& (groundEnemy->GetCenterPosition().y + groundEnemy->GetIHeight() / 2.f > m_position.y - m_height / 2.f - deltaTime * m_speed * m_direction.y) && (groundEnemy->GetCenterPosition().y - groundEnemy->GetHeight() / 2.f < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
+		if (CheckCollision::RectIntersectRect(groundEnemy, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
 		{
 			return groundEnemy;
 		}
@@ -229,8 +228,7 @@ std::shared_ptr<BaseEnemy> Bullet::CheckCollideGroundEnemy(GLfloat deltaTime)
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideFlyEnemy(GLfloat deltaTime)
 {
 	for (auto &flyEnemy : EnemyPoolManager::GetInstance()->flyEnemyList) {
-		if ((flyEnemy->GetCenterPosition().x + flyEnemy->GetWidth() / 2.f > m_position.x - m_width / 2.f - deltaTime * m_speed * m_direction.x) && (flyEnemy->GetCenterPosition().x - flyEnemy->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
-			&& (flyEnemy->GetCenterPosition().y + flyEnemy->GetIHeight() / 2.f > m_position.y - m_height / 2.f - deltaTime * m_speed * m_direction.y) && (flyEnemy->GetCenterPosition().y - flyEnemy->GetHeight() / 2.f < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
+		if (CheckCollision::RectIntersectRect(flyEnemy, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
 		{
 			return flyEnemy;
 		}
@@ -240,18 +238,14 @@ std::shared_ptr<BaseEnemy> Bullet::CheckCollideFlyEnemy(GLfloat deltaTime)
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideEnemyTarget(GLfloat deltaTime)
 {
 	std::shared_ptr<BaseEnemy> enemy = std::static_pointer_cast<BaseEnemy>(m_target.lock());
-	if ((enemy->GetCenterPosition().x + enemy->GetWidth() / 2.f > m_position.x - m_width / 2.f - deltaTime * m_speed * m_direction.x) && (enemy->GetCenterPosition().x - enemy->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
-			&& (enemy->GetCenterPosition().y + enemy->GetIHeight() / 2.f > m_position.y - m_height / 2.f - deltaTime * m_speed * m_direction.y) && (enemy->GetCenterPosition().y - enemy->GetHeight() / 2.f < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
-	{
+	if (CheckCollision::RectIntersectRect(enemy, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
 		return enemy;
-	}
 	return nullptr;
 }
 std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTower(GLfloat deltaTime)
 {
 	for (auto &tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList) {
-		if ((tower->GetCenterPosition().x + tower->GetWidth() / 2.f > m_position.x - m_width / 2.f - deltaTime * m_speed * m_direction.x) && (tower->GetCenterPosition().x - tower->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
-			&& (tower->GetCenterPosition().y + tower->GetIHeight() / 2.f > m_position.y - m_height / 2.f - deltaTime * m_speed * m_direction.y) && (tower->GetCenterPosition().y - tower->GetHeight() / 2.f < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
+		if (CheckCollision::RectIntersectRect(tower, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
 		{
 			return std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
 		}
@@ -262,10 +256,7 @@ std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTower(GLfloat deltaT
 std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTarget(GLfloat deltaTime)
 {
 	std::shared_ptr<UnMoveThroughAbleTower> tower = std::static_pointer_cast<UnMoveThroughAbleTower>(m_target.lock());
-	if ((tower->GetCenterPosition().x + tower->GetWidth() / 2.f > m_position.x - m_width / 2.f - deltaTime * m_speed * m_direction.x) && (tower->GetCenterPosition().x - tower->GetWidth() / 2.f < m_position.x + m_width / 2.f + deltaTime * m_speed * m_direction.x)
-		&& (tower->GetCenterPosition().y + tower->GetIHeight() / 2.f > m_position.y - m_height / 2.f - deltaTime * m_speed * m_direction.y) && (tower->GetCenterPosition().y - tower->GetHeight() / 2.f < m_position.y + m_height / 2.f + deltaTime * m_speed * m_direction.y))
-	{
-		return std::dynamic_pointer_cast<UnMoveThroughAbleTower>(tower);
-	}
+	if (CheckCollision::RectIntersectRect(tower, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
+		return tower;
 	return nullptr;
 }

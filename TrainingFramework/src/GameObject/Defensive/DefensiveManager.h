@@ -20,17 +20,16 @@ public:
 
 	void Init() {
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 1.f / 2.f, TowerType::Main);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 1.f / 4.f, TowerType::Spot);
+		/*DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 1.f / 4.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 3.f / 4.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f + 75, Globals::screenHeight * 3.f / 4.f + 50, TowerType::Spot);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 3.f / 4.f, TowerType::Spot);
+		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 2.f, Globals::screenHeight * 3.f / 4.f, TowerType::Spot);
 
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);
+		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);
+		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);*/
 		/**/for (int i = 0; i < 25; i++) {
 			float x = Globals::screenWidth * ((float)rand()/RAND_MAX);
 			float y = Globals::screenHeight * ((float)rand() / RAND_MAX);
-			//std::cout << x << " " << y << std::endl;
 			std::shared_ptr<Sprite2D> s = std::make_shared<Sprite2D>(nullptr, nullptr, nullptr, x, y, 80, 60, 80, 60);
 			bool intersect = true;
 			while (intersect) {
@@ -50,10 +49,6 @@ public:
 			}
 			DefensivePoolManager::GetInstance()->Add(x, y, TowerType::Spot);
 		}
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3.f / 8.f, Globals::screenHeight * 2.5f / 8.f, TowerType::Spot);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3.f / 8.f, Globals::screenHeight * 5.f / 8.f, TowerType::Spot);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 5.f / 8.f, Globals::screenHeight * 3 / 8.f, TowerType::Spot);
-		//DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 5.f / 8.f, Globals::screenHeight * 5 / 8.f, TowerType::Spot);
 	}
 
 	void Add(float x, float y, TowerType type) {
@@ -119,8 +114,9 @@ public:
 		for (auto &tower : unMoveThroughAbleTowerList) {
 			if(tower->HandleTouchEvents(x, y, bIsPressed, tower)) {
 				return true;
-			};
+			}
 		}
+		return false;
 	}
 	void Draw() {
 		for (auto &spot : spotList) {

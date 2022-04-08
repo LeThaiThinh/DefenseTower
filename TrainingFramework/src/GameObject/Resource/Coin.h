@@ -39,7 +39,7 @@ public:
 		m_coinText->Set2DPosition(COIN_POSITION_X + 5, COIN_POSITION_Y+10);
 	}
 	bool Purchase(int cost) { 
-		if (m_coinValue > cost) {
+		if (m_coinValue >= cost) {
 			m_coinValue -= cost;
 			return true; 
 		}

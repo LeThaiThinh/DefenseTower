@@ -34,10 +34,17 @@ public:
     }
     static bool PointInRect(Vector3 p1, std::shared_ptr<Sprite2D> r)
     {
-        return p1.x > r->GetLeftTop().x && 
-            p1.x < r->GetRightTop().x &&
-            p1.y > r->GetRightTop().y &&
-            p1.y < r->GetRightBottom().y;
+        return p1.x >= r->GetLeftTop().x && 
+            p1.x <= r->GetRightTop().x &&
+            p1.y >= r->GetRightTop().y &&
+            p1.y <= r->GetRightBottom().y;
+    }
+    static bool PointInRectI(Vector3 p1, std::shared_ptr<Sprite2D> r)
+    {
+        return p1.x >= r->GetLeftTopI().x &&
+            p1.x <= r->GetRightTopI().x &&
+            p1.y >= r->GetRightTopI().y &&
+            p1.y <= r->GetRightBottomI().y;
     }
     static bool LineIntersectsLine(Vector3 l1p1, Vector3 l1p2, Vector3 l2p1, Vector3 l2p2)
     {
@@ -96,11 +103,10 @@ public:
         return true;
     }
     static bool RectIntersectRect(std::shared_ptr<Sprite2D> r1,std::shared_ptr<Sprite2D> r2) {
-        if (r1->GetPosition().x + r1->GetWidth() / 2.f > r2->GetPosition().x - r2->GetWidth() / 2.f && (r1->GetPosition().x - r1->GetWidth() / 2.f < r2->GetPosition().x + r2->GetWidth() / 2.f)
-            && (r1->GetPosition().y + r1->GetHeight() / 2.f > r2->GetPosition().y - r2->GetHeight() / 2.f) && (r1->GetPosition().y - r1->GetHeight() / 2.f < r2->GetPosition().y + r2->GetWidth() / 2.f)) {
-            return true;
-        }
-        else return false;
+        return r1->GetRightBottom().x >= r2->GetLeftBottom().x &&     // r1 right edge past r2 left
+            r1->GetLeftBottom().x <= r2->GetRightBottom().x &&       // r1 left edge past r2 right
+            r1->GetLeftBottom().y >= r2->GetLeftTop().y &&       // r1 top edge past r2 bottom
+            r1->GetLeftTop().y <= r2->GetRightBottom().y;
     }
 private:
 

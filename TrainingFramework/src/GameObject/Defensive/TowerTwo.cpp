@@ -10,8 +10,9 @@ TowerTwo::TowerTwo() :UnMoveThroughAbleTower() {}
 TowerTwo::TowerTwo(float x, float y) : UnMoveThroughAbleTower(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("TextureShader"),
 	ResourceManagers::GetInstance()->GetTexture("TowerTwolvl1.tga"),
-	x, y, 80, 60, 80, 60, 500, 0.3, 40, 0, Vector3(0, 0, 0), nullptr, nullptr, 1000, 0, TowerType::Two, 3)
+	x, y, 80, 60, 80, 60, 500, 0.3f, 40, 0, Vector3(0, 0, 0), nullptr, nullptr, 1000, 0, TowerType::Two, 3)
 {
+	SetName("White Tower");
 	Upgrade();
 	LocateOption();
 }
@@ -75,6 +76,7 @@ void TowerTwo::Upgrade()
 	{
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl1.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl1.tga"));
 		SetISize(60, 60);
 		SetSize(60, 60);
 		m_range = 200;
@@ -84,6 +86,7 @@ void TowerTwo::Upgrade()
 		break;
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl2.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl2.tga"));
 		SetISize(80, 80);
 		SetSize(80, 80);
 		m_range = 200;
@@ -92,6 +95,7 @@ void TowerTwo::Upgrade()
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl3.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerTwolvl3.tga"));
 		SetISize(100, 100);
 		SetSize(100, 100);
 		m_range = 200;

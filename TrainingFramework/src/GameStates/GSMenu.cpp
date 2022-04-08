@@ -23,7 +23,8 @@ GSMenu::~GSMenu()
 
 void GSMenu::Init()
 {
-	BackgroundMusic::GetInstance()->PlayBGMMenu();
+	if(backgroundMusic)
+		BackgroundMusic::GetInstance()->PlayBGMMenu();
 
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_2.tga");

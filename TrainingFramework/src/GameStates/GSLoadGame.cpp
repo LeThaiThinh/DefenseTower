@@ -4,8 +4,8 @@
 #include "Enemy/EnemyManager.h"
 #include "Resource/ResourceTable.h"
 #include "Pathing/FloydWarshall.h"
-
-
+#include "HUD/HUD.h"
+#include "Pathing/Timer.h"
 
 GSLoadGame::GSLoadGame() : GameStateBase(StateType::STATE_LOAD_GAME), m_loadPercentage(0.0f), m_loadBar(nullptr), m_loadBackGround(nullptr),m_time(0.0f), m_wait(false)
 {
@@ -36,10 +36,15 @@ void GSLoadGame::Init()
 	m_loadBar->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
 	m_loadBar->SetISize(0, 0);
 
+	Timer::GetInstance()->AddTimeOperation("LoadGame");
+	MainCharacter::GetInstance()->Init();
 	DefensivePoolManager::GetInstance()->Init();
 	EnemyPoolManager::GetInstance()->Init();
 	ResourceTable::GetInstance()->Init();
+	HUD::GetInstance()->Init();
 	SetLoadPercentage(0.1f);
+	Timer::GetInstance()->EndOperation("LoadGame");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("LoadGame");
 }
 
 void GSLoadGame::Exit()
@@ -83,7 +88,17 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
+			Timer::GetInstance()->AddTimeOperation("LoadGame");
 			ObstacleManager::GetInstance()->Init25();
+			SetLoadPercentage(0.15f);
+			m_wait = true;
+		}
+	}
+	else if (m_loadPercentage == 0.15f)
+	{
+		m_wait = false;
+		if (m_time > 0.1) {
+			ObstacleManager::GetInstance()->Init50();
 			SetLoadPercentage(0.2f);
 			m_wait = true;
 		}
@@ -92,16 +107,25 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
-			ObstacleManager::GetInstance()->Init50();
-			SetLoadPercentage(0.3);
+			ObstacleManager::GetInstance()->Init100();
+			SetLoadPercentage(0.25f);
 			m_wait = true;
 		}
 	}
-	else if (m_loadPercentage == 0.3f)
+	else if (m_loadPercentage == 0.25f)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
 			FloydWarshall::GetInstance()->Init25();
+			SetLoadPercentage(0.35f);
+			m_wait = true;
+		}
+	}
+	else if (m_loadPercentage == 0.35f)
+	{
+		m_wait = false;
+		if (m_time > 0.1) {
+			FloydWarshall::GetInstance()->floydWarshall25();
 			SetLoadPercentage(0.5f);
 			m_wait = true;
 		}
@@ -110,33 +134,47 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
-			FloydWarshall::GetInstance()->floydWarshall25();
-			SetLoadPercentage(0.7f);
+			FloydWarshall::GetInstance()->Init50();
+			SetLoadPercentage(0.6f);
 			m_wait = true;
 		}
 	}
-	else if (m_loadPercentage == 0.7f)
+	else if (m_loadPercentage == 0.6f)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
-			FloydWarshall::GetInstance()->Init50();
-			SetLoadPercentage(0.85);
+			FloydWarshall::GetInstance()->floydWarshall50();
+			SetLoadPercentage(0.75f);
 			m_wait = true;
+
+		}
+	}
+	else if (m_loadPercentage == 0.75f)
+	{
+		m_wait = false;
+		if (m_time > 0.1) {
+			FloydWarshall::GetInstance()->Init100();
+			SetLoadPercentage(0.85f);
+			m_wait = true;
+
 		}
 	}
 	else if (m_loadPercentage == 0.85f)
 	{
 		m_wait = false;
 		if (m_time > 0.1) {
-			FloydWarshall::GetInstance()->floydWarshall50();
-			SetLoadPercentage(1);
+			FloydWarshall::GetInstance()->floydWarshall100();
+			SetLoadPercentage(1.f);
 			m_wait = true;
+
 		}
 	}
 	else if (m_loadPercentage == 1.f)
 	{
 		m_wait = false;
 		if (m_time > 0.25) {
+			Timer::GetInstance()->EndOperation("LoadGame");
+			Timer::GetInstance()->EndAddTimeOperationPerCircle("LoadGame");
 			GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
 		}
 	}

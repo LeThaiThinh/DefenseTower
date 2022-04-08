@@ -9,10 +9,16 @@ public:
 	std::map<std::shared_ptr<WayPoint>, std::map<std::shared_ptr<WayPoint>, std::shared_ptr<WayPoint>>> prev25;
     std::map<std::shared_ptr<WayPoint>, std::map<std::shared_ptr<WayPoint>, float>> dist50;
     std::map<std::shared_ptr<WayPoint>, std::map<std::shared_ptr<WayPoint>, std::shared_ptr<WayPoint>>> prev50;
+    std::map<std::shared_ptr<WayPoint>, std::map<std::shared_ptr<WayPoint>, float>> dist100;
+    std::map<std::shared_ptr<WayPoint>, std::map<std::shared_ptr<WayPoint>, std::shared_ptr<WayPoint>>> prev100;
     void Init() {
         ObstacleManager::GetInstance()->Init();
         Init25();
+        floydWarshall25();
         Init50();
+        floydWarshall50();
+        Init100();
+        floydWarshall100();
     }
     void Init25() {
         for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList25) {
@@ -123,11 +129,68 @@ public:
         }
         return path;
     }
+    void Init100() {
+        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+                if (std::find(wayPoint->adjWayPointList.begin(), wayPoint->adjWayPointList.end(), _wayPoint) != wayPoint->adjWayPointList.end()) {
+                    dist100[wayPoint][_wayPoint] = (wayPoint->wayPoint->GetPosition() - _wayPoint->wayPoint->GetPosition()).Length();
+                    prev100[wayPoint][_wayPoint] = _wayPoint;
+                    //std::cout << (wayPoint->wayPoint->GetPosition() - _wayPoint->wayPoint->GetPosition()).Length()<<" ";
+                }
+                else if (wayPoint == _wayPoint) {
+                    dist100[wayPoint][_wayPoint] = 0;
+                    prev100[wayPoint][_wayPoint] = _wayPoint;
+                }
+                else {
+                    dist100[wayPoint][_wayPoint] = INFINITY;
+                    prev100[wayPoint][_wayPoint] = nullptr;
+                }
+            }
+        }
+    }
+    void floydWarshall100()
+    {
+
+        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+                for (auto& __wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+                    if (dist100[_wayPoint][wayPoint] == -1 || dist100[wayPoint][__wayPoint] == -1) {
+                        continue;
+                    }
+                    else
+                        if (dist100[_wayPoint][__wayPoint] > dist100[_wayPoint][wayPoint] + dist100[wayPoint][__wayPoint]) {
+                            dist100[_wayPoint][__wayPoint] = dist100[_wayPoint][wayPoint] + dist100[wayPoint][__wayPoint];
+                            prev100[_wayPoint][__wayPoint] = prev100[_wayPoint][wayPoint];
+                        }
+                }
+            }
+        }
+        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList100) {
+            }
+        }
+    }
+    std::list<Vector3> constructPath100(std::shared_ptr<WayPoint> u, std::shared_ptr<WayPoint> v)
+    {
+        if (prev100[u][v] == nullptr)
+            return {};
+
+        // Storing the path in a vector
+        std::list<Vector3> path;
+        path.push_back(u->wayPoint->GetPosition());
+        while (u != v) {
+            u = prev100[u][v];
+            path.push_back(u->wayPoint->GetPosition());
+        }
+        return path;
+    }
     void Clear() {
         ObstacleManager::GetInstance()->Clear();
         dist25.clear();
         prev25.clear();
         dist50.clear();
         prev50.clear();
+        dist100.clear();
+        prev100.clear();
     }
 };

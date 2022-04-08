@@ -13,6 +13,7 @@ class MainCharacter
 	public Animation2D,
 	public AttackAble,
 	public AbleToAttack,
+	public CSingleton<MainCharacter>
 {
 public:
 
@@ -32,4 +33,5 @@ public:
 	void Draw() { Animation2D::Draw(); AttackAble::Draw(); };
 private:
 	Vector3 m_targetPosition;
+	bool m_isHolding;
 };

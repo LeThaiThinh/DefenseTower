@@ -37,10 +37,13 @@ public:
 	int			GetWidth() { return m_width; }
 	int			GetHeight() { return m_height; }
 	Vector3		GetCenterPosition() { return m_centerPosition; }
-	Vector3		GetLeftTop() { return Vector3(m_centerPosition.x - m_width / 2.f, m_centerPosition.y - m_height / 2.f, 0); }
-	Vector3		GetRightTop() { return Vector3(m_centerPosition.x + m_width / 2.f, m_centerPosition.y - m_height / 2.f, 0); }
-	Vector3		GetLeftBottom() { return Vector3(m_centerPosition.x - m_width / 2.f, m_centerPosition.y + m_height / 2.f, 0); }
-	Vector3		GetRightBottom() { return Vector3(m_centerPosition.x + m_width / 2.f, m_centerPosition.y + m_height / 2.f, 0); }
-
+	Vector3		GetLeftTop() { return Vector3(m_position.x - m_width / 2.f, m_position.y - m_height / 2.f, 0); }
+	Vector3		GetRightTop() { return Vector3(m_position.x + m_width / 2.f, m_position.y - m_height / 2.f, 0); }
+	Vector3		GetLeftBottom() { return Vector3(m_position.x - m_width / 2.f, m_position.y + m_height / 2.f, 0); }
+	Vector3		GetRightBottom() { return Vector3(m_position.x + m_width / 2.f, m_position.y + m_height / 2.f, 0); }
+	Vector3		GetLeftTopI() { return Vector3(m_position.x - m_iWidth / 2.f, m_position.y - m_iHeight / 2.f, 0); }
+	Vector3		GetRightTopI() { return Vector3(m_position.x + m_iWidth / 2.f, m_position.y - m_iHeight / 2.f, 0); }
+	Vector3		GetLeftBottomI() { return Vector3(m_position.x - m_iWidth / 2.f, m_position.y + m_iHeight / 2.f, 0); }
+	Vector3		GetRightBottomI() { return Vector3(m_position.x + m_iWidth / 2.f, m_position.y + m_iHeight / 2.f, 0); }
 };
 

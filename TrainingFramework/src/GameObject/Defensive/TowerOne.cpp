@@ -12,6 +12,7 @@ TowerOne::TowerOne(float x, float y) : UnMoveThroughAbleTower(ResourceManagers::
 	ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"),
 	x, y, 80, 60, 80, 60, 300, 1.5, 2,0,Vector3(0,0,0),nullptr,nullptr, 300.0f, 0, TowerType::One, 3)
 {
+	SetName("Brown Tower");
 	Upgrade();
 	LocateOption();
 }
@@ -38,6 +39,7 @@ void TowerOne::Upgrade()
 	{
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"));
 		SetISize(80, 60);
 		m_totalCost = TowerOneCost;
 		m_costUpgrade = 100;
@@ -49,6 +51,7 @@ void TowerOne::Upgrade()
 		break;
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl2.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl2.tga"));
 		SetISize(80, 60);
 		m_totalCost += m_costUpgrade;
 		m_costUpgrade = 140;
@@ -59,6 +62,7 @@ void TowerOne::Upgrade()
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl3.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl3.tga"));
 		SetISize(80, 60);
 		m_totalCost += m_costUpgrade;
 		m_costUpgrade = 0;

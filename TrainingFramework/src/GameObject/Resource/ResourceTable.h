@@ -23,11 +23,11 @@ public:
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/rope_big.tga");
 		auto sprite = std::make_shared<Sprite2D>(model, shader, texture);
 		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f - 100.f, Globals::screenHeight *0.25f / 10.f);
-		sprite->SetISize(10, Globals::screenHeight * 0.5 / 10.f);
+		sprite->SetISize(10, Globals::screenHeight * 0.5f / 10);
 		m_listRope.push_back(sprite);
 		sprite = std::make_shared<Sprite2D>(model, shader, texture);
 		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f + 100.f, Globals::screenHeight *0.25f / 10.f);
-		sprite->SetISize(10, Globals::screenHeight * 0.5 / 10.f);
+		sprite->SetISize(10, Globals::screenHeight * 0.5f / 10);
 		m_listRope.push_back(sprite);
 	}
 	void Draw() {

@@ -34,6 +34,8 @@ public:
 	void		SetFont(std::shared_ptr<Font> font);
 	void		SetText(std::string text);
 
+	std::string GetText();
+
 	void		Set2DPosition(GLfloat x, GLfloat y);
 	void		Set2DPosition(Vector2 pos);
 

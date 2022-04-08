@@ -10,6 +10,7 @@
 
 #include "GameStatebase.h"
 #include <GameStates/GSLoadGame.h>
+#include <GameStates/GSShop.h>
 
 GameStateBase::GameStateBase(StateType stateType) : m_stateType(stateType)
 {}
@@ -50,6 +51,9 @@ std::shared_ptr<GameStateBase> GameStateBase::CreateState(StateType stt)
 		break;
 	case StateType::STATE_LOAD_GAME:
 		gs = std::make_shared<GSLoadGame>();
+		break;
+	case StateType::STATE_SHOP:
+		gs = std::make_shared<GSShop>();
 		break;
 	default:
 		break;

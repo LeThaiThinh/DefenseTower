@@ -64,6 +64,7 @@ void GSMenuInGame::Init()
 	button->Set2DPosition(Globals::screenWidth * 3 / 6.f, Globals::screenHeight * 5 / 6.f - 25.f);
 	button->SetISize(125, 125);
 	button->SetOnClick([]() {
+		MainCharacter::FreeInstance();
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
 		FloydWarshall::GetInstance()->Clear();
@@ -87,6 +88,7 @@ void GSMenuInGame::Init()
 	button->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PopState();
 		GameStateMachine::GetInstance()->PopState();
+		MainCharacter::FreeInstance();
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
 		FloydWarshall::GetInstance()->Clear();

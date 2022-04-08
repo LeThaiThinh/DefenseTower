@@ -42,23 +42,23 @@ void GSCredit::Init()
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Rot.ttf");
 	std::shared_ptr<Text> m_textInMenu = std::make_shared< Text>(shader, font, "Credit", Vector4(1.0f, 0.6f, 0.f, 1.0f), 3.0f);
-	m_textInMenu->Set2DPosition(Vector2(480.f, Globals::screenHeight * 2.5 / 10.f + 25));
+	m_textInMenu->Set2DPosition(Vector2(480.f, Globals::screenHeight * 2.5f / 10 + 25.f));
 	m_listText.push_back(m_textInMenu);
 
 	m_textInMenu = std::make_shared< Text>(shader, font, "Designer - Le Thai Thinh", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	m_textInMenu->Set2DPosition(Vector2(310.f, Globals::screenHeight * 4 / 10.f + 15.f));
+	m_textInMenu->Set2DPosition(Vector2(310.f, Globals::screenHeight * 4.f / 10 + 15.f));
 	m_listText.push_back(m_textInMenu);
 
 	m_textInMenu = std::make_shared< Text>(shader, font, "Programmer - Le Thai Thinh", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	m_textInMenu->Set2DPosition(Vector2(280.f, Globals::screenHeight * 5 / 10.f + 15.f));
+	m_textInMenu->Set2DPosition(Vector2(280.f, Globals::screenHeight * 5.f / 10 + 15.f));
 	m_listText.push_back(m_textInMenu);
 
 	m_textInMenu = std::make_shared< Text>(shader, font, "Donor - Le Thai Thinh", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	m_textInMenu->Set2DPosition(Vector2(355.f, Globals::screenHeight * 6 / 10.f + 15.f));
+	m_textInMenu->Set2DPosition(Vector2(355.f, Globals::screenHeight * 6.f / 10 + 15.f));
 	m_listText.push_back(m_textInMenu);
 
 	m_textInMenu = std::make_shared< Text>(shader, font, "Producer - Le Thai Thinh", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	m_textInMenu->Set2DPosition(Vector2(310.f, Globals::screenHeight * 7 / 10.f + 15.f));
+	m_textInMenu->Set2DPosition(Vector2(310.f, Globals::screenHeight * 7.f / 10 + 15.f));
 	m_listText.push_back(m_textInMenu);
 }
 

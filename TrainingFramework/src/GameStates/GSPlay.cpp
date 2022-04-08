@@ -16,10 +16,11 @@
 #include "BackgroundMusic.h"
 #include "Pathing/ObstacleManager.h"
 #include "Pathing/FloydWarshall.h"
-
+#include "HUD/HUD.h"
+#include "Pathing/Timer.h"
 float EnemyPoolManager::currentTimeFindPath = 3;
 int GSPlay::win = -1;
-GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),m_mainCharacter(std::make_shared<MainCharacter>()),
+GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),
 m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{})
 {
 }
@@ -34,9 +35,8 @@ void GSPlay::Init()
 		BackgroundMusic::GetInstance()->PlayBGMIngame();
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_land.tga");
-
-	// background
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
+	// background
 	m_background = std::make_shared<Sprite2D>(model, shader, texture);
 	m_background->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
 	m_background->SetISize(Globals::mapWidth, Globals::mapHeight);
@@ -115,10 +115,11 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 			return;
 		}
 	}
-	if (DefensivePoolManager::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed)) {
+	HUD::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
+	if(DefensivePoolManager::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed)) {
 		return;
 	}
-	m_mainCharacter->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
+	MainCharacter::GetInstance()->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed);
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
@@ -163,7 +164,7 @@ void GSPlay::Update(float deltaTime)
 		it->Update(deltaTime);
 		it->Set2DStaticPosition();
 	}
-	m_mainCharacter->Update(deltaTime);
+	MainCharacter::GetInstance()->Update(deltaTime);
 	DefensivePoolManager::GetInstance()->Update(deltaTime);
 	DefensivePoolManager::GetInstance()->Remove();
 	EnemyPoolManager::GetInstance()->Spawn(m_time);
@@ -171,12 +172,20 @@ void GSPlay::Update(float deltaTime)
 	EnemyPoolManager::GetInstance()->Remove();
 	BulletPoolManager::GetInstance()->Update(deltaTime);
 	BulletPoolManager::GetInstance()->Remove();
+	HUD::GetInstance()->Update();
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy25");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect25");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy50");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect50");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy100");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect100");
 	if (win == 1 || win == 0) {
 		Application::GetInstance()->GetCamera()->SetMoveCamera(-Application::GetInstance()->GetCamera()->GetPosition());
 		Application::GetInstance()->GetCamera()->Update(1 / 300.f);
 		Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 0, 0));
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU_AFTER_GAME);
 		Coin::GetInstance()->Reset();
+		MainCharacter::FreeInstance();
 		DefensivePoolManager::GetInstance()->Clear();
 		DefensivePoolManager::GetInstance()->Remove();
 		FloydWarshall::GetInstance()->Clear();
@@ -185,6 +194,12 @@ void GSPlay::Update(float deltaTime)
 		BulletPoolManager::GetInstance()->Clear();
 		BulletPoolManager::GetInstance()->Remove();
 		BackgroundMusic::GetInstance()->StopBGMIngame();
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy25");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect25");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy50");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect50");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy100");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect100");
 		if (win) {
 			ResourceManagers::GetInstance()->GetSound("win.wav")->PlaySoundFromStart2D(false);
 			if(GSSelectStage::choosenLevel == GSSelectStage::currentLevel)
@@ -203,26 +218,27 @@ void GSPlay::Draw()
 	DefensivePoolManager::GetInstance()->Draw();
 	ObstacleManager::GetInstance()->Draw();
 	BulletPoolManager::GetInstance()->Draw();
-	m_mainCharacter->Draw();
+	MainCharacter::GetInstance()->Draw();
 	for (auto& it : m_listButton)
 	{
 		it->Draw();
 	}
 	ResourceTable::GetInstance()->Draw();
+	HUD::GetInstance()->Draw();
 }
 
 void GSPlay::HandleKeyPress(float deltaTime) {
 	if (keyPressed & KEY_MOVE_LEFT) {
-		m_mainCharacter->Move(deltaTime, Vector3(-1, 0, 0));
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(-1, 0, 0));
 	}
 	if (keyPressed & KEY_MOVE_RIGHT) {
-		m_mainCharacter->Move(deltaTime, Vector3(1, 0, 0));
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(1, 0, 0));
 	}
 	if (keyPressed & KEY_MOVE_FORWARD) {
-		m_mainCharacter->Move(deltaTime, Vector3(0, -1, 0));
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, -1, 0));
 	}
 	if (keyPressed & KEY_MOVE_BACKWARD) {
-		m_mainCharacter->Move(deltaTime, Vector3(0, 1, 0));
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, 1, 0));
 	}
 }
 

@@ -1,26 +1,30 @@
 #pragma once
 #include "Singleton.h"
 #include <Base/Text.h>
-class HUD : CSingleton<HUD>
+#include "Base/Sprite2D.h"
+
+class HUD : public CSingleton<HUD>
 {
 public:
 	HUD();
 	~HUD();
 
+	void Init();
 	void ChangeSubject(std::shared_ptr<BaseObject> obj);
+	void UpdateSubject();
 	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed);
+	void Update();
 	void Draw();
 
 private:
-	float m_hitpoint;
-	float m_maxHitpoint;
+	std::shared_ptr<BaseObject> m_subj;
 	std::shared_ptr<Text> m_textHitpointPerMaxHitpoint;
-	float m_attackDamage;
 	std::shared_ptr<Text> m_textAttackDamgage;
-	float m_attackSpeed;
 	std::shared_ptr<Text> m_textAttackSpeed;
-	float m_attackRange;
 	std::shared_ptr<Text> m_textAttackRange;
-
+	std::shared_ptr<Text> m_textName;
+	std::shared_ptr<Sprite2D>	m_table;
+	std::shared_ptr<Sprite2D>	m_avatar;
+	std::list<std::shared_ptr<Sprite2D>>	m_iconList;
 };
 

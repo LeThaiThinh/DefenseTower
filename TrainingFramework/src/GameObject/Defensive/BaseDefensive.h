@@ -3,7 +3,7 @@
 #include "Base/AbleToAttack.h"
 #include "Others/GameButton.h"
 #include "Others/TowerOption.h"
-
+#include "Others/Upgrade.h"
 
 class BaseEnemy;
 class TowerOption;
@@ -21,19 +21,23 @@ enum class TowerType
 class BaseDefensive :
 	public AbleToAttack,
 	public Sprite2D,
-	public AttackAble,
+	public AttackAble
 {
 public:
 	BaseDefensive() :AbleToAttack(), Sprite2D(), AttackAble(), m_level(0), m_maxlevel(3), m_totalCost(0), m_costUpgrade(0), m_disposable(false), m_type(TowerType::Spot) {}
 	BaseDefensive(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
 		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float delayAttackTime,Vector3 bulletSpawner, std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int level, TowerType type, int maxlevel)
-		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(0,0),
+		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(0,1),
 		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation),
 		m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) {}
 	BaseDefensive(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
 		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float delayAttackTime, Vector3 bulletSpawner, std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int level, TowerType type, int maxlevel, float hitPoint, float maxHitPoint)
-		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(hitPoint, maxHitPoint),
-		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation), m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) {}
+		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(hitPoint+ Upgrade::GetInstance()->upgradeList.find("Upgrade Health")->second->GetLevel()*200, maxHitPoint+ Upgrade::GetInstance()->upgradeList.find("Upgrade Health")->second->GetLevel() * 200),
+		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation), m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) 
+	{
+		m_regen = Upgrade::GetInstance()->upgradeList.find("Upgrade Regen")->second->GetLevel()*5;
+		std::cout << Upgrade::GetInstance()->upgradeList.find("Upgrade Regen")->second->GetLevel() * 5;
+	}
 	~BaseDefensive() {}
 
 	int GetTotalCost() { return m_totalCost; }
@@ -52,7 +56,8 @@ public:
 	virtual void	Update(GLfloat deltatime) {
 		Sprite2D::Update(deltatime);
 		AbleToAttack::Update(deltatime);
-		AttackAble::UpdateHitPointBarAndLostHitpointBarPosition(m_position.x, m_position.y - m_iHeight * static_cast<float>(2) / 3);
+		AttackAble::Update(deltatime);
+		AttackAble::UpdateHitPointBarAndLostHitpointBarPosition(m_position.x, m_position.y - m_iHeight * 2.f / 3);
 		AttackAble::UpdateHitPointBarAndLostHitpointBarSize();
 		m_towerOption->Update(deltatime);
 	};

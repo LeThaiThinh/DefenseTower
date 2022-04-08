@@ -101,6 +101,7 @@ void GSSelectStage::Init()
 	}
 	//button 
 	{
+		// button back
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_close_2.tga");
 		std::shared_ptr<GameButton>  button = std::make_shared<GameButton>(model, shader, texture);
 		button->Set2DPosition(Globals::screenWidth * 5 / 6.f - 25.f, Globals::screenHeight / 6.f + 25.f);
@@ -109,7 +110,15 @@ void GSSelectStage::Init()
 			GameStateMachine::GetInstance()->PopState();
 			});
 		m_listButton.push_back(button);
-
+		// button shop
+		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_shop.tga");
+		button = std::make_shared<GameButton>(model, shader, texture);
+		button->Set2DPosition(Globals::screenWidth * 1 / 6.f + 25.f, Globals::screenHeight / 6.f + 25.f);
+		button->SetISize(75, 75);
+		button->SetOnClick([]() {
+			GameStateMachine::GetInstance()->PushState(StateType::STATE_SHOP);
+			});
+		m_listButton.push_back(button);
 		//button level
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/btton_empty.tga");
 		button = std::make_shared<GameButton>(model, shader, texture);
@@ -203,6 +212,7 @@ void GSSelectStage::Init()
 	}
 
 	ResourceTable::GetInstance()->Init();
+	
 }
 
 void GSSelectStage::Exit()

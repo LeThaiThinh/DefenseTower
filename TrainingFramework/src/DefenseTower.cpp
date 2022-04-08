@@ -1,6 +1,8 @@
 #include "targetver.h"
 #include "Application.h"
 #include "utilities.h" 
+#include "GLES2/gl2.h"
+
 
 int Globals::screenWidth = 1200;
 int Globals::screenHeight = 960;
@@ -54,16 +56,16 @@ GLint _tmain(GLint argc, _TCHAR* argv[])
 	esCreateWindow(&esContext, "Territory Conquest", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 	if (Init(&esContext) != 0)
 		return 0;
+
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, OnKey);
 	esRegisterMouseFunc(&esContext, OnMouseClick);
 	esRegisterMouseMoveFunc(&esContext, OnMouseMove);
 	esMainLoop(&esContext);
-
 	//releasing OpenGL resources
 	CleanUp();
-
+	
 	//printf("Press any key...\n");
 	//_getch();
 

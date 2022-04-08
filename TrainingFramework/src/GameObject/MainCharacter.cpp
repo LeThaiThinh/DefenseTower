@@ -10,7 +10,8 @@ MainCharacter::MainCharacter() :Animation2D(ResourceManagers::GetInstance()->Get
 	6, 6, 0.5f, 300.f, 300.f, 30, 30, 30, 30),
 	AbleToAttack(100.f, 2.f, 10.f, 0.3f, Vector3(10, 0, 0), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_right.tga")),
 	AttackAble(500.f, 500.f), 
-	MoveAble(50.f, ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_right.tga"),3,3,0.1)
+	MoveAble(50.f, ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_right.tga"),3,3,0.1f),
+	m_isHolding(false)
 {
 	Init();
 }
@@ -21,6 +22,8 @@ MainCharacter::~MainCharacter()
 
 void MainCharacter::Init()
 {
+	SetName("Witch");
+	SetAvatar(ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_avatar.tga"));
 }
 
 void MainCharacter::Move(GLfloat deltatime)
@@ -106,16 +109,28 @@ bool MainCharacter::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 
 bool MainCharacter::HandleTouchHUD(GLint x, GLint y, bool bIsPressed)
 {
-	bool isHandled = false;
+	bool m_isHandled = false;
 	if (bIsPressed)
 	{
-		
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f))
+		{
+			// The button is being pressed down
+			m_isHolding = true;
+		}
 	}
 	else
 	{
-		isHandled = true;
+		if ((x > m_position.x - m_iWidth / 2.f) && (x < m_position.x + m_iWidth / 2.f)
+			&& (y > m_position.y - m_iHeight / 2.f) && (y < m_position.y + m_iHeight / 2.f)
+			&& m_isHolding == true)
+		{
+			// Only perform click action when the same button was pressed down and released
+			m_isHandled = true;
+		}
+		m_isHolding = false;
 	}
-	return isHandled;
+	return m_isHandled;
 }
 
 bool MainCharacter::CheckCollide(GLfloat deltaTime)

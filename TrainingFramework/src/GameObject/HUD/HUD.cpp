@@ -3,6 +3,7 @@
 #include <Base/AbleToAttack.h>
 #include "Defensive/DefensiveManager.h"
 #include "Enemy/EnemyManager.h"
+#include "Base/Sprite2D.h"
 HUD::HUD()
 {
 }
@@ -11,46 +12,130 @@ HUD::~HUD()
 {
 }
 
-void HUD::ChangeSubject(std::shared_ptr<BaseObject> obj)
+void HUD::Init()
 {
-	m_hitpoint = std::dynamic_pointer_cast<AttackAble>(obj)->GetHitPoint();
-	m_maxHitpoint = std::dynamic_pointer_cast<AttackAble>(obj)->GetMaxHitPoint();
-	m_attackDamage = std::dynamic_pointer_cast<AbleToAttack>(obj)->GetDamage();
-	m_attackRange = std::dynamic_pointer_cast<AbleToAttack>(obj)->GetRange();
-	m_attackSpeed = std::dynamic_pointer_cast<AbleToAttack>(obj)->GetAttackSpeed();
+	m_subj = MainCharacter::GetInstance();
+	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/table.tga");
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
+	//table
+	m_table = std::make_shared<Sprite2D>(model, shader, texture);
+	m_table->Set2DStaticPosition(Globals::screenWidth / 2.f, Globals::screenHeight * 5.25 / 6.f);
+	m_table->SetISize(Globals::screenWidth/2, Globals::screenHeight/6);
+	//icon
+	texture = ResourceManagers::GetInstance()->GetTexture("UI/health_icon.tga");
+	auto icon = std::make_shared<Sprite2D>(model, shader, texture);
+	icon->Set2DStaticPosition(550, Globals::screenHeight * 5.f / 6.f);
+	icon->SetISize(50, 50);
+	m_iconList.push_back(icon);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("UI/attack_damage_icon.tga");
+	icon = std::make_shared<Sprite2D>(model, shader, texture);
+	icon->Set2DStaticPosition(750, Globals::screenHeight * 5.f / 6.f);
+	icon->SetISize(50, 50);
+	m_iconList.push_back(icon);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("UI/attack_range_icon.tga");
+	icon = std::make_shared<Sprite2D>(model, shader, texture);
+	icon->Set2DStaticPosition(550, Globals::screenHeight * 5.5f / 6.f);
+	icon->SetISize(50, 50);
+	m_iconList.push_back(icon);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("UI/attack_speed_icon.tga");
+	icon = std::make_shared<Sprite2D>(model, shader, texture);
+	icon->Set2DStaticPosition(750, Globals::screenHeight * 5.5f / 6.f);
+	icon->SetISize(50, 50);
+	m_iconList.push_back(icon);
+	//avatar
+	m_avatar = std::make_shared<Sprite2D>(model, shader, texture);
+	m_avatar->Set2DStaticPosition(400, Globals::screenHeight * 5.25f / 6.f - 10);
+	m_avatar->SetISize(100, 100);
+	//text
+	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	m_textHitpointPerMaxHitpoint = std::make_shared< Text>(shader, font, "", Vector4(1.0f, 0.6f, 0.f, 1.0f), 1.0f);
+	m_textHitpointPerMaxHitpoint->Set2DPosition(Vector2(600, Globals::screenHeight * 5.f / 6.f + 5));
+	m_textAttackDamgage = std::make_shared< Text>(shader, font, "", Vector4(1.0f, 0.6f, 0.f, 1.0f), 1.0f);
+	m_textAttackDamgage->Set2DPosition(Vector2(800, Globals::screenHeight * 5.f / 6.f + 5));
+	m_textAttackRange = std::make_shared< Text>(shader, font, "", Vector4(1.0f, 0.6f, 0.f, 1.0f), 1.0f);
+	m_textAttackRange->Set2DPosition(Vector2(600, Globals::screenHeight * 5.5f / 6.f + 5));
+	m_textAttackSpeed = std::make_shared<Text>(shader, font, "", Vector4(1.0f, 0.6f, 0.f, 1.0f), 1.0f);
+	m_textAttackSpeed->Set2DPosition(Vector2(800, Globals::screenHeight * 5.5f / 6.f + 5));
+	m_textName = std::make_shared<Text>(shader, font, "", Vector4(1.0f, 0.6f, 0.f, 1.0f), 1.0f);
+	m_textName->Set2DPosition(Vector2(400, Globals::screenHeight * 5.5f / 6.f + 20));
+	UpdateSubject();
 }
 
+void HUD::ChangeSubject(std::shared_ptr<BaseObject> obj)
+{
+	m_subj = obj;
+	UpdateSubject();
+}
+void HUD::UpdateSubject()
+{
+	m_textHitpointPerMaxHitpoint->SetText(std::to_string((int)std::dynamic_pointer_cast<AttackAble>(m_subj)->GetHitPoint())+ "/" + std::to_string((int)std::dynamic_pointer_cast<AttackAble>(m_subj)->GetMaxHitPoint()));
+	m_textAttackDamgage->SetText(std::to_string((int)std::dynamic_pointer_cast<AbleToAttack>(m_subj)->GetDamage()));
+	m_textAttackRange->SetText(std::to_string((int)std::dynamic_pointer_cast<AbleToAttack>(m_subj)->GetRange()));
+	m_textAttackSpeed->SetText(std::to_string((int)std::dynamic_pointer_cast<AbleToAttack>(m_subj)->GetAttackSpeed()));
+	m_textName->SetText(m_subj->GetName());
+	m_textName->Set2DPosition(400 - m_textName->GetText().length() * 5, Globals::screenHeight * 5.5f / 6.f + 5);
+	m_avatar->SetTexture(std::dynamic_pointer_cast<AttackAble>(m_subj)->GetAvatar());
+
+}
 bool HUD::HandleTouchEvents(GLint x, GLint y, bool bIsPressed)
 {
 	for (auto& enemy:EnemyPoolManager::GetInstance()->flyEnemyList)
 	{
-		if (enemy->HandleTouchEvents(x, y, bIsPressed)) {
+		if (enemy->HandleTouchHUD(x, y, bIsPressed)) {
 			ChangeSubject(std::dynamic_pointer_cast<BaseObject>(enemy));
 			return true;
 		}
 	}
 	for (auto& enemy : EnemyPoolManager::GetInstance()->groundEnemyList)
 	{
-		if (enemy->HandleTouchEvents(x, y, bIsPressed)) {
+		if (enemy->HandleTouchHUD(x, y, bIsPressed)) {
 			ChangeSubject(std::dynamic_pointer_cast<BaseObject>(enemy));
 			return true;
 		}
 	}
 	for (auto& tower : DefensivePoolManager::GetInstance()->unMoveThroughAbleTowerList)
 	{
-		if (tower->HandleTouchEvents(x, y, bIsPressed)) {
+		if (tower->HandleTouchEvents(x, y, bIsPressed,tower)) {
 			ChangeSubject(std::dynamic_pointer_cast<BaseObject>(tower));
 			return true;
 		}
 	}
-	if (DefensivePoolManager::GetInstance()->mainTower->HandleTouchEvents(x, y, bIsPressed)) {
+	if (DefensivePoolManager::GetInstance()->mainTower->HandleTouchEvents(x, y, bIsPressed, DefensivePoolManager::GetInstance()->mainTower)) {
 		ChangeSubject(std::dynamic_pointer_cast<BaseObject>(DefensivePoolManager::GetInstance()->mainTower));
 		return true;
+	}
+	if (MainCharacter::GetInstance()->HandleTouchHUD(x, y, bIsPressed)) {
+		ChangeSubject(MainCharacter::GetInstance());
 	}
 	return false;
 }
 
+void HUD::Update()
+{
+	UpdateSubject();
+	m_table->Set2DStaticPosition();
+	m_avatar->Set2DStaticPosition();
+	for (auto& icon : m_iconList) {
+		icon->Set2DStaticPosition();
+	}
+}
+
 void HUD::Draw()
 {
+	m_table->Draw();
+	m_avatar->Draw();
+	m_textHitpointPerMaxHitpoint->Draw();
+	m_textAttackDamgage->Draw();
+	m_textAttackRange->Draw();
+	m_textAttackSpeed->Draw();
+	m_textName->Draw();
+	for (auto& icon : m_iconList) {
+		icon->Draw();
+	}
 
 }

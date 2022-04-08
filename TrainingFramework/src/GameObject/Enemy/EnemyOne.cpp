@@ -8,6 +8,8 @@ EnemyOne::EnemyOne(float x, float y) :GroundEnemy(ResourceManagers::GetInstance(
 	0.3f,Vector3(0,0,0), ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_one_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_one_attack_right.tga"),
 	3,3,0.1f,100, EnemyType::EnemyOne,2)
 {
+	SetName("Mushroom");
+	SetAvatar(ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_one_avatar.tga"));
 }
 
 EnemyOne::~EnemyOne()

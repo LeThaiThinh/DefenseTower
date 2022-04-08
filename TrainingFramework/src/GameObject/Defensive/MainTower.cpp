@@ -12,9 +12,10 @@ MainTower::MainTower(float x, float y)
 		ResourceManagers::GetInstance()->GetShader("TextureShader"),ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"),
 		x, y, 210, 150, 240,210 , 100, 1, 0, 0.2f,Vector3(0,0,0),
 		ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), 
-	10000, 1, TowerType::Main, 3)
+	5000, 1, TowerType::Main, 3)
 {
-
+	SetName("Main tower");
+	SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
 }
 
 void MainTower::Attack()
@@ -55,6 +56,7 @@ void MainTower::Upgrade()
 	{
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
 		SetISize(350, 250);
 		SetSize(380, 300);
 		m_range = 200;
@@ -65,6 +67,7 @@ void MainTower::Upgrade()
 		break;
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
 		SetISize(175, 175);
 		SetSize(200, 175);
 		m_range = 200;
@@ -75,38 +78,9 @@ void MainTower::Upgrade()
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
+		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
 		SetISize(200, 175);
 		SetSize(200, 175);
-		m_range = 200;
-		m_attackSpeed = 1;
-		m_currentTimeAttack = GetAttackSpeed();
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
-		break;
-	case 4:
-		SetTexture(ResourceManagers::GetInstance()->GetTexture("MainTowerlvl4.tga"));
-		SetISize(168, 168);
-		SetSize(96, 96);
-		m_range = 200;
-		m_attackSpeed = 1;
-		m_currentTimeAttack = GetAttackSpeed();
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
-		break;
-	case 5:
-		SetTexture(ResourceManagers::GetInstance()->GetTexture("MainTowerlvl5.tga"));
-		SetISize(182, 182);
-		SetSize(104, 104);
-		m_range = 200;
-		m_attackSpeed = 1;
-		m_currentTimeAttack = 1;
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
-		break;
-	case 6:
-		SetTexture(ResourceManagers::GetInstance()->GetTexture("MainTowerlvl6.tga"));
-		SetISize(196, 196);
-		SetSize(112, 112);
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();

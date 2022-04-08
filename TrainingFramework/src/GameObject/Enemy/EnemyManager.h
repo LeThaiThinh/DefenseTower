@@ -5,6 +5,7 @@
 #include "EnemyTwo.h"
 #include "GameStates/GSPlay.h"
 #include "Resource/Coin.h"
+#include <Enemy/EnemyThree.h>
 #define TimeFindPath 3.0;
 class EnemyPoolManager : public CSingleton<EnemyPoolManager>
 {
@@ -13,6 +14,7 @@ public:
 
 	std::list<std::shared_ptr<BaseEnemy>> enemyOneResources;
 	std::list<std::shared_ptr<BaseEnemy>> enemyTwoResources;
+	std::list<std::shared_ptr<BaseEnemy>> enemyThreeResources;
 
 	std::list<std::shared_ptr<BaseEnemy>> flyEnemyList;
 	std::list<std::shared_ptr<BaseEnemy>> flyEnemyListRemove;
@@ -30,16 +32,16 @@ public:
 		//spawnerList.push_back(std::make_shared<EnemySpawner>(200.f, 500.f, EnemyType::EnemyTwo, 2.f));
 		//spawnerList.push_back(std::make_shared<EnemySpawner>(0.f, 0.f, EnemyType::EnemyTwo, 3.f));
 		/**/
-		for (int i = 0; i < 40; i++) {
-			float x = Globals::mapWidth * ((float)rand() / RAND_MAX);
-			float y = Globals::mapHeight * ((float)rand() / RAND_MAX);
-			if (x < Globals::screenWidth && x>0) {
-				while (y< Globals::screenHeight &&y>0)
+		for (int i = 0; i < 60; i++) {
+			float x = -100 - Globals::mapWidth/2 + Globals::screenWidth/2 + (Globals::mapWidth + 200) * ((float)rand() / RAND_MAX);
+			float y = -100 -Globals::mapHeight/2 + Globals::screenHeight/2 + (Globals::mapHeight + 200) * ((float)rand() / RAND_MAX);
+			if (x < Globals::screenWidth + 100 && x> - 100) {
+				while (y < Globals::screenHeight +100 && y> - 100)
 				{
-					y = Globals::screenHeight * ((float)rand() / RAND_MAX);
+					y = -100 - Globals::mapHeight / 2 + Globals::screenHeight / 2 + (Globals::mapHeight + 200) * ((float)rand() / RAND_MAX);
 				}
 			}
-			spawnerList.push_back(std::make_shared<EnemySpawner>(x, y, (EnemyType)(i%2), i/3.f));
+			spawnerList.push_back(std::make_shared<EnemySpawner>(x, y, (EnemyType)(i%3), i/3.f));
 		}
 	}
 	void Add(float x, float y, EnemyType type) {
@@ -63,11 +65,20 @@ public:
 			}
 			groundEnemyList.push_back(enemy);
 		}
+		else if (type == EnemyType::EnemyThree) {
+			std::shared_ptr<BaseEnemy> enemy;
+			if (enemyThreeResources.empty()) enemy = std::make_shared<EnemyThree>(x, y);
+			else {
+				enemy = enemyThreeResources.front();
+				enemyThreeResources.pop_front();
+				enemy->Set2DPosition(x, y);
+			}
+			groundEnemyList.push_back(enemy);
+		}
 	}
 	void Spawn(float time) {
 		if (!spawnerList.empty() && time >= spawnerList.front()->GetSpawnerTime()) {
 			Add(spawnerList.front()->GetX(), spawnerList.front()->GetY(), spawnerList.front()->GetType());
-			//std::cout << spawnerList.front()->GetX() <<"_" << spawnerList.front()->GetY() << std::endl;
 			spawnerList.pop_front();
 		}
 	}
@@ -97,14 +108,6 @@ public:
 		if (flyEnemyList.empty() && groundEnemyList.empty() && spawnerList.empty())
 			GSPlay::win = 1;
 	}
-	void HandleTouchEvents(GLint x, GLint y, bool bIsPressed) {
-		for (auto &enemy : groundEnemyList) {
-			//enemy->HandleTouchEvents(x, y, bIsPressed, tower);
-		}
-		for (auto &enemy : flyEnemyList) {
-			//enemy->HandleTouchEvents(x, y, bIsPressed, tower);
-		}
-	}
 	void Draw() {
 		for (auto &enemy : groundEnemyList) {
 			enemy->Draw();
@@ -127,6 +130,9 @@ public:
 		else if (enemy->GetType() == EnemyType::EnemyTwo) {
 			enemyTwoResources.push_back(enemy);
 		}
+		else if (enemy->GetType() == EnemyType::EnemyThree) {
+			enemyThreeResources.push_back(enemy);
+		}
 		enemy->Reset();
 	}
 	void RemoveFlyInstant(std::shared_ptr<BaseEnemy> enemy) {
@@ -141,6 +147,9 @@ public:
 		}
 		else if (enemy->GetType() == EnemyType::EnemyTwo) {
 			enemyTwoResources.push_back(enemy);
+		}
+		else if (enemy->GetType() == EnemyType::EnemyThree) {
+			enemyThreeResources.push_back(enemy);
 		}
 		enemy->Reset();
 	}
