@@ -39,14 +39,6 @@ void GSMenuInGame::Init()
 	m_table_2->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
 	m_table_2->SetISize(Globals::screenWidth * 1 / 2.f, Globals::screenHeight * 1 / 3.f);
 
-	// header table
-	if (GSPlay::win == 1)
-		texture = ResourceManagers::GetInstance()->GetTexture("UI/header_win.tga");
-	else
-		texture = ResourceManagers::GetInstance()->GetTexture("UI/header_failed.tga");
-	m_header = std::make_shared<Sprite2D>(model, shader, texture);
-	m_header->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 5.f);
-	m_header->SetISize(Globals::screenWidth / 4.f, 100.f);
 
 	// button left
 	texture = ResourceManagers::GetInstance()->GetTexture("UI/button_left.tga");
@@ -124,18 +116,18 @@ void GSMenuInGame::Init()
 	m_listButton.push_back(button);
 
 	//button vfx sound
-	if (GSMenu::vfxSound == 0)
+	if (GSMenu::sfx == 0)
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_sound_off.tga");
-	else if (GSMenu::vfxSound == 1)
+	else if (GSMenu::sfx == 1)
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_sound.tga");
 	button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(Globals::screenWidth / 2.f + 200.f, Globals::screenHeight * 5.5 / 10.f);
 	button->SetISize(100, 100);
 	button->SetOnClickTexture([](std::shared_ptr<GameButton> button) {
-		GSMenu::vfxSound = !GSMenu::vfxSound;
-		if (GSMenu::vfxSound == 0)
+		GSMenu::sfx = !GSMenu::sfx;
+		if (GSMenu::sfx == 0)
 			button->SetTexture(ResourceManagers::GetInstance()->GetTexture("UI/button_sound_off.tga"));
-		else if (GSMenu::vfxSound == 1)
+		else if (GSMenu::sfx == 1)
 			button->SetTexture(ResourceManagers::GetInstance()->GetTexture("UI/button_sound.tga"));
 		});
 	m_listButton.push_back(button);
@@ -202,7 +194,6 @@ void GSMenuInGame::Draw()
 	m_background->Draw();
 	m_table->Draw();
 	m_table_2->Draw();
-	m_header->Draw();
 	for (auto& button : m_listButton)
 	{
 		button->Draw();

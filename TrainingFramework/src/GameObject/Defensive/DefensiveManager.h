@@ -27,7 +27,7 @@ public:
 
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 1.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);
 		DefensivePoolManager::GetInstance()->Add(Globals::screenWidth * 3.f / 4.f, Globals::screenHeight / 2.f, TowerType::Spot);*/
-		/**/for (int i = 0; i < 25; i++) {
+		/**/for (int i = 0; i < 20; i++) {
 			float x = Globals::screenWidth * ((float)rand()/RAND_MAX);
 			float y = Globals::screenHeight * ((float)rand() / RAND_MAX);
 			std::shared_ptr<Sprite2D> s = std::make_shared<Sprite2D>(nullptr, nullptr, nullptr, x, y, 80, 60, 80, 60);

@@ -94,18 +94,18 @@ void GSSetting::Init()
 	m_listButton.push_back(button);
 
 	//button vfx sound
-	if (GSMenu::vfxSound == 0)
+	if (GSMenu::sfx == 0)
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_sound_off.tga");
-	else if (GSMenu::vfxSound == 1)
+	else if (GSMenu::sfx == 1)
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/button_sound.tga");
 	button = std::make_shared<GameButton>(model, shader, texture);
 	button->Set2DPosition(Globals::screenWidth/2.f + 220.f, Globals::screenHeight * 6.5 / 10.f);
 	button->SetISize(100, 100);
 	button->SetOnClickTexture([](std::shared_ptr<GameButton> button) {
-		GSMenu::vfxSound = !GSMenu::vfxSound;
-		if (GSMenu::vfxSound == 0)
+		GSMenu::sfx = !GSMenu::sfx;
+		if (GSMenu::sfx == 0)
 			button->SetTexture(ResourceManagers::GetInstance()->GetTexture("UI/button_sound_off.tga"));
-		else if (GSMenu::vfxSound == 1)
+		else if (GSMenu::sfx == 1)
 			button->SetTexture(ResourceManagers::GetInstance()->GetTexture("UI/button_sound.tga"));
 		});
 	m_listButton.push_back(button);

@@ -3,7 +3,7 @@
 #include "Base/AbleToAttack.h"
 #include "Others/GameButton.h"
 #include "Others/TowerOption.h"
-#include "Others/Upgrade.h"
+#include "Upgrade/Upgrade.h"
 
 class BaseEnemy;
 class TowerOption;
@@ -36,7 +36,6 @@ public:
 		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation), m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) 
 	{
 		m_regen = Upgrade::GetInstance()->upgradeList.find("Upgrade Regen")->second->GetLevel()*5;
-		std::cout << Upgrade::GetInstance()->upgradeList.find("Upgrade Regen")->second->GetLevel() * 5;
 	}
 	~BaseDefensive() {}
 

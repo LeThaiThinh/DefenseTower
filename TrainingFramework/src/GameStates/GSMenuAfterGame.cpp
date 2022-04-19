@@ -2,6 +2,8 @@
 #include "GSPlay.h"
 #include "BackgroundMusic.h"
 #include <GameStates/GSMenu.h>
+#include "GSSelectStage.h"
+#include "Resource/ResourceTable.h"
 GSMenuAfterGame::GSMenuAfterGame() : GameStateBase(StateType::STATE_MENU_AFTER_GAME)
 {
 }
@@ -42,6 +44,11 @@ void GSMenuAfterGame::Init()
 	m_header = std::make_shared<Sprite2D>(model, shader, texture);
 	m_header->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 5.f);
 	m_header->SetISize(Globals::screenWidth / 4.f, 100.f);
+	//diamond
+	texture = ResourceManagers::GetInstance()->GetTexture("UI/crystal.tga");
+	m_diamond = std::make_shared<Sprite2D>(model, shader, texture);
+	m_diamond->Set2DPosition(Globals::screenWidth / 2.f+20, Globals::screenHeight / 2.f);
+	m_diamond->SetISize(50.f, 50.f);
 
 	// button right
 	texture = ResourceManagers::GetInstance()->GetTexture("UI/button_right.tga");
@@ -67,16 +74,78 @@ void GSMenuAfterGame::Init()
 		});
 	m_listButton.push_back(button);
 
+	int reward = 0;
+	switch (GSSelectStage::choosenLevel)
+	{
+	case 1:
+		if(GSPlay::win==0)
+			reward = 1;
+		else {
+			reward = 5;
+		}
+		break;
+	case 2:
+		if (GSPlay::win == 0)
+			reward = 1;
+		else {
+			reward = 7;
+		}
+		break;
+	case 3:
+		if (GSPlay::win == 0)
+			reward = 2;
+		else {
+			reward = 9;
+		}
+		break;
+	case 4:
+		if (GSPlay::win == 0)
+			reward = 2;
+		else {
+			reward = 11;
+		}
+		break;
+	case 5:
+		if (GSPlay::win == 0)
+			reward = 3;
+		else {
+			reward = 13;
+		}
+		break;
+	case 6:
+		if (GSPlay::win == 0)
+			reward = 3;
+		else {
+			reward = 15;
+		}
+		break;
+	default:
+		break;
+	}
+	Diamond::GetInstance()->Bounty(reward);
 	// text
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
-	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Rot.ttf");
-	std::shared_ptr<Text> text = std::make_shared< Text>(shader, font, "Congratulation", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	text->Set2DPosition(Vector2(400.f, Globals::screenHeight * 4.5 / 10.f + 15.f));
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	std::shared_ptr<Text> text;
+	if (GSPlay::win == 0) {
+		text = std::make_shared< Text>(shader, font, "Try again", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
+		text->Set2DPosition(Vector2(520.f, Globals::screenHeight * 4 / 10.f + 15.f));
+		m_listText.push_back(text);
+	}
+	else {
+		std::shared_ptr<Text> text = std::make_shared< Text>(shader, font, "Congratulation", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
+		text->Set2DPosition(Vector2(475.f, Globals::screenHeight * 4 / 10.f + 15.f));
+		m_listText.push_back(text);
+	}
+
+	text = std::make_shared< Text>(shader, font, std::to_string(reward), Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
+	text->Set2DPosition(Vector2(Globals::screenWidth/2-20, Globals::screenHeight * 5 / 10.f +15.f));
 	m_listText.push_back(text);
 
 	text = std::make_shared< Text>(shader, font, "Your reward", Vector4(1.f, 0.6f, 0.f, 1.0f), 2.0f);
-	text->Set2DPosition(Vector2(400.f, Globals::screenHeight * 5.5 / 10.f + 15.f));
+	text->Set2DPosition(Vector2(500.f, Globals::screenHeight * 6 / 10.f + 15.f));
 	m_listText.push_back(text);
+
 }
 
 void GSMenuAfterGame::Exit()
@@ -130,6 +199,7 @@ void GSMenuAfterGame::Draw()
 	m_table->Draw();
 	m_table_2->Draw();
 	m_header->Draw();
+	m_diamond->Draw();
 	for (auto& button : m_listButton)
 	{
 		button->Draw();

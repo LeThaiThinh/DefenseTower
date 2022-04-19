@@ -36,6 +36,21 @@ void GSTutorial::Init()
 		GameStateMachine::GetInstance()->PopState();
 		});
 	m_listButton.push_back(button);
+
+	//text
+	std::list<std::shared_ptr<Text>> texts;
+	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	std::shared_ptr<Text> text = std::make_shared< Text>(shader, font, "Move your", Vector4(1.0f, 0.6f, 0.f, 1.0f), 3.0f);
+	text->Set2DPosition(Vector2(Globals::screenWidth*3/9, Globals::screenHeight * 7.5f / 10 + 25.f));
+	texts.push_back(text);
+
+	text = std::make_shared< Text>(shader, font, "Character", Vector4(1.0f, 0.6f, 0.f, 1.0f), 3.0f);
+	text->Set2DPosition(Vector2(Globals::screenWidth * 3 / 9, Globals::screenHeight * 8.5f / 10 + 25.f));
+	texts.push_back(text);
+
+	m_listTexts.push_back(texts);
+
 }
 
 void GSTutorial::Exit()
@@ -91,7 +106,9 @@ void GSTutorial::Draw()
 	{
 		button->Draw();
 	}
-	for (auto& text : m_listText) {
-		text->Draw();
+	for (auto& texts : m_listTexts) {
+		for (auto& text : texts) {
+			text->Draw();
+		}
 	}
 }

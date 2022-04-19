@@ -4,31 +4,32 @@
 class ResourceTable :public CSingleton<ResourceTable>
 {
 public:
-	ResourceTable(){};
-	~ResourceTable(){};
-	void Init() {
+	ResourceTable(){
 		auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 		auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 		auto texture = ResourceManagers::GetInstance()->GetTexture("UI/table.tga");
 		m_table = std::make_shared<Sprite2D>(model, shader, texture);
 		m_table->Set2DStaticPosition(Globals::screenWidth / 2.f, Globals::screenHeight * 0.5 / 10.f);
-		m_table->SetISize(Globals::screenWidth * 1 / 4.f, Globals::screenHeight *0.5 / 10.f);
+		m_table->SetISize(Globals::screenWidth * 1 / 4.f, Globals::screenHeight * 0.5 / 10.f);
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/window_1.tga");
-		m_table_2= std::make_shared<Sprite2D>(model, shader, texture);
+		m_table_2 = std::make_shared<Sprite2D>(model, shader, texture);
 		m_table_2->Set2DStaticPosition(Globals::screenWidth / 2.f, Globals::screenHeight * 0.5f / 10.f);
-		m_table_2->SetISize(Globals::screenWidth * 1 / 4.f - 30, Globals::screenHeight *0.5f / 10.f - 12);
-		Coin::GetInstance()->Init();
-		Diamond::GetInstance()->Init();
+		m_table_2->SetISize(Globals::screenWidth * 1 / 4.f - 30, Globals::screenHeight * 0.5f / 10.f - 12);
 		//rope
 		texture = ResourceManagers::GetInstance()->GetTexture("UI/rope_big.tga");
 		auto sprite = std::make_shared<Sprite2D>(model, shader, texture);
-		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f - 100.f, Globals::screenHeight *0.25f / 10.f);
+		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f - 100.f, Globals::screenHeight * 0.25f / 10.f);
 		sprite->SetISize(10, Globals::screenHeight * 0.5f / 10);
 		m_listRope.push_back(sprite);
 		sprite = std::make_shared<Sprite2D>(model, shader, texture);
-		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f + 100.f, Globals::screenHeight *0.25f / 10.f);
+		sprite->Set2DStaticPosition(Globals::screenWidth / 2.f + 100.f, Globals::screenHeight * 0.25f / 10.f);
 		sprite->SetISize(10, Globals::screenHeight * 0.5f / 10);
 		m_listRope.push_back(sprite);
+	};
+	~ResourceTable(){};
+	void Init() {
+		Coin::GetInstance()->Init();
+		Diamond::GetInstance()->Init();
 	}
 	void Draw() {
 		for (auto& rope : m_listRope)

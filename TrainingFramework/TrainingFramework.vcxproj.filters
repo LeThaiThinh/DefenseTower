@@ -168,7 +168,7 @@
     <ClCompile Include="src\GameObject\HUD\HUD.cpp" />
     <ClCompile Include="src\GameStates\GSLoadGame.cpp" />
     <ClCompile Include="src\GameStates\GSShop.cpp" />
-    <ClCompile Include="src\GameObject\Others\UpgradeOption.cpp" />
+    <ClCompile Include="src\GameObject\Upgrade\UpgradeOption.cpp" />
     <ClCompile Include="src\GameObject\Enemy\EnemyThree.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -351,10 +351,10 @@
     <ClInclude Include="src\GameObject\HUD\HUD.h" />
     <ClInclude Include="src\GameStates\GSLoadGame.h" />
     <ClInclude Include="src\GameStates\GSShop.h" />
-    <ClInclude Include="src\GameObject\Pathing\Timer.h" />
-    <ClInclude Include="src\GameObject\Others\UpgradeOption.h" />
-    <ClInclude Include="src\GameObject\Others\DescriptionUpgradeTable.h" />
-    <ClInclude Include="src\GameObject\Others\Upgrade.h" />
+    <ClInclude Include="src\GameObject\Timer.h" />
+    <ClInclude Include="src\GameObject\Upgrade\UpgradeOption.h" />
+    <ClInclude Include="src\GameObject\Upgrade\DescriptionUpgradeTable.h" />
+    <ClInclude Include="src\GameObject\Upgrade\Upgrade.h" />
     <ClInclude Include="src\GameObject\Enemy\EnemyThree.h" />
   </ItemGroup>
   <ItemGroup>

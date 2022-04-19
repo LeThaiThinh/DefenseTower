@@ -2,7 +2,8 @@
 #include "GameStateMachine.h"
 #include <GameStates/Record.h>
 #include "irrKlang.h"
-#include "Others/Upgrade.h"
+#include "Upgrade/Upgrade.h"
+#include "GSMenu.h"
 GSIntro::GSIntro() : GameStateBase(StateType::STATE_INTRO), m_time(0.0f)
 {
 }
@@ -17,8 +18,8 @@ void GSIntro::Init()
 {
 	srand(time(0));
 	Record::GetInstance()->ReadAll();
-	Upgrade::GetInstance();
-	ResourceManagers::GetInstance()->GetSound("intro.mp3")->PlaySoundFromStart2D(false);
+	if(GSMenu::sfx)
+		ResourceManagers::GetInstance()->GetSound("intro.mp3")->PlaySoundFromStart2D(false);
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/logo.tga");

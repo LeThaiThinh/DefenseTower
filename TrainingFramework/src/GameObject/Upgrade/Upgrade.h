@@ -55,6 +55,12 @@ public:
 	};
 	~Upgrade(){};
 
+	void SetLevel(std::string name,int level) {
+		upgradeList.find(name)->second->SetLevel(level);
+	}
+	int GetLevel(std::string name) {
+		return upgradeList.find(name)->second->GetLevel();
+	}
 	bool HandleMouseMoveEvents(int x, int y) {
 		for (auto& upgrade : upgradeList) {
 			if (upgrade.second->HandleMouseMoveEvents(x, y)) {
@@ -84,7 +90,11 @@ public:
 			upgrade.second->Draw();
 		}
 	}
-
+	void Reset() {
+		for (auto& upgrade : upgradeList) {
+			upgrade.second->SetLevel(0);
+		}
+	}
 	std::map<std::string,std::shared_ptr<UpgradeOption>> upgradeList;
 	std::shared_ptr<DescriptionUpgradeTable> desTable;
 	std::shared_ptr<UpgradeOption> currentShowDes;

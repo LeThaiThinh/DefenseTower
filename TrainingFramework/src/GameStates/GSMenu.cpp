@@ -4,8 +4,9 @@
 #include "GSSelectStage.h"
 #include <Resource/ResourceTable.h>
 #include "BackgroundMusic.h"
+#include <Upgrade/Upgrade.h>
 bool GSMenu::backgroundMusic = true;
-bool GSMenu::vfxSound = true;
+bool GSMenu::sfx = true;
 int	GSMenu::difficulty = 0;
 int GSMenu::diamond = 0;
 
@@ -58,6 +59,8 @@ void GSMenu::Init()
 	button->SetISize(Globals::screenWidth / 3.f, Globals::screenHeight / 10.f);
 	button->SetOnClick([]() {
 		GSSelectStage::currentLevel = 1;
+		GSMenu::diamond = 0;
+		Upgrade::GetInstance()->Reset();
 		GameStateMachine::GetInstance()->PushState(StateType::STATE_SELECT_STAGE);
 		});
 	m_listButton.push_back(button);

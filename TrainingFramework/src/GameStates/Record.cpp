@@ -1,6 +1,7 @@
 #include "Record.h"
 #include "GSMenu.h"
 #include "GSSelectStage.h"
+#include <Upgrade/Upgrade.h>
 
 void Record::ReadAll()
 {
@@ -17,7 +18,11 @@ void Record::ReadAll()
 	GSSelectStage::currentLevel = record["CurrentLevel"];
 	GSMenu::diamond = record["Diamond"];
 	GSMenu::backgroundMusic = record["BackgroundMusic"];
-
+	GSMenu::sfx = record["SFX"];
+	Upgrade::GetInstance()->SetLevel("Upgrade Attack", record["Upgrade_Attack"]);
+	Upgrade::GetInstance()->SetLevel("Upgrade Health", record["Upgrade_Health"]);
+	Upgrade::GetInstance()->SetLevel("Upgrade Regen", record["Upgrade_Regen"]);
+	Upgrade::GetInstance()->SetLevel("Upgrade Resource", record["Upgrade_Resource"]);
 	file.close();
 }
 
@@ -28,6 +33,11 @@ void Record::WriteAll()
 	record["CurrentLevel"] = GSSelectStage::currentLevel;
 	record["Diamond"] = GSMenu::diamond;
 	record["BackgroundMusic"] = GSMenu::backgroundMusic;
+	record["SFX"] = GSMenu::sfx;
+	record["Upgrade_Attack"] = Upgrade::GetInstance()->GetLevel("Upgrade Attack");
+	record["Upgrade_Health"] = Upgrade::GetInstance()->GetLevel("Upgrade Health");
+	record["Upgrade_Regen"] = Upgrade::GetInstance()->GetLevel("Upgrade Regen");
+	record["Upgrade_Resource"] = Upgrade::GetInstance()->GetLevel("Upgrade Resource");
 
 	for (auto i = record.begin(); i != record.end(); i++)
 	{

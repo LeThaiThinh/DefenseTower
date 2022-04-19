@@ -22,10 +22,11 @@ public:
 	void	Draw() override;
 
 private:
-	std::shared_ptr<Sprite2D>	m_background;
-	std::shared_ptr<Sprite2D>				m_header;
+	std::shared_ptr<Sprite2D>				m_background;
 	std::shared_ptr<Sprite2D>				m_table;
 	std::shared_ptr<Sprite2D>				m_table_2;
+	std::shared_ptr<Sprite2D>				m_header;
+	std::shared_ptr<Sprite2D>				m_diamond;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::list<std::shared_ptr<Text>>		m_listText;
 

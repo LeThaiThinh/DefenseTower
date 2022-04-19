@@ -25,7 +25,7 @@ private:
 	std::shared_ptr<Sprite2D>	m_background;
 	std::shared_ptr<Sprite2D>				m_table;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
-	std::list<std::shared_ptr<Text>>		m_listText;
+	std::list<std::list<std::shared_ptr<Text>>>		m_listTexts;
 
 };
 

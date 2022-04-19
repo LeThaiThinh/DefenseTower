@@ -1,6 +1,6 @@
 #include "GSShop.h"
 #include "Resource/ResourceTable.h"
-#include "Others/Upgrade.h"
+#include "Upgrade/Upgrade.h"
 
 GSShop::GSShop() : GameStateBase(StateType::STATE_SHOP)
 {

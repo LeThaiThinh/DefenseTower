@@ -17,10 +17,10 @@
 #include "Pathing/ObstacleManager.h"
 #include "Pathing/FloydWarshall.h"
 #include "HUD/HUD.h"
-#include "Pathing/Timer.h"
+#include "GameObject/Timer.h"
 float EnemyPoolManager::currentTimeFindPath = 3;
 int GSPlay::win = -1;
-GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),
+GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),m_count(0),
 m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{})
 {
 }
@@ -155,7 +155,12 @@ void GSPlay::HandleMouseMoveEvents(int x, int y)
 
 void GSPlay::Update(float deltaTime)
 {
-	m_time += deltaTime;
+	//std::cout << deltaTime << std::endl;
+	if (deltaTime > 0) {
+		m_time += deltaTime;
+		m_count++;
+	}
+
 	HandleKeyPress(deltaTime);
 	Application::GetInstance()->GetCamera()->Update(deltaTime);
 	ResourceTable::GetInstance()->Update();
@@ -173,12 +178,12 @@ void GSPlay::Update(float deltaTime)
 	BulletPoolManager::GetInstance()->Update(deltaTime);
 	BulletPoolManager::GetInstance()->Remove();
 	HUD::GetInstance()->Update();
-	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy25");
+	/*Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy25");
 	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect25");
 	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy50");
 	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect50");
 	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemy100");
-	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect100");
+	Timer::GetInstance()->EndAddTimeOperationPerCircle("GroundEnemyConnect100");*/
 	if (win == 1 || win == 0) {
 		Application::GetInstance()->GetCamera()->SetMoveCamera(-Application::GetInstance()->GetCamera()->GetPosition());
 		Application::GetInstance()->GetCamera()->Update(1 / 300.f);
@@ -194,18 +199,20 @@ void GSPlay::Update(float deltaTime)
 		BulletPoolManager::GetInstance()->Clear();
 		BulletPoolManager::GetInstance()->Remove();
 		BackgroundMusic::GetInstance()->StopBGMIngame();
-		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy25");
+		std::cout << "average:"<<std::to_string(m_time/(float)m_count);
+		/*Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy25");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect25");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy50");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect50");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy100");
-		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect100");
+		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect100");*/
 		if (win) {
-			ResourceManagers::GetInstance()->GetSound("win.wav")->PlaySoundFromStart2D(false);
+			if (GSMenu::sfx)
+				ResourceManagers::GetInstance()->GetSound("win.wav")->PlaySoundFromStart2D(false);
 			if(GSSelectStage::choosenLevel == GSSelectStage::currentLevel)
 				GSSelectStage::currentLevel++;
 		}
-		else {
+		else if (GSMenu::sfx) {
 			ResourceManagers::GetInstance()->GetSound("lose.wav")->PlaySoundFromStart2D(false);
 		}
 	}

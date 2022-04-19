@@ -22,7 +22,7 @@ public:
 	void	Update(float deltaTime) override;
 	void	Draw() override;
 
-	static bool vfxSound;
+	static bool sfx;
 	static bool backgroundMusic;
 	static int	difficulty;
 	static int	diamond;

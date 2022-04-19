@@ -338,7 +338,7 @@ public:
 			//obstacle->Draw();
 		}
 		for (auto& obstacle : obstacleList100) {
-			obstacle->Draw();
+			//obstacle->Draw();
 		}
 	}
 	void Clear() {

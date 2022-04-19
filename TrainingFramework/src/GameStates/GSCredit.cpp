@@ -38,7 +38,7 @@ void GSCredit::Init()
 	m_table->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
 	m_table->SetISize(Globals::screenWidth * 2 / 3.f, Globals::screenHeight * 2 / 3.f);
 
-	// credit
+	// credit text
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Rot.ttf");
 	std::shared_ptr<Text> m_textInMenu = std::make_shared< Text>(shader, font, "Credit", Vector4(1.0f, 0.6f, 0.f, 1.0f), 3.0f);

@@ -10,7 +10,7 @@ MainTower::MainTower()
 MainTower::MainTower(float x, float y)
 	: UnMoveThroughAbleTower(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 		ResourceManagers::GetInstance()->GetShader("TextureShader"),ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"),
-		x, y, 210, 150, 240,210 , 100, 1, 0, 0.2f,Vector3(0,0,0),
+		x, y, 180, 150, 210,180 , 100, 1, 0, 0.2f,Vector3(0,0,0),
 		ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), 
 	5000, 1, TowerType::Main, 3)
 {
@@ -57,35 +57,32 @@ void MainTower::Upgrade()
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
-		SetISize(350, 250);
-		SetSize(380, 300);
+		SetISize(180, 150);
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
+		m_hitpoint = 5000.f;
+		m_maxHitPoint = 5000.f;
 		break;
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
-		SetISize(175, 175);
-		SetSize(200, 175);
+		SetISize(210, 175);
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
+		m_maxHitPoint = m_maxHitPoint + 500;
+		m_hitpoint = m_maxHitPoint;
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
-		SetISize(200, 175);
-		SetSize(200, 175);
+		SetISize(240, 200);
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
-		m_hitpoint = 500.f;
-		m_maxHitPoint = 500.f;
+		m_maxHitPoint = m_maxHitPoint + 500;
+		m_hitpoint = m_maxHitPoint;
 		break;
 	default:
 		break;

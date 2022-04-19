@@ -1,5 +1,5 @@
 #pragma once
-#include "GameButton.h"
+#include "Others/GameButton.h"
 #include <Base/Text.h>
 #define UpgradeButtonSize 200
 class UpgradeOption
@@ -16,6 +16,10 @@ public:
 
 	int GetLevel() {
 		return m_level;
+	}
+	void SetLevel(int level) {
+		m_level = level;
+		m_textLevel->SetText("level " +std::to_string(m_level));
 	}
 	void SetTextListAndCostList(std::vector<std::string> textList, std::vector<int> costList) {
 		m_textList = textList;

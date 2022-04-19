@@ -36,5 +36,6 @@ private:
 	std::shared_ptr <MainTower>		m_mainTower;
 	std::shared_ptr <BaseObject>	m_controller;
 	float							m_time;
+	int								m_count;
 };
 

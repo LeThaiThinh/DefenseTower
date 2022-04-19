@@ -333,7 +333,7 @@
     <ClCompile Include="src\GameObject\Others\TowerOption.cpp" />
     <ClCompile Include="src\GameObject\Defensive\TowerTwo.cpp" />
     <ClCompile Include="src\GameObject\Defensive\UnMoveThroughAbleTower.cpp" />
-    <ClCompile Include="src\GameObject\Others\UpgradeOption.cpp" />
+    <ClCompile Include="src\GameObject\Upgrade\UpgradeOption.cpp" />
     <ClCompile Include="src\GameStates\GSCredit.cpp" />
     <ClCompile Include="src\GameStates\GameStateBase.cpp" />
     <ClCompile Include="src\GameStates\GameStateMachine.cpp" />
@@ -369,13 +369,13 @@
     <ClInclude Include="src\GameObject\CheckCollision.h" />
     <ClInclude Include="src\GameObject\Enemy\EnemyThree.h" />
     <ClInclude Include="src\GameObject\HUD\HUD.h" />
-    <ClInclude Include="src\GameObject\Others\DescriptionUpgradeTable.h" />
-    <ClInclude Include="src\GameObject\Others\Upgrade.h" />
-    <ClInclude Include="src\GameObject\Others\UpgradeOption.h" />
+    <ClInclude Include="src\GameObject\Upgrade\DescriptionUpgradeTable.h" />
+    <ClInclude Include="src\GameObject\Upgrade\Upgrade.h" />
+    <ClInclude Include="src\GameObject\Upgrade\UpgradeOption.h" />
     <ClInclude Include="src\GameObject\Pathing\FloydWarshall.h" />
     <ClInclude Include="src\GameObject\Pathing\Obstacle.h" />
     <ClInclude Include="src\GameObject\Pathing\ObstacleManager.h" />
-    <ClInclude Include="src\GameObject\Pathing\Timer.h" />
+    <ClInclude Include="src\GameObject\Timer.h" />
     <ClInclude Include="src\GameObject\Pathing\WayPoint.h" />
     <ClInclude Include="src\GameObject\Resource\Coin.h" />
     <ClInclude Include="src\GameObject\Defensive\DefensiveManager.h" />

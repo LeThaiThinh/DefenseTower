@@ -70,14 +70,53 @@ void MainCharacter::Attack()
 }
 void MainCharacter::SpawnBullet()
 {
-	if(GSMenu::vfxSound)
+	if (GSMenu::sfx)
 		ResourceManagers::GetInstance()->GetSound("maincharacter_attack.mp3")
-		->PlaySoundFromStart(false,irrklang::vec3df((m_position.x-Application::GetInstance()->GetCamera()->GetPosition().x-Globals::mapWidth/2)/ SOUND_DISTANCE_UNIT,
-			(m_position.x - Application::GetInstance()->GetCamera()->GetPosition().x - Globals::screenHeight/2) / 200, 0));
+		->PlaySoundFromStart(false, irrklang::vec3df((m_position.x - Application::GetInstance()->GetCamera()->GetPosition().x - Globals::mapWidth / 2) / SOUND_DISTANCE_UNIT,
+			(m_position.x - Application::GetInstance()->GetCamera()->GetPosition().x - Globals::screenHeight / 2) / 200, 0));
 
 	BulletPoolManager::GetInstance()->AddBullet(
 		BulletType::Linear_MainCharacter, std::dynamic_pointer_cast<BaseEnemy>(std::make_shared<EnemyOne>()),
 		m_targetPosition, shared_from_this());
+	float angle;
+	Vector3 bulletPosition;
+	if ((m_targetPosition - m_position).Normalize().x >= 0)
+		bulletPosition = m_position + m_bulletSpawner;
+	else
+		bulletPosition = m_position - m_bulletSpawner;
+	angle = std::acos((m_targetPosition - bulletPosition).Normalize().x);
+	if (Upgrade::GetInstance()->GetLevel("Upgrade Attack") >= 1) {
+		if ((m_targetPosition - bulletPosition).Normalize().y >= 0) {
+			angle = std::acos((m_targetPosition - bulletPosition).Normalize().x) + PI / 16;
+		}
+		else {
+			angle = - std::acos((m_targetPosition - bulletPosition).Normalize().x ) + PI / 16;
+		}
+		if((m_targetPosition - bulletPosition).Normalize().x>=0)
+			m_targetPosition = Vector3(bulletPosition.x + std::cos(angle) * 100, bulletPosition.y + std::sin(angle) * 100, 0);
+		else
+			m_targetPosition = Vector3(bulletPosition.x + std::cos(angle) * 100, bulletPosition.y + std::sin(angle) * 100, 0);
+		BulletPoolManager::GetInstance()->AddBullet(
+			BulletType::Linear_MainCharacter, std::dynamic_pointer_cast<BaseEnemy>(std::make_shared<EnemyOne>()),
+			m_targetPosition, shared_from_this());
+
+
+		if (Upgrade::GetInstance()->GetLevel("Upgrade Attack") >= 2) {
+			if ((m_targetPosition - bulletPosition).Normalize().y >= 0) {
+				angle = std::acos((m_targetPosition - bulletPosition).Normalize().x) - PI/8;
+			}
+			else {
+				angle = - std::acos((m_targetPosition - bulletPosition).Normalize().x) - PI / 8;
+			}
+			if ((m_targetPosition - bulletPosition).Normalize().x >= 0)
+				m_targetPosition = Vector3(bulletPosition.x + std::cos(angle) * 100, bulletPosition.y + std::sin(angle) * 100, 0);
+			else
+				m_targetPosition = Vector3(bulletPosition.x + std::cos(angle) * 100, bulletPosition.y + std::sin(angle) * 100, 0);
+			BulletPoolManager::GetInstance()->AddBullet(
+				BulletType::Linear_MainCharacter, std::dynamic_pointer_cast<BaseEnemy>(std::make_shared<EnemyOne>()),
+				m_targetPosition, shared_from_this());
+		}
+	}
 }
 void MainCharacter::AttackLinear()
 {
