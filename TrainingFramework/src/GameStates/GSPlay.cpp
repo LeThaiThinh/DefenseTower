@@ -20,7 +20,9 @@
 #include "GameObject/Timer.h"
 float EnemyPoolManager::currentTimeFindPath = 3;
 int GSPlay::win = -1;
-GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), m_time(0),m_count(0),
+float GSPlay::m_time = -1;
+int GSPlay::m_frame = -1;
+GSPlay::GSPlay() :GameStateBase(StateType::STATE_PLAY), 
 m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{})
 {
 }
@@ -34,11 +36,15 @@ void GSPlay::Init()
 	if(GSMenu::backgroundMusic)
 		BackgroundMusic::GetInstance()->PlayBGMIngame();
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_land.tga");
+	std::shared_ptr<Texture> texture;
+	if(GSSelectStage::choosenLevel%2==1)
+		texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_land.tga");
+	else
+		texture = ResourceManagers::GetInstance()->GetTexture("UI/bg_ice.tga");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	// background
 	m_background = std::make_shared<Sprite2D>(model, shader, texture);
-	m_background->Set2DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f);
+	m_background->Set3DPosition(Globals::screenWidth / 2.f, Globals::screenHeight / 2.f,1);
 	m_background->SetISize(Globals::mapWidth, Globals::mapHeight);
 	// button menu
 	texture = ResourceManagers::GetInstance()->GetTexture("UI/button_menu.tga");
@@ -50,6 +56,7 @@ void GSPlay::Init()
 		Application::GetInstance()->GetCamera()->Update(1 / 300.f);
 		Application::GetInstance()->GetCamera()->SetMoveCamera(Vector3(0, 0, 0));
 		GameStateMachine::GetInstance()->PushState(StateType::STATE_MENU_IN_GAME);
+		std::cout << "average:" << std::to_string(m_frame / m_time);
 		});
 	m_listButton.push_back(button);
 
@@ -61,6 +68,7 @@ void GSPlay::HandleEvents()
 
 void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 {
+	m_frame++;
 	if (bIsPressed == true) {
 		switch (key)
 		{
@@ -108,6 +116,7 @@ void GSPlay::HandleKeyEvents(int key, bool bIsPressed)
 
 void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 {
+	m_frame++;
 	for (auto &button : m_listButton)
 	{
 		if (button->HandleTouchEvents((int)Application::GetInstance()->GetCamera()->GetPosition().x + x, (int)Application::GetInstance()->GetCamera()->GetPosition().y + y, bIsPressed))
@@ -158,7 +167,7 @@ void GSPlay::Update(float deltaTime)
 	//std::cout << deltaTime << std::endl;
 	if (deltaTime > 0) {
 		m_time += deltaTime;
-		m_count++;
+		m_frame++;
 	}
 
 	HandleKeyPress(deltaTime);
@@ -199,7 +208,7 @@ void GSPlay::Update(float deltaTime)
 		BulletPoolManager::GetInstance()->Clear();
 		BulletPoolManager::GetInstance()->Remove();
 		BackgroundMusic::GetInstance()->StopBGMIngame();
-		std::cout << "average:"<<std::to_string(m_time/(float)m_count);
+		std::cout << "average:"<<std::to_string(m_frame/m_time);
 		/*Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy25");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemyConnect25");
 		Timer::GetInstance()->EndAddTimeOperationPerGame("GroundEnemy50");
@@ -223,29 +232,29 @@ void GSPlay::Draw()
 	m_background->Draw();
 	EnemyPoolManager::GetInstance()->Draw();
 	DefensivePoolManager::GetInstance()->Draw();
-	ObstacleManager::GetInstance()->Draw();
+	//ObstacleManager::GetInstance()->Draw();
 	BulletPoolManager::GetInstance()->Draw();
 	MainCharacter::GetInstance()->Draw();
 	for (auto& it : m_listButton)
 	{
 		it->Draw();
 	}
-	ResourceTable::GetInstance()->Draw();
+	/**/ResourceTable::GetInstance()->Draw();
 	HUD::GetInstance()->Draw();
 }
 
 void GSPlay::HandleKeyPress(float deltaTime) {
+	if (keyPressed & KEY_MOVE_BACKWARD) {
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, 1, 0));
+	}
+	if (keyPressed & KEY_MOVE_FORWARD) {
+		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, -1, 0));
+	}
 	if (keyPressed & KEY_MOVE_LEFT) {
 		MainCharacter::GetInstance()->Move(deltaTime, Vector3(-1, 0, 0));
 	}
 	if (keyPressed & KEY_MOVE_RIGHT) {
 		MainCharacter::GetInstance()->Move(deltaTime, Vector3(1, 0, 0));
-	}
-	if (keyPressed & KEY_MOVE_FORWARD) {
-		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, -1, 0));
-	}
-	if (keyPressed & KEY_MOVE_BACKWARD) {
-		MainCharacter::GetInstance()->Move(deltaTime, Vector3(0, 1, 0));
 	}
 }
 

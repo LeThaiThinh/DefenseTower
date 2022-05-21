@@ -10,7 +10,7 @@ SpotTower::SpotTower() :BaseDefensive()
 SpotTower::SpotTower(float x, float y) : BaseDefensive(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("TextureShader"),
 	ResourceManagers::GetInstance()->GetTexture("Tower/spot_tower.tga"),
-	x, y, 80, 60, 80, 60, 500.f, 1 / INFINITY, 0,0,Vector3(0,0,0),nullptr,nullptr, 0, TowerType::Spot, 0)
+	x, y, 120, 100, 120, 100, 500.f, 1 / INFINITY, 0,0,Vector3(0,0,0),nullptr,nullptr, 0, TowerType::Spot, 0)
 {
 	LocateOption();
 }
@@ -62,4 +62,13 @@ void SpotTower::LocateOption()
 		}
 		});
 	m_towerOption->AddSecondOption(secondButton2);
+
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	auto text = std::make_shared< Text>(shader, font, std::to_string(TowerOneCost), Vector4(1.0f, 0.6f, 0.f, 1.0f), 0.6f);
+	text->Set2DPositionDynamic(Vector2(m_position.x - m_iWidth / 2.f, m_position.y - m_iHeight / 4.f - AdjustTowerOption));
+	m_towerOption->AddCostText(text);
+	text = std::make_shared< Text>(shader, font, std::to_string(TowerTwoCost), Vector4(1.0f, 0.6f, 0.f, 1.0f), 0.6f);
+	text->Set2DPositionDynamic(Vector2(m_position.x + m_iWidth / 2.f + AdjustTowerOption, m_position.y - m_iHeight / 4.f - AdjustTowerOption));
+	m_towerOption->AddCostText(text);
 }

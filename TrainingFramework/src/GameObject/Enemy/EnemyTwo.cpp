@@ -6,7 +6,7 @@ EnemyTwo::EnemyTwo(float x, float y) :GroundEnemy(ResourceManagers::GetInstance(
 	ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_two_walk_left.tga"), ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_two_walk_right.tga"),
 	6, 6, 0.5f, x, y, 30, 30, 25, 25, 60, 150.f, 1.f, 6.f,  
 	0.2f,Vector3(0,0,0), ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_two_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_two_attack_right.tga"),
-	3, 3, 0.1f,100, EnemyType::EnemyTwo,2)
+	3, 3, 0.1f,30, EnemyType::EnemyTwo,3)
 {
 	SetName("Bomber");
 	SetAvatar(ResourceManagers::GetInstance()->GetTexture("Enemy/enemy_two_avatar.tga"));

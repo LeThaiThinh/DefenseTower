@@ -41,22 +41,17 @@ public:
     }
     void floydWarshall25()
     {
-        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList25) {
-            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList25) {
-                for (auto& __wayPoint : ObstacleManager::GetInstance()->waypointList25) {
-                    if (dist25[_wayPoint][wayPoint] == -1 || dist25[wayPoint][__wayPoint] == -1) {
+        for (auto& k : ObstacleManager::GetInstance()->waypointList25) {
+            for (auto& i : ObstacleManager::GetInstance()->waypointList25) {
+                for (auto& j : ObstacleManager::GetInstance()->waypointList25) {
+                    if (dist25[i][k] == -1 || dist25[k][j] == -1) {
                         continue;
                     }else 
-                    if (dist25[_wayPoint][__wayPoint] > dist25[_wayPoint][wayPoint]+ dist25[wayPoint][__wayPoint]) {
-                        //std::cout << "(" << dist25[_wayPoint][wayPoint] <<"," << dist25[wayPoint][__wayPoint] << ")";
-                        dist25[_wayPoint][__wayPoint] = dist25[_wayPoint][wayPoint] + dist25[wayPoint][__wayPoint];
-                        prev25[_wayPoint][__wayPoint] = prev25[_wayPoint][wayPoint];
+                    if (dist25[i][j] > dist25[i][k]+ dist25[k][j]) {
+                        dist25[i][j] = dist25[i][k] + dist25[k][j];
+                        prev25[i][j] = prev25[i][k];
                     }
                 }
-            }
-        }
-        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList25) {
-            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList25) {
             }
         }
     }
@@ -110,10 +105,6 @@ public:
                 }
             }
         }
-        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList50) {
-            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList50) {
-            }
-        }
     }
     std::list<Vector3> constructPath50(std::shared_ptr<WayPoint> u, std::shared_ptr<WayPoint> v)
     {
@@ -163,10 +154,6 @@ public:
                             prev100[_wayPoint][__wayPoint] = prev100[_wayPoint][wayPoint];
                         }
                 }
-            }
-        }
-        for (auto& wayPoint : ObstacleManager::GetInstance()->waypointList100) {
-            for (auto& _wayPoint : ObstacleManager::GetInstance()->waypointList100) {
             }
         }
     }

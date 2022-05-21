@@ -56,8 +56,9 @@ void GSMenuAfterGame::Init()
 	button->Set2DPosition(Globals::screenWidth * 3.75 / 6.f, Globals::screenHeight *5 / 6.f - 25.f);
 	button->SetISize(125, 125);
 	button->SetOnClick([]() {
-		GSPlay::win = -1;
 		GameStateMachine::GetInstance()->PopState();
+		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_SELECT_STAGE);
+		GSPlay::win = -1;
 		if (GSMenu::backgroundMusic)
 			BackgroundMusic::GetInstance()->PlayBGMMenu();
 		});

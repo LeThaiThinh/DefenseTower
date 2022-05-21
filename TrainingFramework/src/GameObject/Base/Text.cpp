@@ -7,7 +7,7 @@
 
 
 Text::Text(std::shared_ptr<Shader> shader, std::shared_ptr<Font> font, std::string text, TextColor color, float size, TextAlign align)
-	: m_font(font), m_text(text), m_scale(Vector2(size, size)), m_align(align)
+	: m_font(font), m_text(text), m_scale(Vector2(size, size)), m_align(align), xDynamic(0), yDynamic(0)
 {
 	m_position = Vector3(-1.0f, 1.0f, 1.0f);
 	m_pShader = shader;
@@ -185,3 +185,26 @@ void Text::Set2DPosition(Vector2 pos)
 	m_position = Vector3(xx, yy, 1.0f);
 	CalculateWorldMatrix();
 }
+
+void Text::Set2DPositionDynamic(GLfloat x, GLfloat y)
+{
+	xDynamic = x;
+	yDynamic = y;
+}
+
+void Text::Set2DPositionDynamic(Vector2 pos)
+{
+	xDynamic = pos.x;
+	yDynamic = pos.y;
+}
+
+void Text::UpdateDynamic()
+{
+	Set2DPosition(xDynamic - Application::GetInstance()->GetCamera()->GetPosition().x, yDynamic - Application::GetInstance()->GetCamera()->GetPosition().y);
+}
+
+void Text::Translate(float t)
+{
+	Set2DPosition(xDynamic - Application::GetInstance()->GetCamera()->GetPosition().x - t*m_text.length(), yDynamic - Application::GetInstance()->GetCamera()->GetPosition().y);
+}
+

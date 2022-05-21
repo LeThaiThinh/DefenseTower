@@ -36,7 +36,7 @@ public:
 		auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 		auto texture = ResourceManagers::GetInstance()->GetTexture("Tower/way_point.tga");
 		for (int i = 0; i < 4; i++) {
-			/*if (wayPointList[i]->active && wayPointList[(i + 1) % 4]->active) {
+			/**/if (wayPointList[i]->active && wayPointList[(i + 1) % 4]->active) {
 			auto& edge = std::make_shared<Sprite2D>(model, shader, texture,
 				(wayPointList[i]->wayPoint->GetPosition().x + wayPointList[(i+1) % 4]->wayPoint->GetPosition().x) / 2.f,
 				(wayPointList[i]->wayPoint->GetPosition().y + wayPointList[(i + 1) % 4]->wayPoint->GetPosition().y) / 2.f,
@@ -49,7 +49,7 @@ public:
 			wayPointList[(i + 1)%4]->edgeList.push_back(edge);
 			wayPointList[i]->adjWayPointList.push_back(wayPointList[(i + 1) % 4]);
 			wayPointList[(i + 1) % 4]->adjWayPointList.push_back(wayPointList[i]);
-			}*/
+			}
 		}
 		for (int i = 0; i < 4; i++) {
 			std::cout << wayPointList[i]->adjWayPointList.size()<<" ";

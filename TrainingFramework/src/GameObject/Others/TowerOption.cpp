@@ -1,6 +1,7 @@
 #include "TowerOption.h"
 #include "ResourceManagers.h"
-#include "HUD/HUD.h"
+#include "HUD/HUD.h"'
+#include "Base/Text.h"
 #define BORDER_OPTION_TOWER 1.5f
 TowerOption::TowerOption() :m_secondOptionVisible(false) {
 	m_mainOption = std::make_shared<GameButton>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
@@ -19,6 +20,11 @@ void TowerOption::Draw()
 		m_mainOption->Draw();
 		for (auto &m_secondOption : m_secondOptionList) {
 			m_secondOption->Draw();
+		}
+		for (auto& costText : m_costTextList) {
+			costText->UpdateDynamic();
+			costText->Translate(2.5);
+			costText->Draw();
 		}
 	}
 }

@@ -7,10 +7,10 @@
 MainCharacter::MainCharacter() :Animation2D(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("AnimationShader"),
 	ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),
-	6, 6, 0.5f, 300.f, 300.f, 30, 30, 30, 30),
-	AbleToAttack(100.f, 2.f, 10.f, 0.3f, Vector3(10, 0, 0), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_right.tga")),
+	6, 6, 0.5f, 300.f, 300.f, 50, 50, 50, 50),
+	AbleToAttack(600.f, 2.f, 10.f, 0.3f, Vector3(0, 0, 0), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_left.tga"), ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_attack_right.tga")),
 	AttackAble(500.f, 500.f), 
-	MoveAble(50.f, ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_right.tga"),3,3,0.1f),
+	MoveAble(100.f, ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_left.tga"),ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_walk_right.tga"),3,3,0.1f),
 	m_isHolding(false)
 {
 	Init();
@@ -22,6 +22,7 @@ MainCharacter::~MainCharacter()
 
 void MainCharacter::Init()
 {
+	m_typeObject = "Enemy";
 	SetName("Witch");
 	SetAvatar(ResourceManagers::GetInstance()->GetTexture("MainCharacter/main_character_avatar.tga"));
 }
@@ -45,8 +46,8 @@ void MainCharacter::Update(GLfloat deltatime)
 {
 	Animation2D::Update(deltatime);
 	AbleToAttack::Update(deltatime);
-	AttackAble::UpdateHitPointBarAndLostHitpointBarSize();
-	AttackAble::UpdateHitPointBarAndLostHitpointBarPosition(m_position.x, m_position.y - m_iHeight);
+	//AttackAble::UpdateHitPointBarAndLostHitpointBarSize();
+	//AttackAble::UpdateHitPointBarAndLostHitpointBarPosition(m_position.x, m_position.y - m_iHeight);
 	if (m_currentTimeAttack >= m_delayAttackTime/2 && m_isCastingAttack) {
 		m_isCastingAttack = false;
 		SpawnBullet();

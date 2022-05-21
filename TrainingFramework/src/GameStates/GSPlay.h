@@ -30,12 +30,13 @@ public:
 	void	HandleKeyPress(float deltaTime);
 
 	static int win;
+	static float m_time;
+	static int	m_frame;
 private:
 	std::shared_ptr<Sprite2D>		m_background;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::shared_ptr <MainTower>		m_mainTower;
 	std::shared_ptr <BaseObject>	m_controller;
-	float							m_time;
-	int								m_count;
+
 };
 

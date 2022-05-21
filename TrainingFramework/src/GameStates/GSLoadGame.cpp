@@ -108,7 +108,7 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.05) {
-			//ObstacleManager::GetInstance()->Init100();
+			ObstacleManager::GetInstance()->Init100();
 			SetLoadPercentage(0.25f);
 			m_wait = true;
 		}
@@ -154,7 +154,7 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.05) {
-			//FloydWarshall::GetInstance()->Init100();
+			FloydWarshall::GetInstance()->Init100();
 			SetLoadPercentage(0.85f);
 			m_wait = true;
 
@@ -164,7 +164,7 @@ void GSLoadGame::Update(float deltaTime)
 	{
 		m_wait = false;
 		if (m_time > 0.05) {
-			//FloydWarshall::GetInstance()->floydWarshall100();
+			FloydWarshall::GetInstance()->floydWarshall100();
 			SetLoadPercentage(1.f);
 			m_wait = true;
 

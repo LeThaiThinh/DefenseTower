@@ -24,24 +24,28 @@ class BaseDefensive :
 	public AttackAble
 {
 public:
-	BaseDefensive() :AbleToAttack(), Sprite2D(), AttackAble(), m_level(0), m_maxlevel(3), m_totalCost(0), m_costUpgrade(0), m_disposable(false), m_type(TowerType::Spot) {}
+	BaseDefensive() :AbleToAttack(), Sprite2D(), AttackAble(), m_level(0), m_maxlevel(3), m_totalCost(0), m_costUpgrade(0), m_disposable(false), m_type(TowerType::Spot) { m_typeObject = "Tower"; }
 	BaseDefensive(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
 		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float delayAttackTime,Vector3 bulletSpawner, std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int level, TowerType type, int maxlevel)
 		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(0,1),
 		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation),
-		m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) {}
+		m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) {
+		m_typeObject = "Tower";
+	}
 	BaseDefensive(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture,
 		float x, float y, int iwidth, int iheight, int width, int height, float range, float attackSpeed, float damage, float delayAttackTime, Vector3 bulletSpawner, std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int level, TowerType type, int maxlevel, float hitPoint, float maxHitPoint)
 		:Sprite2D(model, shader, texture, x, y, iwidth, iheight, width, height), AttackAble(hitPoint+ Upgrade::GetInstance()->upgradeList.find("Upgrade Health")->second->GetLevel()*200, maxHitPoint+ Upgrade::GetInstance()->upgradeList.find("Upgrade Health")->second->GetLevel() * 200),
 		AbleToAttack(range, attackSpeed, damage, delayAttackTime, bulletSpawner, attackLeftAnimation, attackRightAnimation), m_level(level), m_disposable(false), m_totalCost(0), m_costUpgrade(0), m_type(type), m_maxlevel(maxlevel) 
 	{
 		m_regen = Upgrade::GetInstance()->upgradeList.find("Upgrade Regen")->second->GetLevel()*5;
+		m_typeObject = "Tower";
 	}
 	~BaseDefensive() {}
 
 	int GetTotalCost() { return m_totalCost; }
 	int GetNextCost() { return m_costUpgrade; }
-
+	int GetLevel() { return m_level; }
+	bool IsLevelMax() { return m_level == m_maxlevel; }
 	TowerType GetType() { return m_type; }
 	void SetType(TowerType type) { m_type = type; }
 	bool IsDisposable() { return m_disposable; }
@@ -50,7 +54,8 @@ public:
 
 	virtual void Upgrade() { if (m_level < m_maxlevel) { m_level++; } }
 	bool HandleTouchEvents(GLint x, GLint y, bool bIsPressed, std::shared_ptr<BaseDefensive> tower) { return m_towerOption->HandleTouchEvents(x, y, bIsPressed, tower); };
-	virtual void	Draw() { Sprite2D::Draw(); AttackAble::Draw(); m_towerOption->Draw(); };
+	virtual void	Draw() { Sprite2D::Draw(); }
+	void	DrawHUD() { AttackAble::Draw(); m_towerOption->Draw(); }
 	virtual void	Attack() = 0;
 	virtual void	Update(GLfloat deltatime) {
 		Sprite2D::Update(deltatime);

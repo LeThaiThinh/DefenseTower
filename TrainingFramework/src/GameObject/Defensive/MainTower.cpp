@@ -1,6 +1,7 @@
 #include "MainTower.h"
 #include <Others/TowerOption.h>
 #include "Resource/Coin.h"
+#define MainTowerCost 60
 
 MainTower::MainTower()
 	:UnMoveThroughAbleTower()
@@ -10,12 +11,13 @@ MainTower::MainTower()
 MainTower::MainTower(float x, float y)
 	: UnMoveThroughAbleTower(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 		ResourceManagers::GetInstance()->GetShader("TextureShader"),ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"),
-		x, y, 180, 150, 210,180 , 100, 1, 0, 0.2f,Vector3(0,0,0),
+		x, y, 198, 165, 180,150 , 100, 1, 0, 0.2f,Vector3(0,0,0),
 		ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"), 
 	5000, 1, TowerType::Main, 3)
 {
 	SetName("Main tower");
 	SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
+	LocateOption();
 }
 
 void MainTower::Attack()
@@ -36,11 +38,18 @@ void MainTower::LocateOption()
 		tower->Upgrade();
 		});
 	m_towerOption->AddSecondOption(secondButton);
+
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	auto text = std::make_shared< Text>(shader, font, std::to_string(MainTowerCost), Vector4(1.0f, 0.6f, 0.f, 1.0f), 0.8f);
+	text->Set2DPositionDynamic(Vector2(m_position.x - m_iWidth / 2.f - AdjustTowerOption, m_position.y - m_iHeight  / 3.f - AdjustTowerOption*2));
+	m_towerOption->AddCostText(text);
 }
 
 void MainTower::Reset()
 {
 	UnMoveThroughAbleTower::Reset();
+	LocateOption();
 	Upgrade();
 }
 
@@ -52,12 +61,15 @@ void MainTower::Update(GLfloat deltatime)
 void MainTower::Upgrade()
 {
 	UnMoveThroughAbleTower::Upgrade();
+	float previosMaxHitpoint = m_maxHitPoint;
 	switch (m_level)
 	{
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_1.tga"));
-		SetISize(180, 150);
+		SetISize(198, 165);
+		m_totalCost = MainTowerCost;
+		m_costUpgrade = 200;
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
@@ -67,24 +79,31 @@ void MainTower::Upgrade()
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_2.tga"));
-		SetISize(210, 175);
+		SetISize(204, 170);
+		m_costUpgrade = 250;
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
 		m_maxHitPoint = m_maxHitPoint + 500;
-		m_hitpoint = m_maxHitPoint;
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("Tower/main_tower_3.tga"));
-		SetISize(240, 200);
+		SetISize(210, 175);
+		m_costUpgrade = 0;
 		m_range = 200;
 		m_attackSpeed = 1;
 		m_currentTimeAttack = GetAttackSpeed();
 		m_maxHitPoint = m_maxHitPoint + 500;
-		m_hitpoint = m_maxHitPoint;
 		break;
 	default:
 		break;
+	}
+	if (m_level < m_maxlevel)
+		m_towerOption->GetCostTextList().back()->SetText(std::to_string(m_costUpgrade));
+	else
+		m_towerOption->GetCostTextList().back()->SetText("max");
+	if (m_level >= 2) {
+		m_hitpoint = m_hitpoint / previosMaxHitpoint * m_maxHitPoint;
 	}
 }

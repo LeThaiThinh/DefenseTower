@@ -10,11 +10,11 @@ TowerOne::TowerOne() :UnMoveThroughAbleTower() {}
 TowerOne::TowerOne(float x, float y) : UnMoveThroughAbleTower(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"),
 	ResourceManagers::GetInstance()->GetShader("TextureShader"),
 	ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"),
-	x, y, 80, 60, 80, 60, 300, 1.5, 2,0,Vector3(0,0,0),nullptr,nullptr, 300.0f, 0, TowerType::One, 3)
+	x, y, 120, 100, 120, 100, 300, 1.5, 2,0,Vector3(0,0,0),nullptr,nullptr, 300.f, 0, TowerType::One, 3)
 {
 	SetName("Brown Tower");
-	Upgrade();
 	LocateOption();
+	Upgrade();
 }
 
 void TowerOne::Attack()
@@ -40,9 +40,9 @@ void TowerOne::Upgrade()
 	case 1:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl1.tga"));
-		SetISize(80, 60);
+		SetISize(120, 100);
 		m_totalCost = TowerOneCost;
-		m_costUpgrade = 100;
+		m_costUpgrade = 50;
 		m_range = 300;
 		m_attackSpeed = 1.5f;
 		m_damage = 2.f;
@@ -52,28 +52,33 @@ void TowerOne::Upgrade()
 	case 2:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl2.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl2.tga"));
-		SetISize(80, 60);
+		SetISize(126, 105);
 		m_totalCost += m_costUpgrade;
-		m_costUpgrade = 140;
-		m_range = 330.f;
+		m_costUpgrade = 100;
+		m_range = 400.f;
 		m_attackSpeed = 2.5f;
-		m_damage = 2.5f;
-		m_maxHitPoint = 400.f;
+		m_damage = 4.5f;
+		m_maxHitPoint = m_maxHitPoint + 200;
 		break;
 	case 3:
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl3.tga"));
 		SetAvatar(ResourceManagers::GetInstance()->GetTexture("TowerOnelvl3.tga"));
-		SetISize(80, 60);
+		SetISize(132, 110);
 		m_totalCost += m_costUpgrade;
 		m_costUpgrade = 0;
-		m_range = 360.f;
+		m_range = 500.f;
 		m_attackSpeed = 3.5f;
-		m_damage = 3.f;
-		m_maxHitPoint = 500.f;
+		m_damage = 7.f;
+		m_maxHitPoint = m_maxHitPoint + 200;
 		break;
 	default:
 		break;
 	}
+	m_towerOption->GetCostTextList().front()->SetText(std::to_string((int)(m_totalCost * RefundRatio)));
+	if (m_level < m_maxlevel)
+		m_towerOption->GetCostTextList().back()->SetText(std::to_string(m_costUpgrade));
+	else
+		m_towerOption->GetCostTextList().back()->SetText("max");
 	m_currentTimeAttack = 1 / m_attackSpeed;
 	if (m_level >= 2) {
 		m_hitpoint = m_hitpoint / previosMaxHitpoint * m_maxHitPoint;
@@ -108,6 +113,15 @@ void TowerOne::LocateOption()
 			tower->Upgrade();
 		});
 	m_towerOption->AddSecondOption(secondButton2);
+
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextShader");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Triangle.ttf");
+	auto 	text = std::make_shared< Text>(shader, font, std::to_string((int)(TowerOneCost * RefundRatio)), Vector4(1.0f, 0.6f, 0.f, 1.0f), 0.6f);
+	text->Set2DPositionDynamic(Vector2(m_position.x - m_iWidth / 2.f , m_position.y - m_iHeight / 4.f - AdjustTowerOption));
+	m_towerOption->AddCostText(text);
+	text = std::make_shared< Text>(shader, font, std::to_string(TowerOneCost), Vector4(1.0f, 0.6f, 0.f, 1.0f), 0.6f);
+	text->Set2DPositionDynamic(Vector2(m_position.x + m_iWidth / 2.f + AdjustTowerOption, m_position.y - m_iHeight / 4.f - AdjustTowerOption));
+	m_towerOption->AddCostText(text);
 }
 
 void TowerOne::Update(GLfloat deltatime)

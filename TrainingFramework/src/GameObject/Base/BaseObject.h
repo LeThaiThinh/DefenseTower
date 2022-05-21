@@ -33,6 +33,8 @@ public:
 	virtual void Draw() = 0;
 	virtual void Update(GLfloat deltaTime) = 0;
 
+	std::string GetTypeObject() { return m_typeObject; }
+
 	void SetObjectID(GLuint id) { m_id = id; }
 	GLint GetObjectID(GLuint id) { return	m_id; }
 
@@ -52,7 +54,7 @@ public:
 	void SetTexture(std::shared_ptr<Texture> texture) { m_pTexture = texture; }
 	std::shared_ptr<Texture> GetTextue() { return m_pTexture; }
 
-	void SetPosition(Vector3 position) { m_position = position; }
+	void SetPosition(Vector3 position) { m_position = position; 	CalculateWorldMatrix();}
 	Vector3 GetPosition() { return m_position; }
 
 	void SetRotation(Vector3 rotation) { m_rotation = rotation; CalculateWorldMatrix(); }
@@ -83,7 +85,8 @@ protected:
 	std::shared_ptr<Shader>		m_pShader;
 	std::shared_ptr<Texture>	m_pTexture;
 	std::shared_ptr<Camera>		m_pCamera;
-
+	
+	std::string		m_typeObject;
 private:
 	GLint			m_id;
 	std::string		m_name;

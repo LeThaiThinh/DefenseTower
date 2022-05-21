@@ -33,16 +33,20 @@ public:
 	void		Update(GLfloat deltatime) override;
 	void		SetFont(std::shared_ptr<Font> font);
 	void		SetText(std::string text);
-
 	std::string GetText();
 
 	void		Set2DPosition(GLfloat x, GLfloat y);
 	void		Set2DPosition(Vector2 pos);
-
+	void		Set2DPositionDynamic(GLfloat x, GLfloat y);
+	void		Set2DPositionDynamic(Vector2 pos);
+	void		UpdateDynamic();
+	void Translate(float t);
 private:
 	std::string				m_text;
 	std::shared_ptr<Font>	m_font;
 
+	int xDynamic;
+	int yDynamic;
 	GLint		m_iHeight;
 	GLint		m_iWidth;
 	Vector2		m_scale;

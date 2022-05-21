@@ -18,13 +18,14 @@ protected:
 	std::shared_ptr<Texture> m_avatar;
 
 public:
-	AttackAble() :m_hitpoint(0), m_maxHitPoint(1), m_hitpointBarMaxSize(Vector2(0, 0)) {}
+	AttackAble() :m_hitpoint(0), m_maxHitPoint(1), m_hitpointBarMaxSize(Vector2(0, 0)),m_regen(0) {}
 	AttackAble(float hitpoint, float maxHitPoint) :m_hitpoint(hitpoint), m_maxHitPoint(maxHitPoint), m_regen(0),
 		//m_hitpointBarMaxSize(Vector2(std::sqrt(m_maxHitPoint/StandardHitpoint)*StandardHitPointBarWidth,std::sqrt(m_maxHitPoint/StandardHitpoint)*StandardHitPointBarHeight)),
 		m_hitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("UI/bar_4.tga"))),
 		m_lostHitpointBar(std::make_shared<Sprite2D>(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"), ResourceManagers::GetInstance()->GetShader("TextureShader"), ResourceManagers::GetInstance()->GetTexture("UI/bar_bg.tga")))
 	{
 		m_hitpointBarMaxSize = Vector2(std::sqrt(m_maxHitPoint / StandardHitpoint) * StandardHitPointBarWidth, std::sqrt(m_maxHitPoint / StandardHitpoint) * StandardHitPointBarHeight);
+		//m_hitpointBarMaxSize = Vector2(10,10);
 		m_hitpointBar->SetISize(hitpoint / maxHitPoint * m_hitpointBarMaxSize.x, hitpoint / maxHitPoint * m_hitpointBarMaxSize.y);
 		m_lostHitpointBar->SetISize((1 - hitpoint / maxHitPoint) * m_hitpointBarMaxSize.x, (1 - hitpoint / maxHitPoint) * m_hitpointBarMaxSize.y);
 	}
@@ -45,8 +46,8 @@ public:
 		}
 	}
 	void		UpdateHitPointBarAndLostHitpointBarPosition(float x, float y) {
-		m_hitpointBar->Set2DPosition(x - (m_hitpointBarMaxSize.x - std::floor(m_hitpoint / m_maxHitPoint * m_hitpointBarMaxSize.x)) / 2, y);
-		m_lostHitpointBar->Set2DPosition(x, y);
+		m_hitpointBar->Set3DPosition(x - (m_hitpointBarMaxSize.x - std::floor(m_hitpoint / m_maxHitPoint * m_hitpointBarMaxSize.x)) / 2, y,1);
+		m_lostHitpointBar->Set3DPosition(x, y,1);
 	}
 	void		UpdateHitPointBarAndLostHitpointBarSize() {
 		m_hitpointBar->SetISize(std::ceil(m_hitpoint / m_maxHitPoint * m_hitpointBarMaxSize.x), m_hitpointBarMaxSize.y);

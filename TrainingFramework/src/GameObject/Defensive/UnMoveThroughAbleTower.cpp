@@ -8,7 +8,7 @@ std::shared_ptr<BaseEnemy> UnMoveThroughAbleTower::FindEnemyTarget() {
 	for (auto& enemy : m_attackedList) {
 		std::shared_ptr<BaseEnemy> e = std::dynamic_pointer_cast<BaseEnemy>(enemy.lock());
 		float distance = (e->GetCenterPosition() - GetPosition()).Length();
-		if (distance <= m_range) {
+		if (distance <= m_range && distance < distanceMin) {
 			distanceMin = distance;
 			enemyMin = e;
 		}
@@ -21,7 +21,7 @@ std::shared_ptr<BaseEnemy> UnMoveThroughAbleTower::FindEnemyTarget() {
 	{
 		std::shared_ptr<BaseEnemy> e = std::dynamic_pointer_cast<BaseEnemy>(enemy.lock());
 		float distance = (e->GetCenterPosition() - GetPosition()).Length();
-		if (distance <= m_range) {
+		if (distance <= m_range && distance < distanceMin) {
 			distanceMin = distance;
 			enemyMin = e;
 		}

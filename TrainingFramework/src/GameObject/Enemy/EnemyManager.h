@@ -32,7 +32,9 @@ public:
 		//spawnerList.push_back(std::make_shared<EnemySpawner>(200.f, 500.f, EnemyType::EnemyTwo, 2.f));
 		//spawnerList.push_back(std::make_shared<EnemySpawner>(0.f, 0.f, EnemyType::EnemyTwo, 3.f));
 		/**/
-		for (int i = 0; i < 25; i++) {
+		float maxE = 60;
+		float T = 120;
+		for (int i = 0; i < maxE; i++) {
 			float x = -100 - Globals::mapWidth/2 + Globals::screenWidth/2 + (Globals::mapWidth + 200) * ((float)rand() / RAND_MAX);
 			float y = -100 -Globals::mapHeight/2 + Globals::screenHeight/2 + (Globals::mapHeight + 200) * ((float)rand() / RAND_MAX);
 			if (x < Globals::screenWidth + 100 && x> - 100) {
@@ -41,7 +43,8 @@ public:
 					y = -100 - Globals::mapHeight / 2 + Globals::screenHeight / 2 + (Globals::mapHeight + 200) * ((float)rand() / RAND_MAX);
 				}
 			}
-			spawnerList.push_back(std::make_shared<EnemySpawner>(x, y, (EnemyType)(i%3), i/3.f));
+			spawnerList.push_back(std::make_shared<EnemySpawner>(x, y, (EnemyType)(i%3), T*(i*i)/(maxE*maxE)));
+			//spawnerList.push_back(std::make_shared<EnemySpawner>(x, y, (EnemyType)(i % 3), 0));
 		}
 	}
 	void Add(float x, float y, EnemyType type) {

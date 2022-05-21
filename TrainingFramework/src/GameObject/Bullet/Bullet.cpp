@@ -63,7 +63,7 @@ void Bullet::Move(GLfloat deltatime)
 				SetDirection((m_target.lock()->GetPosition() - m_source.lock()->GetPosition()).Normalize());
 			Set2DPosition(m_position.x + deltatime * m_speed * m_direction.x, m_position.y + deltatime * m_speed * m_direction.y);
 		}
-		else if (enemy->GetType()==EnemyType::EnemyOne|| enemy->GetType() == EnemyType::EnemyTwo) {
+		else if (enemy->GetType()==EnemyType::EnemyOne|| enemy->GetType() == EnemyType::EnemyTwo || enemy->GetType() == EnemyType::EnemyThree) {
 			enemy->TakeDamage(m_damage);
 			if (enemy->GetHitPoint() <= 0) {
 				EnemyPoolManager::GetInstance()->RemoveGroundInstant(enemy);
@@ -79,7 +79,29 @@ void Bullet::Move(GLfloat deltatime)
 		}
 	}
 	break;
-	case BulletType::TowerTwo:
+	case BulletType::Target_Tower_Two:
+	{
+		std::shared_ptr<BaseEnemy> enemy = CheckCollideEnemyTarget(deltatime);
+		if (!enemy) {
+			if (m_target.lock())
+				SetDirection((m_target.lock()->GetPosition() - m_source.lock()->GetPosition()).Normalize());
+			Set2DPosition(m_position.x + deltatime * m_speed * m_direction.x, m_position.y + deltatime * m_speed * m_direction.y);
+		}
+		else if (enemy->GetType() == EnemyType::EnemyOne || enemy->GetType() == EnemyType::EnemyTwo || enemy->GetType() == EnemyType::EnemyThree) {
+			enemy->TakeDamage(m_damage);
+			if (enemy->GetHitPoint() <= 0) {
+				EnemyPoolManager::GetInstance()->RemoveGroundInstant(enemy);
+			}
+			BulletPoolManager::GetInstance()->RemoveBullet(std::dynamic_pointer_cast<Bullet>(shared_from_this()));
+		}
+		else {
+			enemy->TakeDamage(m_damage);
+			if (enemy->GetHitPoint() <= 0) {
+				EnemyPoolManager::GetInstance()->RemoveFlyInstant(enemy);
+			}
+			BulletPoolManager::GetInstance()->RemoveBullet(std::dynamic_pointer_cast<Bullet>(shared_from_this()));
+		}
+	}
 		break;
 	case BulletType::TowerThree:
 		break;
@@ -148,6 +170,30 @@ void Bullet::Init(BulletType bulletType, std::shared_ptr<BaseObject> target, Vec
 	case BulletType::Target_Tower_One:
 	{
 		SetModels(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"));
+		SetTexture(ResourceManagers::GetInstance()->GetTexture("Bullet/bullet_tower_one.tga"));
+		SetShaders(ResourceManagers::GetInstance()->GetShader("AnimationShader"));
+		m_numFrames = 10;
+		m_numFramesInLine = 2;
+		m_frameTime = 0.1f;
+
+		m_source = source;
+		m_target = target;
+		if ((target->GetPosition() - source->GetPosition()).x >= 0) {
+			SetPosition(source->GetPosition() + std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		else {
+			SetPosition(source->GetPosition() - std::dynamic_pointer_cast<AbleToAttack>(source)->GetBulletSpawner());
+		}
+		SetDirection((target->GetPosition() - m_position).Normalize());
+		m_speed = 300.f;
+		m_timeExist = 3.f;
+		SetISize(30, 20);
+		SetSize(20, 20);
+	}
+	break;
+	case BulletType::Target_Tower_Two:
+	{
+		SetModels(ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg"));
 		SetTexture(ResourceManagers::GetInstance()->GetTexture("ElectricBullet.tga"));
 		SetShaders(ResourceManagers::GetInstance()->GetShader("AnimationShader"));
 		m_numFrames = 6;
@@ -164,7 +210,7 @@ void Bullet::Init(BulletType bulletType, std::shared_ptr<BaseObject> target, Vec
 		}
 		SetDirection((target->GetPosition() - m_position).Normalize());
 		m_speed = 300.f;
-		m_timeExist = 2.f;
+		m_timeExist = 3.f;
 		SetISize(20, 20);
 		SetSize(20, 20);
 	}
@@ -238,7 +284,7 @@ std::shared_ptr<BaseEnemy> Bullet::CheckCollideFlyEnemy(GLfloat deltaTime)
 std::shared_ptr<BaseEnemy> Bullet::CheckCollideEnemyTarget(GLfloat deltaTime)
 {
 	std::shared_ptr<BaseEnemy> enemy = std::static_pointer_cast<BaseEnemy>(m_target.lock());
-	if (CheckCollision::RectIntersectRect(enemy, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
+	if (enemy && CheckCollision::RectIntersectRect(enemy, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
 		return enemy;
 	return nullptr;
 }
@@ -255,8 +301,10 @@ std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTower(GLfloat deltaT
 
 std::shared_ptr<UnMoveThroughAbleTower> Bullet::CheckCollideTarget(GLfloat deltaTime)
 {
-	std::shared_ptr<UnMoveThroughAbleTower> tower = std::static_pointer_cast<UnMoveThroughAbleTower>(m_target.lock());
-	if (CheckCollision::RectIntersectRect(tower, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
-		return tower;
+	if (m_target.lock()) {
+		std::shared_ptr<UnMoveThroughAbleTower> tower = std::static_pointer_cast<UnMoveThroughAbleTower>(m_target.lock());
+		if (CheckCollision::RectIntersectRect(tower, std::dynamic_pointer_cast<Sprite2D>(shared_from_this())))
+			return tower;
+	}
 	return nullptr;
 }

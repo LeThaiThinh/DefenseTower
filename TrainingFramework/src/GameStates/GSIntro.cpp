@@ -33,7 +33,6 @@ void GSIntro::Init()
 	ResourceManagers::GetInstance()->AddShader("TextShader");
 	ResourceManagers::GetInstance()->AddShader("AnimationShader");
 	//UI
-	ResourceManagers::GetInstance()->AddTexture("UI/bg.tga");
 	ResourceManagers::GetInstance()->AddTexture("UI/bg_2.tga");
 	ResourceManagers::GetInstance()->AddTexture("UI/table.tga");
 	ResourceManagers::GetInstance()->AddTexture("UI/button_empty.tga");
@@ -63,6 +62,66 @@ void GSIntro::Init()
 	ResourceManagers::GetInstance()->AddTexture("UI/bar_4.tga");
 	ResourceManagers::GetInstance()->AddTexture("UI/bar_bg.tga");
 	ResourceManagers::GetInstance()->AddTexture("UI/bg_bar.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/header_levels.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/lock.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_shop.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/window_1.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/coin.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/tower_upgrade.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/health_icon.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/attack_damage_icon.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/attack_range_icon.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/attack_speed_icon.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/bg_land.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_menu.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_restart.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/header_shop.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/header_settings.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_hard.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_easy.tga");
+	ResourceManagers::GetInstance()->AddTexture("UI/button_normal.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainCharacter/main_character_walk_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainCharacter/main_character_walk_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainCharacter/main_character_walk_attack_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainCharacter/main_character_walk_attack_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("MainCharacter/main_character_avatar.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/main_tower_1.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/upgrade_tower.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/spot_tower.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/upgrade_tower_one.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/upgrade_tower_two.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/obstacle_border.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/way_point.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerOnelvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl1.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl2.tga");
+	ResourceManagers::GetInstance()->AddTexture("TowerTwolvl3.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/remove_tower.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/main_tower_1.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/main_tower_2.tga");
+	ResourceManagers::GetInstance()->AddTexture("Tower/main_tower_3.tga");
+	ResourceManagers::GetInstance()->AddTexture("Bullet/bullet_main_character.tga");
+	ResourceManagers::GetInstance()->AddTexture("Bullet/enemy_two_bullet.tga");
+	ResourceManagers::GetInstance()->AddTexture("Bullet/bullet_tower_one.tga");
+	ResourceManagers::GetInstance()->AddTexture("ElectricBullet.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_one_attack_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_one_attack_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_one_walk_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_one_walk_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_one_avatar.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_two_attack_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_two_attack_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_two_walk_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_two_walk_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_two_avatar.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_three_attack_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_three_attack_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_three_walk_right.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_three_walk_left.tga");
+	ResourceManagers::GetInstance()->AddTexture("Enemy/enemy_three_avatar.tga");
+
 
 	//sound
 	ResourceManagers::GetInstance()->AddSound("epic.mp3");
@@ -102,7 +161,7 @@ void GSIntro::HandleMouseMoveEvents(int x, int y)
 void GSIntro::Update(float deltaTime)
 {
 	m_time += deltaTime;
-	if (m_time > 5.5f)
+	if (m_time > 2.0f)
 	{
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
 		m_time = 0;

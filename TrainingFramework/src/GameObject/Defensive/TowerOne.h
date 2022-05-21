@@ -13,7 +13,6 @@ public:
 	void	Upgrade() override;
 	void	LocateOption();
 	void	Update(GLfloat deltatime);
-
 private:
 
 };

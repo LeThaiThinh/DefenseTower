@@ -11,12 +11,14 @@ enum class BulletType
 	Linear_MainCharacter,
 	AOE,
 	Target_Tower_One,
-	TowerTwo,
+	Target_Tower_Two,
 	TowerThree,
 	Chain,
 	Target_Enemy_Two,
 };
-class Bullet :public MoveAble, public SelfDestructable, public Animation2D
+class Bullet :public MoveAble, 
+		public SelfDestructable, 
+		public Animation2D
 {
 
 public:

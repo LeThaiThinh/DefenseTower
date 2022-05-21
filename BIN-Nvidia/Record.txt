@@ -1,0 +1,13 @@
+BackgroundMusic 0
+CurrentLevel 4
+Diamond 909
+Difficulty 2
+SFX 1
+Upgrade_Attack 2
+Upgrade_Health 2
+Upgrade_Regen 2
+Upgrade_Resource 2
+
+
+
+

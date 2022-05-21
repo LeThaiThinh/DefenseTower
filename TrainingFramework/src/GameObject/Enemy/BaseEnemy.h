@@ -19,7 +19,9 @@ class BaseEnemy :
 	public BountyObject
 {
 public:
-	BaseEnemy() :m_type(EnemyType::EnemyOne) {}
+	BaseEnemy() :m_type(EnemyType::EnemyOne) {
+		m_typeObject = "Enemy";
+	}
 	BaseEnemy(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> textureLeft, std::shared_ptr<Texture> textureRight, int numFrame, int numFramesInLine, float frameTime,
 		float x, float y, int iwidth, int iheight, int width, int height, float speed, float range, float attackSpeed, float damage,float delayAttackTime, Vector3 bulletSpawner, 
 		std::shared_ptr<Texture> attackLeftAnimation, std::shared_ptr<Texture> attackRightAnimation, int numFrameAttack, int numFramesInLineAttack, float frameTimeAttack, float hitPoint, EnemyType type,int bounty)
@@ -28,7 +30,9 @@ public:
 		AttackAble((GSMenu::difficulty * 0.2f + 0.8f)* hitPoint,(GSMenu::difficulty * 0.2f + 0.8f)*hitPoint), BountyObject(bounty+ Upgrade::GetInstance()->upgradeList.find("Upgrade Resource")->second->GetLevel()*1),
 		AbleToAttack(range, attackSpeed,(GSMenu::difficulty*0.2f+0.8f)*damage,delayAttackTime,bulletSpawner, attackLeftAnimation,attackRightAnimation,numFrameAttack,numFramesInLineAttack,frameTimeAttack), m_type(type)
 		,m_isHolding(false)
-	{}
+	{
+		m_typeObject = "Enemy";
+	}
 	~BaseEnemy() {}
 
 	EnemyType GetType() { return m_type; }
@@ -77,13 +81,12 @@ public:
 		//	if target is targeted  
 		if (target) {
 			//if in range able to attack then attack
-			if ((target->GetCenterPosition() - m_centerPosition).Length() <= m_range + target->GetHeight() / 2.f + m_height /2.f  || CheckCollideTarget(deltaTime)) {
+			if (CheckCollideTarget(deltaTime) || (m_range > 0 && (target->GetCenterPosition() - m_centerPosition).Length() <= m_range + target->GetHeight() / 2.f + m_height / 2.f)) {
 				m_isAttacking = true;
 				if (CanAttack()) {
 					Attack();
 				}
 				m_wayPointList.clear();
-
 			}
 			//if closed at goal
 			else if (!m_wayPointList.empty()) {
@@ -124,8 +127,8 @@ public:
 		m_wayPointList.clear();
 	};
 
-	virtual void Draw() { Animation2D::Draw(); AttackAble::Draw(); };
-
+	virtual void Draw() { Animation2D::Draw(); };
+	void DrawHUD() { AttackAble::Draw(); }
 	virtual void FindPath()=0;
 
 	std::shared_ptr<UnMoveThroughAbleTower> FindTarget() {

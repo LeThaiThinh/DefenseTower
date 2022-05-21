@@ -11,9 +11,9 @@
 class MainCharacter
 	:public MoveAble,
 	public Animation2D,
-	public AttackAble,
 	public AbleToAttack,
-	public CSingleton<MainCharacter>
+	public CSingleton<MainCharacter>,
+	public AttackAble
 {
 public:
 
@@ -30,7 +30,7 @@ public:
 	bool HandleTouchHUD(GLint x, GLint y, bool bIsPressed);
 	void AttackCircular() {};
 	bool CheckCollide(GLfloat deltaTime);
-	void Draw() { Animation2D::Draw(); AttackAble::Draw(); };
+	void Draw() { Animation2D::Draw();  };
 private:
 	Vector3 m_targetPosition;
 	bool m_isHolding;

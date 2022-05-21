@@ -30,9 +30,10 @@ public:
 			m_coinValue = 5000;
 			break;
 		case 2: 
-			m_coinValue = 400;
+			m_coinValue = 2000;
 			break;
 		default:
+			m_coinValue = 2000;
 			break;
 		}
 		m_coinText = std::make_shared<Text>(shader, font, std::to_string(m_coinValue), Vector4(1.0f, 0.5f, 0.0f, 1.0f), 1.0f);

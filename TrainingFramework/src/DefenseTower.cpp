@@ -21,6 +21,7 @@ void Draw(ESContext* esContext)
 {
 	Application::GetInstance()->Render();
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+	glFinish();
 }
 
 void Update(ESContext* esContext, GLfloat deltaTime)

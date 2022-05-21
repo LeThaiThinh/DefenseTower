@@ -121,10 +121,9 @@ void GSSetting::Init()
 	m_textInMenu->Set2DPosition(Vector2(320.f, Globals::screenHeight * 5 / 10.f + 15.f));
 	m_listText.push_back(m_textInMenu);
 
-	m_textInMenu = std::make_shared< Text>(shader, font, "VFX Sound", Vector4(1.f, 0.6f, 0.f, 1.0f), 1.7f);
+	m_textInMenu = std::make_shared< Text>(shader, font, "SFX", Vector4(1.f, 0.6f, 0.f, 1.0f), 1.7f);
 	m_textInMenu->Set2DPosition(Vector2(320.f, Globals::screenHeight * 6.5 / 10.f + 15.f));
 	m_listText.push_back(m_textInMenu);
-
 }
 
 void GSSetting::Exit()

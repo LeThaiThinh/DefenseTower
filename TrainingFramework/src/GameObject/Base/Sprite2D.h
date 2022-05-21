@@ -27,6 +27,7 @@ public:
 	void		Update(GLfloat deltatime) override;
 
 	void		Set2DPosition(GLfloat x, GLfloat y);
+	void		Set3DPosition(GLfloat x, GLfloat y, GLfloat z);
 	void		Set2DStaticPosition(GLfloat x, GLfloat y);
 	void		Set2DStaticPosition();
 	void		Set2DPosition(Vector2 position);

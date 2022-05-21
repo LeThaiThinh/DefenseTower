@@ -1,7 +1,9 @@
 #pragma once
 #include "GameStateBase.h"
 #include <Others/GameButton.h>
-
+#include "Base/Text.h"
+#include "Base/Sprite2D.h"
+#define MAXPAGE 3
 class GSTutorial : public GameStateBase
 {
 public:
@@ -20,12 +22,13 @@ public:
 	void	HandleMouseMoveEvents(int x, int y) override;
 	void	Update(float deltaTime) override;
 	void	Draw() override;
-
+	static	int		page;
 private:
 	std::shared_ptr<Sprite2D>	m_background;
 	std::shared_ptr<Sprite2D>				m_table;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
-	std::list<std::list<std::shared_ptr<Text>>>		m_listTexts;
-
+	std::vector<std::shared_ptr<Sprite2D>>		m_listImage;
+	std::vector<std::list<std::shared_ptr<Text>>>		m_listTexts;
+	
 };
 

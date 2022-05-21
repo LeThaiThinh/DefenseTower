@@ -44,7 +44,8 @@ void GroundEnemy::FindPath()
 			else {
 				for (auto& obstacle : ObstacleManager::GetInstance()->obstacleList25) {
 					for (auto wayPoint : obstacle->wayPointList) {
-						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active) {
+						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active 
+							&& (CheckCollision::CheckLesser90Degree(std::dynamic_pointer_cast<Sprite2D>(shared_from_this()), wayPoint->wayPoint, endWayPoint->wayPoint))) {
 							startWayPoint = wayPoint;
 							minF = (m_position - wayPoint->wayPoint->GetPosition()).Length();
 						}
@@ -74,7 +75,8 @@ void GroundEnemy::FindPath()
 			else {
 				for (auto& obstacle : ObstacleManager::GetInstance()->obstacleList50) {
 					for (auto wayPoint : obstacle->wayPointList) {
-						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active) {
+						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active
+							&& (CheckCollision::CheckLesser90Degree(std::dynamic_pointer_cast<Sprite2D>(shared_from_this()), wayPoint->wayPoint, endWayPoint->wayPoint))) {
 							startWayPoint = wayPoint;
 							minF = (m_position - wayPoint->wayPoint->GetPosition()).Length();
 						}
@@ -104,7 +106,8 @@ void GroundEnemy::FindPath()
 			else {
 				for (auto& obstacle : ObstacleManager::GetInstance()->obstacleList100) {
 					for (auto wayPoint : obstacle->wayPointList) {
-						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active) {
+						if ((m_position - wayPoint->wayPoint->GetPosition()).Length()  < minF && wayPoint->active
+							&& (CheckCollision::CheckLesser90Degree(std::dynamic_pointer_cast<Sprite2D>(shared_from_this()), wayPoint->wayPoint, endWayPoint->wayPoint))) {
 							startWayPoint = wayPoint;
 							minF = (m_position - wayPoint->wayPoint->GetPosition()).Length();
 						}

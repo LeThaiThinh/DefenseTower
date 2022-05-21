@@ -1,9 +1,14 @@
-BackgroundMusic 1
-CurrentLevel 2
-Diamond 8325
-Difficulty 2
+BackgroundMusic 0
+CurrentLevel 3
+Diamond 23
+Difficulty 1
 SFX 1
-Upgrade_Attack 2
-Upgrade_Health 1
+Upgrade_Attack 1
+Upgrade_Health 0
 Upgrade_Regen 0
-Upgrade_Resource 1
+Upgrade_Resource 0
+
+
+
+
+

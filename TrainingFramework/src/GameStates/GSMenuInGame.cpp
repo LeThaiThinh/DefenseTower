@@ -139,7 +139,7 @@ void GSMenuInGame::Init()
 	text->Set2DPosition(Vector2(350.f, Globals::screenHeight * 4.5 / 10.f + 15.f));
 	m_listText.push_back(text);
 
-	text = std::make_shared< Text>(shader, font, "VFX Sound", Vector4(1.f, 0.6f, 0.f, 1.0f), 1.5f);
+	text = std::make_shared< Text>(shader, font, "SFX", Vector4(1.f, 0.6f, 0.f, 1.0f), 1.5f);
 	text->Set2DPosition(Vector2(350.f, Globals::screenHeight * 5.5 / 10.f + 15.f));
 	m_listText.push_back(text);
 }

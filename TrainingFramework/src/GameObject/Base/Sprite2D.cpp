@@ -123,7 +123,12 @@ void Sprite2D::Set2DPosition(GLfloat x, GLfloat y)
 	m_centerPosition = Vector3(x - m_iWidth / 2 + m_width / 2, y + m_iHeight / 2 - m_height / 2, 0.0f);
 	CalculateWorldMatrix();
 }
-
+void Sprite2D::Set3DPosition(GLfloat x, GLfloat y, GLfloat z)
+{
+	m_position = Vector3(x, y, z);
+	m_centerPosition = Vector3(x , y , 0);
+	CalculateWorldMatrix();
+}
 void Sprite2D::Set2DStaticPosition(GLfloat x, GLfloat y)
 {
 	m_static_x = x;
